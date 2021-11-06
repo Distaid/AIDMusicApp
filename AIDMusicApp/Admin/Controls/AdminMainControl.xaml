@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="AIDMusicApp.Admin.Controls.AdminMainControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AIDMusicApp.Admin.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Style="{StaticResource AIDMenuStyle}">
+            <MenuItem Header="Статичные таблицы" Style="{StaticResource AIDMenuItemStyle}">
+                <MenuItem x:Name="CountriesButton" Header="Страны" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem x:Name="GenresButton" Header="Жанры" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem x:Name="LabelsButton" Header="Лэйблы" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem x:Name="SkillsButton" Header="Навыки" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem x:Name="AlbumFormatsButton" Header="Форматы альбомов" Style="{StaticResource AIDMenuItemStyle}"/>
+            </MenuItem>
+            <MenuItem Header="Таблицы данных" Style="{StaticResource AIDMenuItemStyle}">
+                <MenuItem x:Name="UsersButton" Header="Пользователи" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem x:Name="GroupsButton" Header="Группы" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem Header="Альбомы" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem Header="Песни" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem x:Name="MusiciansButton" Header="Музыканты" Style="{StaticResource AIDMenuItemStyle}"/>
+            </MenuItem>
+        </Menu>
+
+        <Button Grid.Row="0" x:Name="ExitButton" Content="Выход" Style="{StaticResource AIDButtonStyle}" HorizontalAlignment="Right" Margin="10 0" Width="80"/>
+
+        <ContentControl x:Name="MainContent" Grid.Row="1"/>
+    </Grid>
+</UserControl>
