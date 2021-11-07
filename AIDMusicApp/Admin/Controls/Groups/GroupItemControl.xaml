@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:AIDMusicApp.Admin.Controls.Groups"
              xmlns:local1="clr-namespace:AIDMusicApp.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="280" d:DesignWidth="500"
-             Height="280" Width="500">
+             d:DesignHeight="210" d:DesignWidth="450"
+             Height="210" Width="450">
     <UserControl.Resources>
         <local1:Group x:Key="GroupItem"/>
     </UserControl.Resources>
@@ -36,7 +36,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="38"/>
-                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -48,14 +47,13 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" Margin="10 3 10 3"/>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" Margin="10 3 10 3"/>
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" Margin="10 3 10 3"/>
-                <TextBlock Grid.Column="0" Grid.Row="5" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Top" Foreground="{StaticResource AIDCyan}" Margin="10 3 10 3"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="NameText" Text="{Binding Source={StaticResource GroupItem}, Path=Name, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
                 <TextBlock Grid.Column="1" Grid.Row="1" x:Name="CountryText" Text="{Binding Source={StaticResource GroupItem}, Path=CountryId, Mode=TwoWay, StringFormat={}{0}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" x:Name="CreationText" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfCreation, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
-                <TextBlock Grid.Column="1" Grid.Row="3" x:Name="BreakupText" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" x:Name="CreationText" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfCreation, Mode=TwoWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" x:Name="BreakupText" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=TwoWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
                 
-                <ScrollViewer Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 2">
+                <ScrollViewer Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="6 2">
                     <ItemsControl x:Name="GenresItems" ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Genres, Mode=TwoWay}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -68,9 +66,6 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </ScrollViewer>
-                <ScrollViewer Grid.Column="1" Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                    <TextBlock x:Name="DescriptionText" Text="{Binding Source={StaticResource GroupItem}, Path=Description, Mode=TwoWay}" TextWrapping="Wrap" Style="{StaticResource AIDTextBlockStyle}" Margin="5 3"/>
                 </ScrollViewer>
             </Grid>
 

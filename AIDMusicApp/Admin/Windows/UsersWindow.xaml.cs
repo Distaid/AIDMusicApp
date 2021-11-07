@@ -115,27 +115,27 @@ namespace AIDMusicApp.Admin.Windows
             }
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private bool CheckFields()
         {
             if (string.IsNullOrWhiteSpace(LoginText.Text))
             {
                 AIDMessageWindow.Show("Поле \"Логин\" обязательно для заполнения!");
                 LoginText.Focus();
-                return;
+                return false;
             }
 
             if (SqlDatabase.Instance.UsersAdapter.ContainsLogin(LoginText.Text))
             {
                 AIDMessageWindow.Show("Пользователь с таким логином уже существует!");
                 LoginText.Focus();
-                return;
+                return false;
             }
 
             if (string.IsNullOrWhiteSpace(PasswordText.Password))
             {
                 AIDMessageWindow.Show("Поле \"Пароль\" обязательно для заполнения!");
                 PasswordText.Focus();
-                return;
+                return false;
             }
 
             if (!string.IsNullOrWhiteSpace(PhoneText.Text))
@@ -144,14 +144,14 @@ namespace AIDMusicApp.Admin.Windows
                 {
                     AIDMessageWindow.Show("Поле \"Номер\" не соответствует шаблону!");
                     PhoneText.Focus();
-                    return;
+                    return false;
                 }
 
                 if (SqlDatabase.Instance.UsersAdapter.ContainsPhone(PhoneText.Text))
                 {
                     AIDMessageWindow.Show("Пользователь с таким номером телефона уже существует!");
                     PhoneText.Focus();
-                    return;
+                    return false;
                 }
             }
 
@@ -161,16 +161,24 @@ namespace AIDMusicApp.Admin.Windows
                 {
                     AIDMessageWindow.Show("Поле \"Почта\" не соответствует шаблону!");
                     EmailText.Focus();
-                    return;
+                    return false;
                 }
 
                 if (SqlDatabase.Instance.UsersAdapter.ContainsEmail(EmailText.Text))
                 {
                     AIDMessageWindow.Show("Пользователь с такой почтой уже существует!");
                     EmailText.Focus();
-                    return;
+                    return false;
                 }
             }
+
+            return true;
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckFields())
+                return;
 
             var accessId = (Access)(AccessId.SelectedItem as ComboBoxItem).Tag;
             var stream = (AvatarImage.ImageSource as BitmapImage).StreamSource;
@@ -196,56 +204,8 @@ namespace AIDMusicApp.Admin.Windows
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(LoginText.Text))
-            {
-                AIDMessageWindow.Show("Поле \"Логин\" обязательно для заполнения!");
-                LoginText.Focus();
+            if (!CheckFields())
                 return;
-            }
-
-            if (LoginText.Text != UserItem.Login)
-            {
-                if (SqlDatabase.Instance.UsersAdapter.ContainsLogin(LoginText.Text))
-                {
-                    AIDMessageWindow.Show("Пользователь с таким логином уже существует!");
-                    LoginText.Focus();
-                    return;
-                }
-            }
-
-            if (PhoneText.Text != UserItem.Phone)
-            {
-                if (!Regex.IsMatch(PhoneText.Text, @"\+375\d{9}"))
-                {
-                    AIDMessageWindow.Show("Поле \"Номер\" не соответствует шаблону!");
-                    PhoneText.Focus();
-                    return;
-                }
-
-                if (SqlDatabase.Instance.UsersAdapter.ContainsPhone(PhoneText.Text))
-                {
-                    AIDMessageWindow.Show("Пользователь с таким номером телефона уже существует!");
-                    PhoneText.Focus();
-                    return;
-                }
-            }
-
-            if (EmailText.Text != UserItem.Email)
-            {
-                if (!Regex.IsMatch(EmailText.Text, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$"))
-                {
-                    AIDMessageWindow.Show("Поле \"Почта\" не соответствует шаблону!");
-                    EmailText.Focus();
-                    return;
-                }
-
-                if (SqlDatabase.Instance.UsersAdapter.ContainsEmail(EmailText.Text))
-                {
-                    AIDMessageWindow.Show("Пользователь с такой почтой уже существует!");
-                    EmailText.Focus();
-                    return;
-                }
-            }
 
             var accessId = (Access)(AccessId.SelectedItem as ComboBoxItem).Tag;
             var stream = (AvatarImage.ImageSource as BitmapImage).StreamSource;

@@ -101,30 +101,30 @@ namespace AIDMusicApp.Admin.Windows
             SkillItems.Children.Insert(SkillItems.Children.Count - 1, item);
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private bool CheckFields()
         {
             if (string.IsNullOrWhiteSpace(NameText.Text))
             {
                 AIDMessageWindow.Show("Поле \"Имя\" должно быть заполнено!");
-                return;
+                return false;
             }
 
             if (string.IsNullOrWhiteSpace(AgeText.Text))
             {
                 AIDMessageWindow.Show("Поле \"Возраст\" должно быть заполнено!");
-                return;
+                return false;
             }
 
             if (CountryId.SelectedIndex == -1)
             {
                 AIDMessageWindow.Show("Поле \"Страна\" должно быть заполнено!");
-                return;
+                return false;
             }
 
             if (SkillItems.Children.Count == 1)
             {
                 AIDMessageWindow.Show("Поле \"Навыки\" должно содержать хотя бы один элемент!");
-                return;
+                return false;
             }
 
             for (var i = 0; i < SkillItems.Children.Count - 1; i++)
@@ -134,10 +134,18 @@ namespace AIDMusicApp.Admin.Windows
                     if ((SkillItems.Children[i] as MusicianSkillItemControl).SkillItem.Id == (SkillItems.Children[j] as MusicianSkillItemControl).SkillItem.Id)
                     {
                         AIDMessageWindow.Show("Навыки не должны повторяться!");
-                        return;
+                        return false;
                     }
                 }
             }
+
+            return true;
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckFields())
+                return;
 
             var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
 
@@ -155,35 +163,8 @@ namespace AIDMusicApp.Admin.Windows
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(NameText.Text))
-            {
-                AIDMessageWindow.Show("Поле \"Имя\" должно быть заполнено!");
+            if (!CheckFields())
                 return;
-            }
-
-            if (string.IsNullOrWhiteSpace(AgeText.Text))
-            {
-                AIDMessageWindow.Show("Поле \"Возраст\" должно быть заполнено!");
-                return;
-            }
-
-            if (SkillItems.Children.Count == 1)
-            {
-                AIDMessageWindow.Show("Поле \"Навыки\" должно содержать хотя бы один элемент!");
-                return;
-            }
-
-            for (var i = 0; i < SkillItems.Children.Count - 1; i++)
-            {
-                for (var j = i + 1; j < SkillItems.Children.Count - 1; j++)
-                {
-                    if ((SkillItems.Children[i] as MusicianSkillItemControl).SkillItem.Id == (SkillItems.Children[j] as MusicianSkillItemControl).SkillItem.Id)
-                    {
-                        AIDMessageWindow.Show("Навыки не должны повторяться!");
-                        return;
-                    }
-                }
-            }
 
             var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
 
@@ -196,7 +177,7 @@ namespace AIDMusicApp.Admin.Windows
                 var j = 0;
                 for (; j < MusicianItem.Skills.Count; j++)
                 {
-                    if (MusicianItem.Skills[i].Id == skill.Id)
+                    if (MusicianItem.Skills[j].Id == skill.Id)
                         break;
                 }
 
