@@ -20,20 +20,26 @@ namespace AIDMusicApp.Sql.Adapters
 
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    yield return new Group
+                    var group = new Group
                     {
                         Id = Convert.ToInt32(row[0]),
                         Name = Convert.ToString(row[1]),
                         Description = Convert.ToString(row[2]),
-                        YearOfCreation = Convert.ToInt16(row[3]),
-                        YearOfBreakup = Convert.ToInt16(row[4]),
+                        YearOfCreation = row[3].Equals(DBNull.Value) ? null : Convert.ToInt16(row[3]),
+                        YearOfBreakup = row[4].Equals(DBNull.Value) ? null : Convert.ToInt16(row[4]),
                         CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[5])),
                         Albums = new ObservableCollection<Album>(),
                         Genres = new ObservableCollection<Genre>(),
                         Labels = new ObservableCollection<Label>(),
                         Members = new ObservableCollection<Member>()
                     };
+
+                    foreach (var genre in SqlDatabase.Instance.GroupGenresAdapter.GetGenresByGroupId(group.Id))
+                        group.Genres.Add(genre);
+
+                    yield return group;
                 }
+
             }
         }
 
@@ -42,6 +48,10 @@ namespace AIDMusicApp.Sql.Adapters
             using (var command = new SqlCommand(_sqlComands["SQL_Insert"], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@description", !string.IsNullOrWhiteSpace(description) ? description : DBNull.Value);
+                command.Parameters.AddWithValue("@creation", yearOfCreation.HasValue ? yearOfCreation.Value : DBNull.Value);
+                command.Parameters.AddWithValue("@breakup", yearOfBreakup.HasValue ? yearOfBreakup.Value : DBNull.Value);
+                command.Parameters.AddWithValue("@country_id", countryId);
 
                 return new Group
                 {
