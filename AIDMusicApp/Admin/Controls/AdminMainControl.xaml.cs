@@ -19,9 +19,12 @@ namespace AIDMusicApp.Admin.Controls
     {
         public event Action ExitClick = null;
 
-        public AdminMainControl()
+        public AdminMainControl(bool isAdmin = true)
         {
             InitializeComponent();
+
+            if (!isAdmin)
+                UsersButton.Visibility = Visibility.Collapsed;
 
             ExitButton.Click += ExitButton_Click;
 

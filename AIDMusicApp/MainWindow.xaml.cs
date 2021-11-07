@@ -126,6 +126,13 @@ namespace AIDMusicApp
                     MainContent.Content = new AdminMainControl();
                     (MainContent.Content as AdminMainControl).ExitClick += MainWindow_ExitClick;
                     break;
+
+                case "Редактор":
+                    MainContent.Content = null;
+                    MainContent.Content = new AdminMainControl(false);
+                    (MainContent.Content as AdminMainControl).ExitClick += MainWindow_ExitClick;
+                    break;
+
                 default:
                     break;
             }
