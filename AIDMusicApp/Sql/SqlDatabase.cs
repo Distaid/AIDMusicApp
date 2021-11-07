@@ -27,6 +27,7 @@ namespace AIDMusicApp.Sql
         public GroupsAdapter GroupsAdapter = null;
 
         public MusicianSkillsAdapter MusicianSkillsAdapter = null;
+        public GroupGenresAdapter GroupGenresAdapter = null;
 
         protected SqlDatabase()
         {
@@ -78,6 +79,7 @@ namespace AIDMusicApp.Sql
                 GroupsAdapter = new GroupsAdapter(_sqlConnection);
 
                 MusicianSkillsAdapter = new MusicianSkillsAdapter(_sqlConnection);
+                GroupGenresAdapter = new GroupGenresAdapter(_sqlConnection);
             }
             catch
             {
