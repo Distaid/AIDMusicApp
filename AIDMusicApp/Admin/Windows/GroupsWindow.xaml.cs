@@ -3,18 +3,9 @@ using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
 using AIDMusicApp.Windows;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AIDMusicApp.Admin.Windows
 {
@@ -41,6 +32,7 @@ namespace AIDMusicApp.Admin.Windows
             };
 
             AddGenre.Click += AddGenre_Click;
+            ConfirmButton.Click += AddButton_Click;
 
             foreach (var country in SqlDatabase.Instance.CountriesListAdapter.GetAll())
             {
@@ -54,8 +46,8 @@ namespace AIDMusicApp.Admin.Windows
             InitializeComponent();
 
             TitleBar.MouseDown += TitleBar_MouseDown;
-            TitleText.Text = "Добавление Группы";
-            ConfirmButton.Content = "Добавить";
+            TitleText.Text = "Редактирование Группы";
+            ConfirmButton.Content = "Изменить";
 
             CountryId.PreviewMouseWheel += (o, e) =>
             {
@@ -69,6 +61,7 @@ namespace AIDMusicApp.Admin.Windows
             DescriptionText.Text = GroupItem.Description;
 
             AddGenre.Click += AddGenre_Click;
+            ConfirmButton.Click += ChangeButton_Click;
 
             foreach (var country in SqlDatabase.Instance.CountriesListAdapter.GetAll())
             {
@@ -76,6 +69,12 @@ namespace AIDMusicApp.Admin.Windows
                 CountryId.Items.Add(item);
                 if (GroupItem.CountryId.Id == country.Id)
                     item.IsSelected = true;
+            }
+
+            foreach (var genre in SqlDatabase.Instance.GroupGenresAdapter.GetGenresByGroupId(GroupItem.Id))
+            {
+                var item = new GenreBoxItemControl(genre.Id);
+                GenreItems.Children.Insert(GenreItems.Children.Count - 1, item);
             }
         }
 
@@ -103,40 +102,40 @@ namespace AIDMusicApp.Admin.Windows
             GenreItems.Children.Insert(GenreItems.Children.Count - 1, item);
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private bool CheckFields()
         {
             if (string.IsNullOrWhiteSpace(NameText.Text))
             {
                 AIDMessageWindow.Show("Поле \"Имя\" должно быть заполнено!");
-                return;
+                return false;
             }
 
             if (CountryId.SelectedIndex == -1)
             {
                 AIDMessageWindow.Show("Поле \"Страна\" должно быть заполнено!");
-                return;
+                return false;
             }
 
-            if (string.IsNullOrWhiteSpace(YearOfCreationText.Text))
+            if (!string.IsNullOrWhiteSpace(YearOfCreationText.Text))
             {
                 if (short.TryParse(YearOfCreationText.Text, out short res))
                 {
                     if (res > 2021 || res < 1900)
                     {
                         AIDMessageWindow.Show("Поле \"Год основания\" должно быть в диапазоне от 1900 до 2021!");
-                        return;
+                        return false;
                     }
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(YearOfBreakupText.Text))
+            if (!string.IsNullOrWhiteSpace(YearOfBreakupText.Text))
             {
                 if (short.TryParse(YearOfCreationText.Text, out short res))
                 {
                     if (res > 2021 || res < 1900)
                     {
                         AIDMessageWindow.Show("Поле \"Год распада\" должно быть в диапазоне от 1900 до 2021!");
-                        return;
+                        return false;
                     }
                 }
             }
@@ -144,7 +143,7 @@ namespace AIDMusicApp.Admin.Windows
             if (GenreItems.Children.Count == 1)
             {
                 AIDMessageWindow.Show("Поле \"Жанры\" должно содержать хотя бы один элемент!");
-                return;
+                return false;
             }
 
             for (var i = 0; i < GenreItems.Children.Count - 1; i++)
@@ -154,10 +153,18 @@ namespace AIDMusicApp.Admin.Windows
                     if ((GenreItems.Children[i] as GenreBoxItemControl).GenreItem.Id == (GenreItems.Children[j] as GenreBoxItemControl).GenreItem.Id)
                     {
                         AIDMessageWindow.Show("Жанры не должны повторяться!");
-                        return;
+                        return false;
                     }
                 }
             }
+
+            return true;
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckFields())
+                return;
 
             var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
 
@@ -166,12 +173,58 @@ namespace AIDMusicApp.Admin.Windows
                 !string.IsNullOrWhiteSpace(YearOfBreakupText.Text) ? Convert.ToInt16(YearOfBreakupText.Text) : null,
                 countryId.Id);
 
-            //for (var i = 0; i < SkillItems.Children.Count - 1; i++)
-            //{
-            //    var skill = (SkillItems.Children[i] as MusicianSkillItemControl).SkillItem;
-            //    MusicianItem.Skills.Add(skill);
-            //    SqlDatabase.Instance.MusicianSkillsAdapter.Insert(MusicianItem.Id, skill.Id);
-            //}
+            for (var i = 0; i < GenreItems.Children.Count - 1; i++)
+            {
+                var genre = (GenreItems.Children[i] as GenreBoxItemControl).GenreItem;
+                GroupItem.Genres.Add(genre);
+                SqlDatabase.Instance.GroupGenresAdapter.Insert(GroupItem.Id, genre.Id);
+            }
+
+            DialogResult = true;
+        }
+
+        private void ChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckFields())
+                return;
+
+            var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
+
+            GroupItem.Update(NameText.Text, DescriptionText.Text,
+                !string.IsNullOrWhiteSpace(YearOfCreationText.Text) ? Convert.ToInt16(YearOfCreationText.Text) : null,
+                !string.IsNullOrWhiteSpace(YearOfBreakupText.Text) ? Convert.ToInt16(YearOfBreakupText.Text) : null,
+                countryId);
+
+            for (var i = 0; i < GenreItems.Children.Count - 1; i++)
+            {
+                var skill = (GenreItems.Children[i] as GenreBoxItemControl).GenreItem;
+
+                var j = 0;
+                for (; j < GroupItem.Genres.Count; j++)
+                {
+                    if (GroupItem.Genres[j].Id == skill.Id)
+                        break;
+                }
+
+                if (j != GroupItem.Genres.Count)
+                    GroupItem.Genres.RemoveAt(j);
+                else
+                    SqlDatabase.Instance.GroupGenresAdapter.Insert(GroupItem.Id, skill.Id);
+            }
+
+            foreach (var skill in GroupItem.Genres)
+            {
+                var id = SqlDatabase.Instance.GroupGenresAdapter.GetIdByGroupIdAndGenreId(GroupItem.Id, skill.Id);
+                SqlDatabase.Instance.GroupGenresAdapter.Delete(id);
+            }
+
+            GroupItem.Genres.Clear();
+
+            for (var i = 0; i < GenreItems.Children.Count - 1; i++)
+            {
+                var genre = (GenreItems.Children[i] as GenreBoxItemControl).GenreItem;
+                GroupItem.Genres.Add(genre);
+            }
 
             DialogResult = true;
         }

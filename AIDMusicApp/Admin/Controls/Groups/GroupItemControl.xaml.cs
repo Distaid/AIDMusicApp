@@ -1,4 +1,5 @@
-﻿using AIDMusicApp.Models;
+﻿using AIDMusicApp.Admin.Windows;
+using AIDMusicApp.Models;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,6 +15,7 @@ namespace AIDMusicApp.Admin.Controls.Groups
             InitializeComponent();
 
             RemoveButton.Click += RemoveButton_Click;
+            EditButton.Click += EditButton_Click;
 
             GroupItem.Id = group.Id;
             GroupItem.Name = group.Name;
@@ -21,9 +23,16 @@ namespace AIDMusicApp.Admin.Controls.Groups
             GroupItem.YearOfCreation = group.YearOfCreation;
             GroupItem.YearOfBreakup = group.YearOfBreakup;
             GroupItem.CountryId = group.CountryId;
+            GroupItem.Genres = group.Genres;
         }
 
         public Group GroupItem => (Group)Resources["GroupItem"];
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var editWindow = new GroupsWindow(GroupItem);
+            editWindow.ShowDialog();
+        }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
