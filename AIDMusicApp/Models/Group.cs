@@ -1,6 +1,8 @@
 ﻿using AIDMusicApp.Sql;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace AIDMusicApp.Models
@@ -132,14 +134,19 @@ namespace AIDMusicApp.Models
             SqlDatabase.Instance.GroupsAdapter.Delete(Id);
         }
 
-        public void Update(string name, string description, short? yearOfCreation, short? yearOfBreakup, Country countryId)
+        public void Update(string name, string description, short? yearOfCreation, short? yearOfBreakup, Country countryId, IEnumerable<Genre> genres)
         {
             SqlDatabase.Instance.GroupsAdapter.Update(Id, name, description, yearOfCreation, yearOfBreakup, countryId.Id);
+            SqlDatabase.Instance.GroupGenresAdapter.Update(Genres.ToList(), genres, Id);
             Name = name;
             Description = description;
             YearOfCreation = yearOfCreation;
             YearOfBreakup = yearOfBreakup;
             CountryId = countryId;
+
+            Genres.Clear();
+            foreach (var genre in genres)
+                Genres.Add(genre);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

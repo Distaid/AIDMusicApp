@@ -3,6 +3,8 @@ using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
 using AIDMusicApp.Windows;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -168,38 +170,14 @@ namespace AIDMusicApp.Admin.Windows
 
             var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
 
-            MusicianItem.Update(NameText.Text, Convert.ToByte(AgeText.Text), countryId, Convert.ToBoolean(IsDeadText.SelectedIndex));
-
+            var skills = new List<Skill>();
             for (var i = 0; i < SkillItems.Children.Count - 1; i++)
             {
                 var skill = (SkillItems.Children[i] as MusicianSkillItemControl).SkillItem;
-
-                var j = 0;
-                for (; j < MusicianItem.Skills.Count; j++)
-                {
-                    if (MusicianItem.Skills[j].Id == skill.Id)
-                        break;
-                }
-
-                if (j != MusicianItem.Skills.Count)
-                    MusicianItem.Skills.RemoveAt(j);
-                else
-                    SqlDatabase.Instance.MusicianSkillsAdapter.Insert(MusicianItem.Id, skill.Id);
+                skills.Add(skill);
             }
 
-            foreach (var skill in MusicianItem.Skills)
-            {
-                var id = SqlDatabase.Instance.MusicianSkillsAdapter.GetIdByMusicianIdAndSkillId(MusicianItem.Id, skill.Id);
-                SqlDatabase.Instance.MusicianSkillsAdapter.Delete(id);
-            }
-
-            MusicianItem.Skills.Clear();
-
-            for (var i = 0; i < SkillItems.Children.Count - 1; i++)
-            {
-                var skill = (SkillItems.Children[i] as MusicianSkillItemControl).SkillItem;
-                MusicianItem.Skills.Add(skill);
-            }
+            MusicianItem.Update(NameText.Text, Convert.ToByte(AgeText.Text), countryId, Convert.ToBoolean(IsDeadText.SelectedIndex), skills);
 
             DialogResult = true;
         }

@@ -1,6 +1,8 @@
 ﻿using AIDMusicApp.Sql;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace AIDMusicApp.Models
@@ -96,13 +98,18 @@ namespace AIDMusicApp.Models
             SqlDatabase.Instance.MusiciansAdapter.Delete(Id);
         }
 
-        public void Update(string name, byte age, Country countryId, bool isDead)
+        public void Update(string name, byte age, Country countryId, bool isDead, IEnumerable<Skill> skills)
         {
             SqlDatabase.Instance.MusiciansAdapter.Update(Id, name, age, countryId.Id, isDead);
+            SqlDatabase.Instance.MusicianSkillsAdapter.Update(Skills.ToList(), skills, Id);
             Name = name;
             Age = age;
             CountryId = countryId;
             IsDead = isDead;
+
+            Skills.Clear();
+            foreach (var skill in skills)
+                Skills.Add(skill);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -3,6 +3,7 @@ using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
 using AIDMusicApp.Windows;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -190,41 +191,17 @@ namespace AIDMusicApp.Admin.Windows
 
             var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
 
-            GroupItem.Update(NameText.Text, DescriptionText.Text,
-                !string.IsNullOrWhiteSpace(YearOfCreationText.Text) ? Convert.ToInt16(YearOfCreationText.Text) : null,
-                !string.IsNullOrWhiteSpace(YearOfBreakupText.Text) ? Convert.ToInt16(YearOfBreakupText.Text) : null,
-                countryId);
-
-            for (var i = 0; i < GenreItems.Children.Count - 1; i++)
-            {
-                var skill = (GenreItems.Children[i] as GenreBoxItemControl).GenreItem;
-
-                var j = 0;
-                for (; j < GroupItem.Genres.Count; j++)
-                {
-                    if (GroupItem.Genres[j].Id == skill.Id)
-                        break;
-                }
-
-                if (j != GroupItem.Genres.Count)
-                    GroupItem.Genres.RemoveAt(j);
-                else
-                    SqlDatabase.Instance.GroupGenresAdapter.Insert(GroupItem.Id, skill.Id);
-            }
-
-            foreach (var skill in GroupItem.Genres)
-            {
-                var id = SqlDatabase.Instance.GroupGenresAdapter.GetIdByGroupIdAndGenreId(GroupItem.Id, skill.Id);
-                SqlDatabase.Instance.GroupGenresAdapter.Delete(id);
-            }
-
-            GroupItem.Genres.Clear();
-
+            var genres = new List<Genre>();
             for (var i = 0; i < GenreItems.Children.Count - 1; i++)
             {
                 var genre = (GenreItems.Children[i] as GenreBoxItemControl).GenreItem;
-                GroupItem.Genres.Add(genre);
+                genres.Add(genre);
             }
+
+            GroupItem.Update(NameText.Text, DescriptionText.Text,
+                !string.IsNullOrWhiteSpace(YearOfCreationText.Text) ? Convert.ToInt16(YearOfCreationText.Text) : null,
+                !string.IsNullOrWhiteSpace(YearOfBreakupText.Text) ? Convert.ToInt16(YearOfBreakupText.Text) : null,
+                countryId, genres);
 
             DialogResult = true;
         }

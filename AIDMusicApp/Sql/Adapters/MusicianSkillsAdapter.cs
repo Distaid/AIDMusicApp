@@ -26,6 +26,25 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
+        public void Update(List<Skill> musicianSkills, IEnumerable<Skill> destination, int musicianId)
+        {
+            foreach (var skill in destination)
+            {
+                var index = musicianSkills.FindIndex((s) => s.Id == skill.Id);
+
+                if (index != -1)
+                    musicianSkills.RemoveAt(index);
+                else
+                    Insert(musicianId, skill.Id);
+            }
+
+            foreach (var skill in musicianSkills)
+            {
+                var id = GetIdByMusicianIdAndSkillId(musicianId, skill.Id);
+                Delete(id);
+            }
+        }
+
         public void Delete(int id)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_DELETE], _sqlConnection))
