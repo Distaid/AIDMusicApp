@@ -2,6 +2,7 @@
 using AIDMusicApp.Controls;
 using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
+using AIDMusicApp.Windows;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -94,9 +95,9 @@ namespace AIDMusicApp
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
                     Dispatcher.Invoke(delegate
                     {
+                        AIDMessageWindow.Show(ex.Message);
                         Application.Current.Shutdown();
                     });
                     return;
