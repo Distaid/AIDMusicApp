@@ -35,7 +35,7 @@ namespace AIDMusicApp.Sql.Adapters
                 var attr = Attribute.GetCustomAttribute(field, typeof(SqlCommandKeyAttribute), true) as SqlCommandKeyAttribute;
                 if (attr != null)
                     if (!_sqlComands.ContainsKey(field.GetValue(this).ToString()))
-                        throw new Exception($"Ключ {field.GetValue(this)} не содержится в исходном файле {Path.GetFileName(file)}!\nВероятно, файл был поврежден.");
+                        throw new Exception($"Ключ {field.GetValue(this)} не содержится в исходном файле {Path.GetFileName(file)}.\nВероятно, файл был поврежден.\nРабота приложения будет прекращена!");
             }
         }
     }
