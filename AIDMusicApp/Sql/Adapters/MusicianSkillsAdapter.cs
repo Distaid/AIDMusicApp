@@ -8,11 +8,16 @@ namespace AIDMusicApp.Sql.Adapters
 {
     public class MusicianSkillsAdapter : BaseAdapter
     {
+        [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
+        [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
+        [SqlCommandKey] private const string SQL_SELECT_SKILLSBYMUSICIANID = "SQL_Select_SkillsByMusicianId";
+        [SqlCommandKey] private const string SQL_SELECT_ID_BYMUSICIANIDANDSKILLID = "SQL_Select_Id_ByMusicianIdAndSkillId";
+
         public MusicianSkillsAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLMusicianSkills.aid") { }
 
         public int Insert(int musicianId, int skillId)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Insert"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_INSERT], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@musician_id", musicianId);
                 command.Parameters.AddWithValue("@skill_id", skillId);
@@ -23,7 +28,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public void Delete(int id)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Delete"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_DELETE], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", id);
 
@@ -33,7 +38,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public IEnumerable<Skill> GetSkillsByMusicianId(int musicianId)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Select_SkillsByMusicianId"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_SKILLSBYMUSICIANID], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", musicianId);
 
@@ -56,7 +61,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public int GetIdByMusicianIdAndSkillId(int musicianId, int skillId)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Select_Id_ByMusicianIdAndSkillId"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ID_BYMUSICIANIDANDSKILLID], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@musician_id", musicianId);
                 command.Parameters.AddWithValue("@skill_id", skillId);

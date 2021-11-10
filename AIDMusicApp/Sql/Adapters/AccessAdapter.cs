@@ -8,11 +8,14 @@ namespace AIDMusicApp.Sql.Adapters
 {
     public class AccessAdapter: BaseAdapter
     {
+        [SqlCommandKey] private const string SQL_SELECT = "SQL_Select";
+        [SqlCommandKey] private const string SQL_SELECT_BYID = "SQL_Select_ById";
+
         public AccessAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLAccessRights.aid") { }
 
         public IEnumerable<Access> GetAll()
         {
-            using (var adapter = new SqlDataAdapter(_sqlComands["SQL_Select"], _sqlConnection))
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT], _sqlConnection))
             {
                 var ds = new DataSet();
                 adapter.Fill(ds);
@@ -30,7 +33,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public Access GetById(int id)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Select_ById"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_BYID], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", id);
 

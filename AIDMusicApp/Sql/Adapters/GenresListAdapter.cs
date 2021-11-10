@@ -8,11 +8,17 @@ namespace AIDMusicApp.Sql.Adapters
 {
     public class GenresListAdapter : BaseAdapter
     {
+        [SqlCommandKey] private const string SQL_SELECT = "SQL_Select";
+        [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
+        [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
+        [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
+        [SqlCommandKey] private const string SQL_CHECK_NAME = "SQL_Check_Name";
+
         public GenresListAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLGenresList.aid") { }
 
         public IEnumerable<Genre> GetAll()
         {
-            using (var adapter = new SqlDataAdapter(_sqlComands["SQL_Select"], _sqlConnection))
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT], _sqlConnection))
             {
                 var ds = new DataSet();
                 adapter.Fill(ds);
@@ -30,7 +36,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public Genre Insert(string name)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Insert"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_INSERT], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@name", name);
 
@@ -44,7 +50,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public void Update(int id, string name)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Update"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_UPDATE], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", id);
                 command.Parameters.AddWithValue("@name", name);
@@ -55,7 +61,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public void Delete(int id)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Delete"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_DELETE], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", id);
 
@@ -65,7 +71,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public bool ContainsName(string name)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Check_Name"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_CHECK_NAME], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@name", name);
 

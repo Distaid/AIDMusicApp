@@ -8,11 +8,16 @@ namespace AIDMusicApp.Sql.Adapters
 {
     public class GroupGenresAdapter : BaseAdapter
     {
+        [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
+        [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
+        [SqlCommandKey] private const string SQL_SELECT_GENRESBYGROUPID = "SQL_Select_GenresByGroupId";
+        [SqlCommandKey] private const string SQL_SELECT_ID_BYGROUPIDANDGENREID = "SQL_Select_Id_ByGroupIdAndGenreId";
+
         public GroupGenresAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLGroupGenres.aid") { }
 
         public int Insert(int groupId, int genreId)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Insert"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_INSERT], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@group_id", groupId);
                 command.Parameters.AddWithValue("@genre_id", genreId);
@@ -23,7 +28,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public void Delete(int id)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Delete"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_DELETE], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", id);
 
@@ -33,7 +38,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public IEnumerable<Genre> GetGenresByGroupId(int groupId)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Select_GenresByGroupId"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_GENRESBYGROUPID], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", groupId);
 
@@ -56,7 +61,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public int GetIdByGroupIdAndGenreId(int groupId, int genreId)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Select_Id_ByGroupIdAndGenreId"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ID_BYGROUPIDANDGENREID], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@group_id", groupId);
                 command.Parameters.AddWithValue("@genre_id", genreId);

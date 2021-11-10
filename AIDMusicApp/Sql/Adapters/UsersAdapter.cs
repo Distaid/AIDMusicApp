@@ -9,11 +9,20 @@ namespace AIDMusicApp.Sql.Adapters
 {
     public class UsersAdapter : BaseAdapter
     {
+        [SqlCommandKey] private const string SQL_SELECT = "SQL_Select";
+        [SqlCommandKey] private const string SQL_SELECT_BYLOGIN = "SQL_Select_ByLogin";
+        [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
+        [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
+        [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
+        [SqlCommandKey] private const string SQL_CHECK_LOGIN = "SQL_Check_Login";
+        [SqlCommandKey] private const string SQL_CHECK_PHONE = "SQL_Check_Phone";
+        [SqlCommandKey] private const string SQL_CHECK_EMAIL = "SQL_Check_Email";
+
         public UsersAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLUsers.aid") { }
 
         public IEnumerable<User> GetAll()
         {
-            using (var adapter = new SqlDataAdapter(_sqlComands["SQL_Select"], _sqlConnection))
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT], _sqlConnection))
             {
                 var ds = new DataSet();
                 adapter.Fill(ds);
@@ -36,7 +45,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public User GetByLogin(string login)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Select_ByLogin"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_BYLOGIN], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@login", login);
 
@@ -63,7 +72,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public User Insert(string login, string password, string phone, string email, int accessId, byte[] avatar)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Insert"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_INSERT], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@login", login);
                 command.Parameters.AddWithValue("@password", password);
@@ -87,7 +96,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public void Update(int id, string login, string password, string phone, string email, int access_id, byte[] avatar)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Update"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_UPDATE], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", id);
                 command.Parameters.AddWithValue("@login", login);
@@ -103,7 +112,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public void Delete(int id)
         {
-            using (var command = new SqlCommand(_sqlComands[$"SQL_Delete"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_DELETE], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", id);
 
@@ -113,7 +122,7 @@ namespace AIDMusicApp.Sql.Adapters
 
         public bool ContainsLogin(string login)
         {
-            using (var command = new SqlCommand(_sqlComands["SQL_Check_Login"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_CHECK_LOGIN], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@login", login);
 
@@ -126,7 +135,7 @@ namespace AIDMusicApp.Sql.Adapters
         {
             if (string.IsNullOrWhiteSpace(phone)) return false;
 
-            using (var command = new SqlCommand(_sqlComands["SQL_Check_Phone"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_CHECK_PHONE], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@phone", phone);
 
@@ -139,7 +148,7 @@ namespace AIDMusicApp.Sql.Adapters
         {
             if (string.IsNullOrWhiteSpace(email)) return false;
 
-            using (var command = new SqlCommand(_sqlComands["SQL_Check_Email"], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_CHECK_EMAIL], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@email", email);
 
