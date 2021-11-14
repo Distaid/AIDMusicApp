@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace AIDMusicApp.Admin.Controls.AlbumFormats
+namespace AIDMusicApp.Admin.Controls.Formats
 {
     /// <summary>
-    /// Логика взаимодействия для AlbumFormatsControl.xaml
+    /// Логика взаимодействия для FormatsControl.xaml
     /// </summary>
-    public partial class AlbumFormatsControl : UserControl
+    public partial class FormatsControl : UserControl
     {
-        public AlbumFormatsControl()
+        public FormatsControl()
         {
             InitializeComponent();
 
@@ -30,12 +30,12 @@ namespace AIDMusicApp.Admin.Controls.AlbumFormats
                 }));
                 await Task.Delay(1);
 
-                foreach (var albumFormat in SqlDatabase.Instance.AlbumFormatsListAdapter.GetAll())
+                foreach (var albumFormat in SqlDatabase.Instance.FormatsListAdapter.GetAll())
                 {
                     await Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        var item = new AlbumFormatItemControl(albumFormat);
-                        AlbumFormatsItems.Children.Add(item);
+                        var item = new FormatItemControl(albumFormat);
+                        FormatsItems.Children.Add(item);
                     }));
                     await Task.Delay(1);
                 }
@@ -53,7 +53,7 @@ namespace AIDMusicApp.Admin.Controls.AlbumFormats
         {
             if (SearchTextBox.Text.Length == 0)
             {
-                foreach (UIElement item in AlbumFormatsItems.Children)
+                foreach (UIElement item in FormatsItems.Children)
                 {
                     item.Visibility = Visibility.Visible;
                 }
@@ -67,9 +67,9 @@ namespace AIDMusicApp.Admin.Controls.AlbumFormats
             if (SearchTextBox.Text.Length == 0)
                 return;
 
-            foreach (AlbumFormatItemControl item in AlbumFormatsItems.Children)
+            foreach (FormatItemControl item in FormatsItems.Children)
             {
-                if (item.AlbumFormatItem.Name.Contains(SearchTextBox.Text))
+                if (item.FormatItem.Name.Contains(SearchTextBox.Text))
                     item.Visibility = Visibility.Visible;
                 else
                     item.Visibility = Visibility.Collapsed;
@@ -80,11 +80,11 @@ namespace AIDMusicApp.Admin.Controls.AlbumFormats
 
         private void AddItemButton_Click(object sender, RoutedEventArgs e)
         {
-            var addWindow = new AlbumFormatsWindow();
+            var addWindow = new FormatsWindow();
             if (addWindow.ShowDialog() == true)
             {
-                var item = new AlbumFormatItemControl(addWindow.AlbumFormatItem);
-                AlbumFormatsItems.Children.Add(item);
+                var item = new FormatItemControl(addWindow.AlbumFormatItem);
+                FormatsItems.Children.Add(item);
             }
         }
     }

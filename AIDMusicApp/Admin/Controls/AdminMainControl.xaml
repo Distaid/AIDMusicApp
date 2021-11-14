@@ -20,7 +20,7 @@
                 <MenuItem x:Name="GenresButton" Header="Жанры" Style="{StaticResource AIDMenuItemStyle}"/>
                 <MenuItem x:Name="LabelsButton" Header="Лэйблы" Style="{StaticResource AIDMenuItemStyle}"/>
                 <MenuItem x:Name="SkillsButton" Header="Навыки" Style="{StaticResource AIDMenuItemStyle}"/>
-                <MenuItem x:Name="AlbumFormatsButton" Header="Форматы альбомов" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem x:Name="FormatsButton" Header="Форматы альбомов" Style="{StaticResource AIDMenuItemStyle}"/>
             </MenuItem>
             <MenuItem Header="Таблицы данных" Style="{StaticResource AIDMenuItemStyle}">
                 <MenuItem x:Name="UsersButton" Header="Пользователи" Style="{StaticResource AIDMenuItemStyle}"/>

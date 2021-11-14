@@ -1,4 +1,4 @@
-﻿using AIDMusicApp.Admin.Controls.AlbumFormats;
+﻿using AIDMusicApp.Admin.Controls.Formats;
 using AIDMusicApp.Admin.Controls.Countries;
 using AIDMusicApp.Admin.Controls.Genres;
 using AIDMusicApp.Admin.Controls.Groups;
@@ -32,7 +32,7 @@ namespace AIDMusicApp.Admin.Controls
             GenresButton.Click += ChangePanel;
             LabelsButton.Click += ChangePanel;
             SkillsButton.Click += ChangePanel;
-            AlbumFormatsButton.Click += ChangePanel;
+            FormatsButton.Click += ChangePanel;
             UsersButton.Click += ChangePanel;
             MusiciansButton.Click += ChangePanel;
             GroupsButton.Click += ChangePanel;
@@ -69,9 +69,9 @@ namespace AIDMusicApp.Admin.Controls
                         MainContent.Content = new SkillsControl();
                     break;
 
-                case "AlbumFormatsButton":
-                    if (!(MainContent.Content is AlbumFormatsControl))
-                        MainContent.Content = new AlbumFormatsControl();
+                case "FormatsButton":
+                    if (!(MainContent.Content is FormatsControl))
+                        MainContent.Content = new FormatsControl();
                     break;
 
                 case "UsersButton":

@@ -7,13 +7,13 @@ using System.Windows.Input;
 namespace AIDMusicApp.Admin.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для AlbumFormatsWindow.xaml
+    /// Логика взаимодействия для FormatsWindow.xaml
     /// </summary>
-    public partial class AlbumFormatsWindow : Window
+    public partial class FormatsWindow : Window
     {
-        public AlbumFormat AlbumFormatItem = null;
+        public Format AlbumFormatItem = null;
 
-        public AlbumFormatsWindow()
+        public FormatsWindow()
         {
             InitializeComponent();
 
@@ -25,7 +25,7 @@ namespace AIDMusicApp.Admin.Windows
             ConfirmButton.Click += AddButton_Click;
         }
 
-        public AlbumFormatsWindow(AlbumFormat albumFormat)
+        public FormatsWindow(Format albumFormat)
         {
             InitializeComponent();
 
@@ -56,7 +56,7 @@ namespace AIDMusicApp.Admin.Windows
                 return;
             }
 
-            if (SqlDatabase.Instance.AlbumFormatsListAdapter.ContainsName(NameText.Text))
+            if (SqlDatabase.Instance.FormatsListAdapter.ContainsName(NameText.Text))
             {
                 AIDMessageWindow.Show("Страна с таким названием уже существует!");
                 NameText.Focus();
@@ -64,7 +64,7 @@ namespace AIDMusicApp.Admin.Windows
                 return;
             }
 
-            AlbumFormatItem = SqlDatabase.Instance.AlbumFormatsListAdapter.Insert(NameText.Text);
+            AlbumFormatItem = SqlDatabase.Instance.FormatsListAdapter.Insert(NameText.Text);
 
             DialogResult = true;
         }
@@ -85,7 +85,7 @@ namespace AIDMusicApp.Admin.Windows
                 return;
             }
 
-            if (SqlDatabase.Instance.AlbumFormatsListAdapter.ContainsName(NameText.Text))
+            if (SqlDatabase.Instance.FormatsListAdapter.ContainsName(NameText.Text))
             {
                 AIDMessageWindow.Show("Страна с таким названием уже существует!");
                 NameText.Focus();

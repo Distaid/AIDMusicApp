@@ -4,35 +4,35 @@ using AIDMusicApp.Sql;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace AIDMusicApp.Admin.Controls.AlbumFormats
+namespace AIDMusicApp.Admin.Controls.Formats
 {
     /// <summary>
-    /// Логика взаимодействия для AlbumFormatItemControl.xaml
+    /// Логика взаимодействия для FormatItemControl.xaml
     /// </summary>
-    public partial class AlbumFormatItemControl : UserControl
+    public partial class FormatItemControl : UserControl
     {
-        public AlbumFormatItemControl(AlbumFormat albumFormat)
+        public FormatItemControl(Format albumFormat)
         {
             InitializeComponent();
 
-            AlbumFormatItem.Id = albumFormat.Id;
-            AlbumFormatItem.Name = albumFormat.Name;
+            FormatItem.Id = albumFormat.Id;
+            FormatItem.Name = albumFormat.Name;
 
             EditButton.Click += EditButton_Click;
             RemoveButton.Click += RemoveButton_Click;
         }
 
-        public AlbumFormat AlbumFormatItem => (AlbumFormat)Resources["AlbumFormatItem"];
+        public Format FormatItem => (Format)Resources["FormatItem"];
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            var editWindow = new AlbumFormatsWindow(AlbumFormatItem);
+            var editWindow = new FormatsWindow(FormatItem);
             editWindow.ShowDialog();
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            AlbumFormatItem.Delete();
+            FormatItem.Delete();
             (Parent as WrapPanel).Children.Remove(this);
         }
     }

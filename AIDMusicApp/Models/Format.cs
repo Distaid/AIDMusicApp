@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace AIDMusicApp.Models
 {
-    public class AlbumFormat : INotifyPropertyChanged
+    public class Format : INotifyPropertyChanged
     {
         private int _id;
 
@@ -32,12 +32,12 @@ namespace AIDMusicApp.Models
 
         public void Delete()
         {
-            SqlDatabase.Instance.AlbumFormatsListAdapter.Delete(Id);
+            SqlDatabase.Instance.FormatsListAdapter.Delete(Id);
         }
 
         public void Update(string name)
         {
-            SqlDatabase.Instance.AlbumFormatsListAdapter.Update(Id, name);
+            SqlDatabase.Instance.FormatsListAdapter.Update(Id, name);
             Name = name;
         }
 
