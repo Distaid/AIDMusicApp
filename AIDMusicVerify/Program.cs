@@ -16,7 +16,7 @@ namespace AIDMusicVerify
             "GenresList",
             "LabelsList",
             "SkillsList",
-            "AlbumFormatsList",
+            "FormatsList",
             "Users",
             "Groups",
             "Albums",
