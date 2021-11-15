@@ -6,21 +6,21 @@ using System.Data.SqlClient;
 
 namespace AIDMusicApp.Sql.Adapters
 {
-    public class AlbumFormatsAdapter : BaseAdapter
+    public class AlbumGenresAdapter : BaseAdapter
     {
         [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
-        [SqlCommandKey] private const string SQL_SELECT_FORMATSBYALBUMID = "SQL_Select_FormatsByAlbumId";
-        [SqlCommandKey] private const string SQL_SELECT_ID_BYALBUMIDANDFORMATID = "SQL_Select_Id_ByAlbumIdAndFormatId";
+        [SqlCommandKey] private const string SQL_SELECT_GENRESBYALBUMID = "SQL_Select_GenresByAlbumId";
+        [SqlCommandKey] private const string SQL_SELECT_ID_BYALBUMIDANDGENREID = "SQL_Select_Id_ByAlbumIdAndGenreId";
 
-        public AlbumFormatsAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLAlbumFormats.aid") { }
+        public AlbumGenresAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLAlbumGenres.aid") { }
 
-        public int Insert(int albumId, int formatId)
+        public int Insert(int albumId, int genreId)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_INSERT], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@album_id", albumId);
-                command.Parameters.AddWithValue("@format_id", formatId);
+                command.Parameters.AddWithValue("@genre_id", genreId);
 
                 return Convert.ToInt32(command.ExecuteScalar());
             }
@@ -38,9 +38,9 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public IEnumerable<Format> GetFormatsByGroupId(int albumId)
+        public IEnumerable<Genre> GetGenresByGroupId(int albumId)
         {
-            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_FORMATSBYALBUMID], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_GENRESBYALBUMID], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@id", albumId);
 
@@ -51,7 +51,7 @@ namespace AIDMusicApp.Sql.Adapters
 
                     foreach (DataRow row in ds.Tables[0].Rows)
                     {
-                        yield return new Format
+                        yield return new Genre
                         {
                             Id = Convert.ToInt32(row[0]),
                             Name = Convert.ToString(row[1])
@@ -61,12 +61,12 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public int GetIdByAlbumIdAndGenreId(int albumId, int formatId)
+        public int GetIdByAlbumIdAndGenreId(int albumId, int genreId)
         {
-            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ID_BYALBUMIDANDFORMATID], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ID_BYALBUMIDANDGENREID], _sqlConnection))
             {
                 command.Parameters.AddWithValue("@album_id", albumId);
-                command.Parameters.AddWithValue("@format_id", formatId);
+                command.Parameters.AddWithValue("@genre_id", genreId);
 
                 return Convert.ToInt32(command.ExecuteScalar());
             }

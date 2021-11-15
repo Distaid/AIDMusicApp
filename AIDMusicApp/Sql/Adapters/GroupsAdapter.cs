@@ -42,6 +42,9 @@ namespace AIDMusicApp.Sql.Adapters
                     foreach (var genre in SqlDatabase.Instance.GroupGenresAdapter.GetGenresByGroupId(group.Id))
                         group.Genres.Add(genre);
 
+                    foreach (var album in SqlDatabase.Instance.DiscographyAdapter.GetAlbumsByGroupId(group.Id))
+                        group.Albums.Add(album);
+
                     yield return group;
                 }
 

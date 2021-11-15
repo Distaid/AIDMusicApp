@@ -37,7 +37,7 @@ namespace AIDMusicApp.Sql.Adapters
                         Phone = Convert.ToString(row[3]),
                         Email = Convert.ToString(row[4]),
                         AccessId = SqlDatabase.Instance.AccessAdapter.GetById(Convert.ToInt32(row[5])),
-                        Avatar = row[6].Equals(DBNull.Value) ? null : (byte[])row[6]
+                        Avatar = (byte[])row[6]
                     };
                 }
             }
@@ -64,7 +64,7 @@ namespace AIDMusicApp.Sql.Adapters
                         Phone = Convert.ToString(row[3]),
                         Email = Convert.ToString(row[4]),
                         AccessId = SqlDatabase.Instance.AccessAdapter.GetById(Convert.ToInt32(row[5])),
-                        Avatar = row[6].Equals(DBNull.Value) ? null : (byte[])row[6]
+                        Avatar = (byte[])row[6]
                     };
                 }
             }
@@ -79,7 +79,7 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@phone", !string.IsNullOrWhiteSpace(phone) ? phone : SqlString.Null);
                 command.Parameters.AddWithValue("@email", !string.IsNullOrWhiteSpace(email) ? email : SqlString.Null);
                 command.Parameters.AddWithValue("@access_id", accessId);
-                command.Parameters.AddWithValue("@avatar", avatar ?? SqlBinary.Null);
+                command.Parameters.AddWithValue("@avatar", avatar);
 
                 return new User
                 {
@@ -104,7 +104,7 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@phone", !string.IsNullOrWhiteSpace(phone) ? phone : SqlString.Null);
                 command.Parameters.AddWithValue("@email", !string.IsNullOrWhiteSpace(email) ? email : SqlString.Null);
                 command.Parameters.AddWithValue("@access_id", access_id);
-                command.Parameters.AddWithValue("@avatar", avatar ?? SqlBinary.Null);
+                command.Parameters.AddWithValue("@avatar", avatar);
 
                 command.ExecuteNonQuery();
             }

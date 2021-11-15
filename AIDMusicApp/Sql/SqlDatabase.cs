@@ -20,14 +20,18 @@ namespace AIDMusicApp.Sql
         public GenresListAdapter GenresListAdapter = null;
         public LabelsListAdapter LabelsListAdapter = null;
         public SkillsListAdapter SkillsListAdapter = null;
-        public AlbumFormatsListAdapter AlbumFormatsListAdapter = null;
+        public FormatsListAdapter FormatsListAdapter = null;
 
         public UsersAdapter UsersAdapter = null;
         public MusiciansAdapter MusiciansAdapter = null;
         public GroupsAdapter GroupsAdapter = null;
+        public AlbumsAdapter AlbumsAdapter = null;
 
         public MusicianSkillsAdapter MusicianSkillsAdapter = null;
         public GroupGenresAdapter GroupGenresAdapter = null;
+        public AlbumGenresAdapter AlbumGenresAdapter = null;
+        public AlbumFormatsAdapter AlbumFormatsAdapter = null;
+        public DiscographyAdapter DiscographyAdapter = null;
 
         protected SqlDatabase()
         {
@@ -72,14 +76,18 @@ namespace AIDMusicApp.Sql
                 GenresListAdapter = new GenresListAdapter(_sqlConnection);
                 LabelsListAdapter = new LabelsListAdapter(_sqlConnection);
                 SkillsListAdapter = new SkillsListAdapter(_sqlConnection);
-                AlbumFormatsListAdapter = new AlbumFormatsListAdapter(_sqlConnection);
+                FormatsListAdapter = new FormatsListAdapter(_sqlConnection);
 
                 UsersAdapter = new UsersAdapter(_sqlConnection);
                 MusiciansAdapter = new MusiciansAdapter(_sqlConnection);
                 GroupsAdapter = new GroupsAdapter(_sqlConnection);
+                AlbumsAdapter = new AlbumsAdapter(_sqlConnection);
 
                 MusicianSkillsAdapter = new MusicianSkillsAdapter(_sqlConnection);
                 GroupGenresAdapter = new GroupGenresAdapter(_sqlConnection);
+                AlbumGenresAdapter = new AlbumGenresAdapter(_sqlConnection);
+                AlbumFormatsAdapter = new AlbumFormatsAdapter(_sqlConnection);
+                DiscographyAdapter = new DiscographyAdapter(_sqlConnection);
             }
             catch
             {
