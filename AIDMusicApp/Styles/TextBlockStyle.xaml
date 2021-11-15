@@ -7,4 +7,10 @@
         <Setter Property="Margin" Value="3"/>
     </Style>
 
+    <Style x:Key="AIDTextBlockStackStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
 </ResourceDictionary>
