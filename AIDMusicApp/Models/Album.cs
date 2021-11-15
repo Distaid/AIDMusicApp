@@ -1,15 +1,100 @@
-﻿namespace AIDMusicApp.Models
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace AIDMusicApp.Models
 {
-    public class Album
+    public class Album : INotifyPropertyChanged
     {
-        public int Id { get; set; }
+        private int _id;
 
-        public string Name { get; set; }
+        private string _name;
 
-        public string Description { get; set; }
+        private string _description;
 
-        public short Year { get; set; }
+        private short _year;
 
-        public byte[] Cover { get; set; }
+        private byte[] _cover;
+
+        private ObservableCollection<Genre> _genres;
+
+        private ObservableCollection<Format> _formats;
+
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                _description = value;
+                OnPropertyChanged("Description");
+            }
+        }
+
+        public short Year
+        {
+            get => _year;
+            set
+            {
+                _year = value;
+                OnPropertyChanged("Year");
+            }
+        }
+
+        public byte[] Cover
+        {
+            get => _cover;
+            set
+            {
+                _cover = value;
+                OnPropertyChanged("Cover");
+            }
+        }
+
+        public ObservableCollection<Genre> Genres
+        {
+            get => _genres;
+            set
+            {
+                _genres = value;
+                OnPropertyChanged("Genres");
+            }
+        }
+
+        public ObservableCollection<Format> Formats
+        {
+            get => _formats;
+            set
+            {
+                _formats = value;
+                OnPropertyChanged("Formats");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

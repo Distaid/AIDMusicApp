@@ -7,15 +7,5 @@
         public int AlbumId { get; set; }
 
         public int GroupId { get; set; }
-
-        public Discography Copy()
-        {
-            return new Discography
-            {
-                Id = Id,
-                AlbumId = AlbumId,
-                GroupId = GroupId
-            };
-        }
     }
 }

@@ -65,7 +65,7 @@ namespace AIDMusicApp.Models
             set
             {
                 _yearOfCreation = value;
-                OnPropertyChanged("YearOfFoundation");
+                OnPropertyChanged("YearOfCreation");
             }
         }
 

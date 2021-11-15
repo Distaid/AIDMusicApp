@@ -9,16 +9,5 @@
         public short Time { get; set; }
 
         public bool IsCover { get; set; }
-
-        public Song Copy()
-        {
-            return new Song
-            {
-                Id = Id,
-                Name = Name,
-                Time = Time,
-                IsCover = IsCover
-            };
-        }
     }
 }
