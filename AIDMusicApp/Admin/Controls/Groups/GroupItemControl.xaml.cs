@@ -16,6 +16,7 @@ namespace AIDMusicApp.Admin.Controls.Groups
 
             RemoveButton.Click += RemoveButton_Click;
             EditButton.Click += EditButton_Click;
+            InfoButton.Click += InfoButton_Click;
 
             GroupItem.Id = group.Id;
             GroupItem.Name = group.Name;
@@ -24,6 +25,7 @@ namespace AIDMusicApp.Admin.Controls.Groups
             GroupItem.YearOfBreakup = group.YearOfBreakup;
             GroupItem.CountryId = group.CountryId;
             GroupItem.Genres = group.Genres;
+            GroupItem.Albums = group.Albums;
         }
 
         public Group GroupItem => (Group)Resources["GroupItem"];
@@ -38,6 +40,12 @@ namespace AIDMusicApp.Admin.Controls.Groups
         {
             GroupItem.Delete();
             (Parent as WrapPanel).Children.Remove(this);
+        }
+
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            var infoWindow = new GroupInfoWindow(GroupItem);
+            infoWindow.ShowDialog();
         }
     }
 }

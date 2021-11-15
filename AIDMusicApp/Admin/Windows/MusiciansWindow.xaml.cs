@@ -3,7 +3,6 @@ using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
 using AIDMusicApp.Windows;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -181,6 +180,5 @@ namespace AIDMusicApp.Admin.Windows
 
             DialogResult = true;
         }
-
     }
 }

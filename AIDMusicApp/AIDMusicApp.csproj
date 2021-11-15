@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\cd.png" />
     <None Remove="Images\LoadingIcon.gif" />
     <None Remove="Images\person-default.png" />
     <None Remove="Logo.ico" />
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\cd.png" />
     <Resource Include="Images\LoadingIcon.gif" />
     <Resource Include="Images\person-default.png" />
     <Resource Include="Logo.ico" />

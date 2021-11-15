@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AIDMusicApp.Admin.Controls.Groups"
              xmlns:local1="clr-namespace:AIDMusicApp.Models"
+             xmlns:conv="clr-namespace:AIDMusicApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="210" d:DesignWidth="450"
              Height="210" Width="450">
     <UserControl.Resources>
         <local1:Group x:Key="GroupItem"/>
+        <conv:ObjectToStringConverter x:Key="ObjectConverter"/>
     </UserControl.Resources>
 
     <Border Background="#222222" BorderThickness="1" BorderBrush="{StaticResource AIDCyan}" CornerRadius="10">
@@ -48,13 +50,13 @@
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" Margin="10 3 10 3"/>
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" Margin="10 3 10 3"/>
 
-                <TextBlock Grid.Column="1" Grid.Row="0" x:Name="NameText" Text="{Binding Source={StaticResource GroupItem}, Path=Name, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
-                <TextBlock Grid.Column="1" Grid.Row="1" x:Name="CountryText" Text="{Binding Source={StaticResource GroupItem}, Path=CountryId, Mode=TwoWay, StringFormat={}{0}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" x:Name="CreationText" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfCreation, Mode=TwoWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
-                <TextBlock Grid.Column="1" Grid.Row="3" x:Name="BreakupText" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=TwoWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
+                <TextBlock Grid.Column="1" Grid.Row="0" x:Name="NameText" Text="{Binding Source={StaticResource GroupItem}, Path=Name, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" x:Name="CountryText" Text="{Binding Source={StaticResource GroupItem}, Path=CountryId, Mode=OneWay, Converter={StaticResource ObjectConverter}, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" x:Name="CreationText" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfCreation, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" x:Name="BreakupText" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
                 
                 <ScrollViewer Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="6 2">
-                    <ItemsControl x:Name="GenresItems" ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Genres, Mode=TwoWay}">
+                    <ItemsControl x:Name="GenresItems" ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Genres, Mode=OneWay}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal"/>

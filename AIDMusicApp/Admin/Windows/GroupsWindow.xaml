@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AIDMusicApp.Admin.Windows"
         mc:Ignorable="d"
-        Height="400" Width="600"
+        Height="410" Width="600"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Style="{StaticResource AIDWindowStyle}">
@@ -44,12 +44,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Жанры" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3"/>
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 3"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Жанры" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
 
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="NameText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
             <ComboBox Grid.Row="1" Grid.Column="1" x:Name="CountryId" Style="{StaticResource AIDComboBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
@@ -57,14 +57,14 @@
             <TextBox Grid.Row="3" Grid.Column="1" x:Name="YearOfBreakupText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
             <Border Grid.Row="4" Grid.Column="1" BorderThickness="1" CornerRadius="2" Background="#191919" BorderBrush="{StaticResource AIDCyan}" Margin="0 5 10 5">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}">
-                    <StackPanel x:Name="GenreItems" Margin="0 5" x:FieldModifier="private">
+                    <StackPanel x:Name="GenreItems" Margin="5" x:FieldModifier="private">
                         <Button x:Name="AddGenre" Content="Добавить жанр" Style="{StaticResource AIDButtonStyle}" Margin="5 2" Width="150"/>
                     </StackPanel>
                 </ScrollViewer>
             </Border>
             <TextBox Grid.Row="5" Grid.Column="1" x:Name="DescriptionText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
 
-            <Grid Grid.Row="6" Grid.ColumnSpan="2">
+            <Grid Grid.Row="6" Grid.ColumnSpan="2" Margin="10 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
