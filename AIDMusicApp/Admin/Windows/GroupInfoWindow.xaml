@@ -52,8 +52,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
@@ -69,7 +68,7 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="2" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                        <TextBlock Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="2" Text="{Binding Source={StaticResource GroupItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Text="{Binding Source={StaticResource GroupItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5"/>
                     </Grid>
 
                     <TextBlock Text="Жанры" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>

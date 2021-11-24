@@ -2,6 +2,7 @@
 using AIDMusicApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,19 @@ namespace AIDMusicApp.Admin.Controls.Albums
     /// </summary>
     public partial class AlbumItemControl : UserControl
     {
-        public AlbumItemControl(Album album)
+        private ObservableCollection<Album> _albums;
+        private Album _album;
+
+        public AlbumItemControl(Album album, ObservableCollection<Album> albums)
         {
             InitializeComponent();
 
+            InfoButton.Click += InfoButton_Click;
             EditButton.Click += EditButton_Click;
             RemoveButton.Click += RemoveButton_Click;
+
+            _albums = albums;
+            _album = album;
 
             AlbumItem.Id = album.Id;
             AlbumItem.Name = album.Name;
@@ -40,6 +48,12 @@ namespace AIDMusicApp.Admin.Controls.Albums
 
         public Album AlbumItem => (Album)Resources["AlbumItem"];
 
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            var infoWindow = new AlbumInfoWindow(AlbumItem);
+            infoWindow.ShowDialog();
+        }
+
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             var editWindow = new AlbumsWindow(AlbumItem);
@@ -48,6 +62,7 @@ namespace AIDMusicApp.Admin.Controls.Albums
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            _albums.Remove(_album);
             AlbumItem.Delete();
             (Parent as WrapPanel).Children.Remove(this);
         }

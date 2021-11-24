@@ -113,7 +113,7 @@ namespace AIDMusicApp.Admin.Windows
 
             foreach (var album in GroupItem.Albums)
             {
-                var item = new AlbumItemControl(album);
+                var item = new AlbumItemControl(album, GroupItem.Albums);
                 AlbumItems.Children.Add(item);
             }
         }
@@ -171,7 +171,12 @@ namespace AIDMusicApp.Admin.Windows
         private void AddAlbum_Click(object sender, RoutedEventArgs e)
         {
             var addWindow = new AlbumsWindow(GroupItem.Id, GroupItem.Genres);
-            addWindow.ShowDialog();
+            if (addWindow.ShowDialog() == true)
+            {
+                GroupItem.Albums.Add(addWindow.AlbumItem);
+                var item = new AlbumItemControl(addWindow.AlbumItem, GroupItem.Albums);
+                AlbumItems.Children.Add(item);
+            }
         }
 
         private bool CheckFieldInputs()

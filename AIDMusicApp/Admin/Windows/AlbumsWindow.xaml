@@ -101,6 +101,28 @@
                         <Button x:Name="SaveFormatsButton" Grid.Row="1" Content="Сохранить Форматы" Style="{StaticResource AIDButtonStyle}" Width="150" Margin="5" Visibility="Collapsed"/>
                     </Grid>
                 </TabItem>
+                <TabItem x:Name="SongsPanel" Header="Песни" Visibility="Visible">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.Row="0" x:Name="AddSong" Content="Добавить" Style="{StaticResource AIDButtonStyle}" Width="100" HorizontalAlignment="Left" Margin="5"/>
+
+                        <Border Grid.Row="1" Background="#191919" Margin="5">
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
+                                <WrapPanel Grid.Row="1" x:Name="AlbumItems" Background="#191919">
+                                    <!--<WrapPanel.Resources>
+                                        <Style TargetType="albums:AlbumItemControl">
+                                            <Setter Property="Margin" Value="5"/>
+                                        </Style>
+                                    </WrapPanel.Resources>-->
+                                </WrapPanel>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                </TabItem>
             </TabControl>
         </Grid>
 

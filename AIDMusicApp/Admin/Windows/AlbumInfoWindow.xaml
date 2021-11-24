@@ -1,0 +1,112 @@
+﻿<Window x:Class="AIDMusicApp.Admin.Windows.AlbumInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIDMusicApp.Admin.Windows" xmlns:local1="clr-namespace:AIDMusicApp.Models" xmlns:conv="clr-namespace:AIDMusicApp.Converters"
+        mc:Ignorable="d"
+        Height="450" Width="700"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Style="{StaticResource AIDWindowStyle}">
+    <Window.Resources>
+        <local1:Album x:Key="AlbumItem"/>
+        <conv:BoolToStringConverter x:Key="StringConverter"/>
+        <conv:BytesToImageConverter x:Key="BytesConverter"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TitleBar" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="TitleText" Grid.Column="0" Style="{StaticResource AIDTitleTextStyle}" Text="Header"/>
+            <Button Grid.Column="1" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="10 4"/>
+            <Button x:Name="CloseButton" Grid.Column="2" IsCancel="True" Style="{StaticResource AIDTitleButtonStyle}">
+                <Path Style="{StaticResource AIDCloseButtonPathStyle}"/>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
+                <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Rectangle Grid.Column="0" Grid.RowSpan="3" Height="90" Width="90" Margin="10 5">
+                            <Rectangle.Fill>
+                                <ImageBrush x:Name="CoverImage" ImageSource="{Binding Source={StaticResource AlbumItem}, Path=Cover, Converter={StaticResource BytesConverter}}" x:FieldModifier="private"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Source={StaticResource AlbumItem}, Path=Name, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Год" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Source={StaticResource AlbumItem}, Path=Year, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="{Binding Source={StaticResource AlbumItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5"/>
+                    </Grid>
+
+                    <TextBlock Text="Жанры" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 0 10 5">
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource AlbumItem}, Path=Genres, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="10" Background="#191919" Padding="10 5 10 7" Margin="5 0">
+                                        <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    
+                    <TextBlock Text="Форматы" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 0 10 5">
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource AlbumItem}, Path=Formats, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="10" Background="#191919" Padding="10 5 10 7" Margin="5 0">
+                                        <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    
+                    <TextBlock Text="Песни" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

@@ -35,6 +35,7 @@ namespace AIDMusicApp.Admin.Windows
             InitializeComponent();
 
             AddPanel.Visibility = Visibility.Visible;
+            SongsPanel.Visibility = Visibility.Collapsed;
 
             TitleBar.MouseDown += TitleBar_MouseDown;
             LoadImage.Click += LoadImage_Click;
