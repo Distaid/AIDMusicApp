@@ -36,11 +36,17 @@ namespace AIDMusicApp.Sql.Adapters
                         Albums = new ObservableCollection<Album>(),
                         Genres = new ObservableCollection<Genre>(),
                         Labels = new ObservableCollection<Label>(),
-                        Members = new ObservableCollection<Member>()
+                        Members = new ObservableCollection<Musician>()
                     };
 
                     foreach (var genre in SqlDatabase.Instance.GroupGenresAdapter.GetGenresByGroupId(group.Id))
                         group.Genres.Add(genre);
+
+                    foreach (var label in SqlDatabase.Instance.ContractsAdapter.GetLabelsByGroupId(group.Id))
+                        group.Labels.Add(label);
+
+                    foreach (var musician in SqlDatabase.Instance.MembersAdapter.GetMusiciansByGroupId(group.Id))
+                        group.Members.Add(musician);
 
                     foreach (var album in SqlDatabase.Instance.DiscographyAdapter.GetAlbumsByGroupId(group.Id))
                         group.Albums.Add(album);
@@ -72,7 +78,7 @@ namespace AIDMusicApp.Sql.Adapters
                     Albums = new ObservableCollection<Album>(),
                     Genres = new ObservableCollection<Genre>(),
                     Labels = new ObservableCollection<Label>(),
-                    Members = new ObservableCollection<Member>()
+                    Members = new ObservableCollection<Musician>()
                 };
             }
         }

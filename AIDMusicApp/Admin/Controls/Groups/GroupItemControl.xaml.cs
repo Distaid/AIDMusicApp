@@ -25,6 +25,8 @@ namespace AIDMusicApp.Admin.Controls.Groups
             GroupItem.YearOfBreakup = group.YearOfBreakup;
             GroupItem.CountryId = group.CountryId;
             GroupItem.Genres = group.Genres;
+            GroupItem.Labels = group.Labels;
+            GroupItem.Members = group.Members;
             GroupItem.Albums = group.Albums;
         }
 

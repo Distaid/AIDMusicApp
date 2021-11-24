@@ -18,10 +18,10 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Rectangle Grid.Row="0" Width="auto" Height="auto" Margin="5">
+            <Rectangle Grid.Row="0" Width="Auto" Height="Auto" Margin="5">
                 <Rectangle.Fill>
                     <ImageBrush x:Name="CoverImage" ImageSource="{Binding ElementName=albumGroupItemWindow, Path=AlbumItem.Cover, Mode=OneWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultCover}}" x:FieldModifier="private"/>
                 </Rectangle.Fill>

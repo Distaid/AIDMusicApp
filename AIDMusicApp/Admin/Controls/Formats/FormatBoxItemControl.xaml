@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:AIDMusicApp.Admin.Controls.Formats"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="800"
-             Height="30" Width="auto">
+             Height="30" Width="Auto">
 
     <Border Background="Transparent">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <ComboBox Grid.Column="0" x:Name="FormatComboBox" Style="{StaticResource AIDComboBoxStyle}" Margin="5 2" x:FieldModifier="private"/>

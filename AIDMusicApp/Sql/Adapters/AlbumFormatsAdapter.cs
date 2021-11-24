@@ -26,7 +26,24 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        //TODO Update
+        public void Update(List<Format> albumFormats, IEnumerable<Format> destination, int albumId)
+        {
+            foreach (var format in destination)
+            {
+                var index = albumFormats.FindIndex((s) => s.Id == format.Id);
+
+                if (index != -1)
+                    albumFormats.RemoveAt(index);
+                else
+                    Insert(albumId, format.Id);
+            }
+
+            foreach (var format in albumFormats)
+            {
+                var id = GetIdByAlbumIdAndFormatId(albumId, format.Id);
+                Delete(id);
+            }
+        }
 
         public void Delete(int id)
         {
@@ -61,7 +78,7 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public int GetIdByAlbumIdAndGenreId(int albumId, int formatId)
+        public int GetIdByAlbumIdAndFormatId(int albumId, int formatId)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ID_BYALBUMIDANDFORMATID], _sqlConnection))
             {

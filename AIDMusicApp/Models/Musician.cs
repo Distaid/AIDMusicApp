@@ -98,18 +98,14 @@ namespace AIDMusicApp.Models
             SqlDatabase.Instance.MusiciansAdapter.Delete(Id);
         }
 
-        public void Update(string name, byte age, Country countryId, bool isDead, IEnumerable<Skill> skills)
+        public void Update(string name, byte age, Country countryId, bool isDead)
         {
             SqlDatabase.Instance.MusiciansAdapter.Update(Id, name, age, countryId.Id, isDead);
-            SqlDatabase.Instance.MusicianSkillsAdapter.Update(Skills.ToList(), skills, Id);
+
             Name = name;
             Age = age;
             CountryId = countryId;
             IsDead = isDead;
-
-            Skills.Clear();
-            foreach (var skill in skills)
-                Skills.Add(skill);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

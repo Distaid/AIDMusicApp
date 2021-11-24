@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AIDMusicApp.Admin.Controls.Albums"
+             xmlns:local="clr-namespace:AIDMusicApp.Admin.Controls.Albums" xmlns:models="clr-namespace:AIDMusicApp.Models" xmlns:converters="clr-namespace:AIDMusicApp.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Height="250" Width="500">
+             d:DesignHeight="185" d:DesignWidth="400"
+             Height="185" Width="400">
+    <UserControl.Resources>
+        <models:Album x:Key="AlbumItem"/>
+        <converters:BytesToImageConverter x:Key="BytesConverter"/>
+    </UserControl.Resources>
 
     <Border Background="#222222" BorderThickness="1" BorderBrush="{StaticResource AIDCyan}" CornerRadius="10">
         <Grid>
@@ -23,15 +27,14 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="ID" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="0" Grid.Column="2" x:Name="IdText" Text="ID" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3" HorizontalAlignment="Right" x:FieldModifier="private"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Source={StaticResource AlbumItem}, Path=Id, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3" HorizontalAlignment="Right"/>
 
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="38"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="38"/>
                 </Grid.RowDefinitions>
                 
                 <Grid.ColumnDefinitions>
@@ -40,25 +43,44 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Rectangle Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Width="150" Height="150" Margin="10 3" VerticalAlignment="Top">
+                <Rectangle Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Width="100" Height="100" Margin="10 3" VerticalAlignment="Top">
                     <Rectangle.Fill>
-                        <ImageBrush x:Name="CoverImage" ImageSource="/AIDMusicApp;component/Images/person-default.png" x:FieldModifier="private"/>
+                        <ImageBrush x:Name="CoverImage" ImageSource="{Binding Source={StaticResource AlbumItem}, Path=Cover, Mode=TwoWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultCover}}" x:FieldModifier="private"/>
                     </Rectangle.Fill>
                 </Rectangle>
 
                 <TextBlock Grid.Column="1" Grid.Row="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" Margin="5 3 10 3"/>
                 <TextBlock Grid.Column="1" Grid.Row="1" Text="Год" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" Margin="5 3 10 3"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="Формат" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" Margin="5 3 10 3"/>
-                <TextBlock Grid.Column="1" Grid.Row="4" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Top" Foreground="{StaticResource AIDCyan}" Margin="5 3 10 3"/>
 
-                <TextBlock Grid.Column="2" Grid.Row="0" x:Name="NameText" Text="NAME" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
-                <TextBlock Grid.Column="2" Grid.Row="1" x:Name="YearText" Text="YEAR" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
-                <TextBlock Grid.Column="2" Grid.Row="2" x:Name="FormatText" Text="FORMAT" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
-                <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="5 0" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                    <StackPanel x:Name="GenresItems" Orientation="Horizontal"/>
+                <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Source={StaticResource AlbumItem}, Path=Name, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Source={StaticResource AlbumItem}, Path=Year, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="5 3"/>
+                <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="5 0" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
+                    <ItemsControl ItemsSource="{Binding Source={StaticResource AlbumItem}, Path=Formats, Mode=OneWay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource AIDTextBlockStackStyle}" Margin="5 2"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </ScrollViewer>
-                <ScrollViewer Grid.Column="2" Grid.Row="4" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                    <TextBlock x:Name="DescriptionText" Text="DESCRIPTION" TextWrapping="Wrap" Style="{StaticResource AIDTextBlockStyle}" Margin="5 3"/>
+                <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="5 0" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
+                    <ItemsControl ItemsSource="{Binding Source={StaticResource AlbumItem}, Path=Genres, Mode=OneWay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource AIDTextBlockStackStyle}" Margin="5 2"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </ScrollViewer>
             </Grid>
 

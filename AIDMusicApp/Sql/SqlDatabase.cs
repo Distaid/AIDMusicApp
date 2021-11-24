@@ -11,27 +11,29 @@ namespace AIDMusicApp.Sql
 {
     public class SqlDatabase
     {
-        public static SqlDatabase Instance = null;
+        public static SqlDatabase Instance { get; private set; }
 
         private SqlConnection _sqlConnection = null;
 
-        public AccessAdapter AccessAdapter = null;
-        public CountriesListAdapter CountriesListAdapter = null;
-        public GenresListAdapter GenresListAdapter = null;
-        public LabelsListAdapter LabelsListAdapter = null;
-        public SkillsListAdapter SkillsListAdapter = null;
-        public FormatsListAdapter FormatsListAdapter = null;
+        public AccessAdapter AccessAdapter { get; private set; }
+        public CountriesListAdapter CountriesListAdapter { get; private set; }
+        public GenresListAdapter GenresListAdapter { get; private set; }
+        public LabelsListAdapter LabelsListAdapter { get; private set; }
+        public SkillsListAdapter SkillsListAdapter { get; private set; }
+        public FormatsListAdapter FormatsListAdapter { get; private set; }
 
-        public UsersAdapter UsersAdapter = null;
-        public MusiciansAdapter MusiciansAdapter = null;
-        public GroupsAdapter GroupsAdapter = null;
-        public AlbumsAdapter AlbumsAdapter = null;
+        public UsersAdapter UsersAdapter { get; private set; }
+        public MusiciansAdapter MusiciansAdapter { get; private set; }
+        public GroupsAdapter GroupsAdapter { get; private set; }
+        public AlbumsAdapter AlbumsAdapter { get; private set; }
 
-        public MusicianSkillsAdapter MusicianSkillsAdapter = null;
-        public GroupGenresAdapter GroupGenresAdapter = null;
-        public AlbumGenresAdapter AlbumGenresAdapter = null;
-        public AlbumFormatsAdapter AlbumFormatsAdapter = null;
-        public DiscographyAdapter DiscographyAdapter = null;
+        public MusicianSkillsAdapter MusicianSkillsAdapter { get; private set; }
+        public GroupGenresAdapter GroupGenresAdapter { get; private set; }
+        public AlbumGenresAdapter AlbumGenresAdapter { get; private set; }
+        public AlbumFormatsAdapter AlbumFormatsAdapter { get; private set; }
+        public DiscographyAdapter DiscographyAdapter { get; private set; }
+        public ContractsAdapter ContractsAdapter { get; private set; }
+        public MembersAdapter MembersAdapter { get; private set; }
 
         protected SqlDatabase()
         {
@@ -88,6 +90,8 @@ namespace AIDMusicApp.Sql
                 AlbumGenresAdapter = new AlbumGenresAdapter(_sqlConnection);
                 AlbumFormatsAdapter = new AlbumFormatsAdapter(_sqlConnection);
                 DiscographyAdapter = new DiscographyAdapter(_sqlConnection);
+                ContractsAdapter = new ContractsAdapter(_sqlConnection);
+                MembersAdapter = new MembersAdapter(_sqlConnection);
             }
             catch
             {

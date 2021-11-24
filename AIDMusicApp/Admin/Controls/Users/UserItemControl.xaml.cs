@@ -10,8 +10,6 @@ namespace AIDMusicApp.Admin.Controls.Users
     /// </summary>
     public partial class UserItemControl : UserControl
     {
-        //public User UserItem { get; private set; }
-
         public UserItemControl(User user)
         {
             InitializeComponent();

@@ -27,7 +27,7 @@ namespace AIDMusicApp.Models
 
         private ObservableCollection<Album> _albums;
 
-        private ObservableCollection<Member> _members;
+        private ObservableCollection<Musician> _members;
 
         public int Id
         {
@@ -119,7 +119,7 @@ namespace AIDMusicApp.Models
             }
         }
 
-        public ObservableCollection<Member> Members
+        public ObservableCollection<Musician> Members
         {
             get => _members;
             set
@@ -134,19 +134,14 @@ namespace AIDMusicApp.Models
             SqlDatabase.Instance.GroupsAdapter.Delete(Id);
         }
 
-        public void Update(string name, string description, short? yearOfCreation, short? yearOfBreakup, Country countryId, IEnumerable<Genre> genres)
+        public void Update(string name, string description, short? yearOfCreation, short? yearOfBreakup, Country countryId)
         {
             SqlDatabase.Instance.GroupsAdapter.Update(Id, name, description, yearOfCreation, yearOfBreakup, countryId.Id);
-            SqlDatabase.Instance.GroupGenresAdapter.Update(Genres.ToList(), genres, Id);
             Name = name;
             Description = description;
             YearOfCreation = yearOfCreation;
             YearOfBreakup = yearOfBreakup;
             CountryId = countryId;
-
-            Genres.Clear();
-            foreach (var genre in genres)
-                Genres.Add(genre);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

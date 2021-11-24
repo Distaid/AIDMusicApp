@@ -26,7 +26,24 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        //TODO Update
+        public void Update(List<Genre> albumGenres, IEnumerable<Genre> destination, int albumId)
+        {
+            foreach (var genre in destination)
+            {
+                var index = albumGenres.FindIndex((s) => s.Id == genre.Id);
+
+                if (index != -1)
+                    albumGenres.RemoveAt(index);
+                else
+                    Insert(albumId, genre.Id);
+            }
+
+            foreach (var genre in albumGenres)
+            {
+                var id = GetIdByAlbumIdAndGenreId(albumId, genre.Id);
+                Delete(id);
+            }
+        }
 
         public void Delete(int id)
         {

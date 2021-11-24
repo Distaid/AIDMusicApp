@@ -26,7 +26,7 @@ namespace AIDMusicApp.Admin.Windows
             InitializeComponent();
 
             TitleBar.MouseDown += TitleBar_MouseDown;
-            AddAlbum.Click += AddAlbum_Click;
+            EditButton.Click += EditButton_Click;
 
             GroupItem.Id = group.Id;
             GroupItem.Name = group.Name;
@@ -49,11 +49,10 @@ namespace AIDMusicApp.Admin.Windows
                 DragMove();
         }
 
-        private void AddAlbum_Click(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            var addAlbumWindow = new AlbumsWindow(GroupItem.Id);
-            if (addAlbumWindow.ShowDialog() == true)
-                GroupItem.Albums.Add(addAlbumWindow.AlbumItem);
+            var editWindow = new GroupsWindow(GroupItem);
+            editWindow.ShowDialog();
         }
     }
 }

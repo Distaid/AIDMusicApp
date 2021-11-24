@@ -14,8 +14,8 @@
         <Setter Property="MinHeight" Value="20"/>
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Padding" Value="2 1 2 2"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="3 2 3 3"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="CaretBrush" Value="White"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -54,8 +54,8 @@
         <Setter Property="MinHeight" Value="20"/>
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Padding" Value="2 1 2 2"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="3 2 3 3"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="CaretBrush" Value="White"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>

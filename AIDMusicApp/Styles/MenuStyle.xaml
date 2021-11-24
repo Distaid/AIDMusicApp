@@ -31,7 +31,7 @@
     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelHeaderTemplateKey}" TargetType="{x:Type MenuItem}">
         <Border x:Name="Border" Background="Transparent">
             <Grid>
-                <ContentPresenter Margin="6 3" ContentSource="Header" RecognizesAccessKey="True" TextBlock.FontSize="15"/>
+                <ContentPresenter Margin="6 3" ContentSource="Header" RecognizesAccessKey="True" TextBlock.FontSize="12"/>
                 <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsSubmenuOpen}"
                        AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
                     <Border x:Name="SubmenuBorder" SnapsToDevicePixels="True"
@@ -56,7 +56,7 @@
     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelItemTemplateKey}" TargetType="{x:Type MenuItem}">
         <Border x:Name="Border" Background="Transparent">
             <Grid>
-                <ContentPresenter Margin="6 3" ContentSource="Header" RecognizesAccessKey="True" TextBlock.FontSize="15" />
+                <ContentPresenter Margin="6 3" ContentSource="Header" RecognizesAccessKey="True" TextBlock.FontSize="12" />
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
@@ -70,7 +70,7 @@
         <Border x:Name="Border" Background="Transparent">
             <Grid>
                 <ContentPresenter Margin="15 3 35 3" ContentSource="Header"
-                                  RecognizesAccessKey="True" TextBlock.FontSize="15"
+                                  RecognizesAccessKey="True" TextBlock.FontSize="12"
                                   TextBlock.Foreground="White"/>
             </Grid>
         </Border>
@@ -89,7 +89,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <ContentPresenter Margin="15 3 35 3" ContentSource="Header"
-                                  RecognizesAccessKey="True" TextBlock.FontSize="15"
+                                  RecognizesAccessKey="True" TextBlock.FontSize="12"
                                   TextBlock.Foreground="White"/>
                 <Path Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"
                       Data="M 0 0 L 0 7 L 4 3.5 Z" Fill="White"/>

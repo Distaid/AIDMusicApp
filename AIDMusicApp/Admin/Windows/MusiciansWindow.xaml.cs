@@ -1,9 +1,10 @@
-﻿using AIDMusicApp.Admin.Controls.Musicians;
+﻿using AIDMusicApp.Admin.Controls.Skills;
 using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
 using AIDMusicApp.Windows;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,6 +26,7 @@ namespace AIDMusicApp.Admin.Windows
             AgeText.PreviewTextInput += AgeText_PreviewTextInput;
             TitleText.Text = "Добавление Музыканта";
             ConfirmButton.Content = "Добавить";
+            AddPanel.Visibility = Visibility.Visible;
 
             CountryId.PreviewMouseWheel += (o, e) =>
             {
@@ -48,7 +50,12 @@ namespace AIDMusicApp.Admin.Windows
             TitleBar.MouseDown += TitleBar_MouseDown;
             AgeText.PreviewTextInput += AgeText_PreviewTextInput;
             TitleText.Text = "Редактирование Музыканта";
-            ConfirmButton.Content = "Изменить";
+
+            SaveGeneralButton.Visibility = Visibility.Visible;
+            SaveGeneralButton.Click += SaveGeneralButton_Click;
+
+            SaveSkillsButton.Visibility = Visibility.Visible;
+            SaveSkillsButton.Click += SaveSkillsButton_Click;
 
             CountryId.PreviewMouseWheel += (o, e) =>
             {
@@ -61,7 +68,6 @@ namespace AIDMusicApp.Admin.Windows
             IsDeadText.SelectedIndex = Convert.ToInt32(MusicianItem.IsDead);
 
             AddSkill.Click += AddSkill_Click;
-            ConfirmButton.Click += ChangeButton_Click;
 
             foreach (var country in SqlDatabase.Instance.CountriesListAdapter.GetAll())
             {
@@ -71,9 +77,9 @@ namespace AIDMusicApp.Admin.Windows
                     item.IsSelected = true;
             }
 
-            foreach (var skill in SqlDatabase.Instance.MusicianSkillsAdapter.GetSkillsByMusicianId(MusicianItem.Id))
+            foreach (var skill in MusicianItem.Skills)
             {
-                var item = new MusicianSkillItemControl(skill.Id);
+                var item = new SkillBoxItemControl(skill.Id);
                 SkillItems.Children.Insert(SkillItems.Children.Count - 1, item);
             }
         }
@@ -93,12 +99,12 @@ namespace AIDMusicApp.Admin.Windows
         {
             if (SkillItems.Children.Count != 1)
             {
-                var skillItemControl = SkillItems.Children[SkillItems.Children.Count - 2] as MusicianSkillItemControl;
+                var skillItemControl = SkillItems.Children[SkillItems.Children.Count - 2] as SkillBoxItemControl;
                 if (skillItemControl.SkillItem == null)
                     return;
             }
 
-            var item = new MusicianSkillItemControl();
+            var item = new SkillBoxItemControl();
             SkillItems.Children.Insert(SkillItems.Children.Count - 1, item);
         }
 
@@ -122,17 +128,11 @@ namespace AIDMusicApp.Admin.Windows
                 return false;
             }
 
-            if (SkillItems.Children.Count == 1)
-            {
-                AIDMessageWindow.Show("Поле \"Навыки\" должно содержать хотя бы один элемент!");
-                return false;
-            }
-
             for (var i = 0; i < SkillItems.Children.Count - 1; i++)
             {
                 for (var j = i + 1; j < SkillItems.Children.Count - 1; j++)
                 {
-                    if ((SkillItems.Children[i] as MusicianSkillItemControl).SkillItem.Id == (SkillItems.Children[j] as MusicianSkillItemControl).SkillItem.Id)
+                    if ((SkillItems.Children[i] as SkillBoxItemControl).SkillItem.Id == (SkillItems.Children[j] as SkillBoxItemControl).SkillItem.Id)
                     {
                         AIDMessageWindow.Show("Навыки не должны повторяться!");
                         return false;
@@ -154,7 +154,7 @@ namespace AIDMusicApp.Admin.Windows
 
             for (var i = 0; i < SkillItems.Children.Count - 1; i++)
             {
-                var skill = (SkillItems.Children[i] as MusicianSkillItemControl).SkillItem;
+                var skill = (SkillItems.Children[i] as SkillBoxItemControl).SkillItem;
                 MusicianItem.Skills.Add(skill);
                 SqlDatabase.Instance.MusicianSkillsAdapter.Insert(MusicianItem.Id, skill.Id);
             }
@@ -162,23 +162,61 @@ namespace AIDMusicApp.Admin.Windows
             DialogResult = true;
         }
 
-        private void ChangeButton_Click(object sender, RoutedEventArgs e)
+        private void SaveGeneralButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!CheckFields())
+            if (string.IsNullOrWhiteSpace(NameText.Text))
+            {
+                AIDMessageWindow.Show("Поле \"Имя\" должно быть заполнено!");
                 return;
+            }
+
+            if (string.IsNullOrWhiteSpace(AgeText.Text))
+            {
+                AIDMessageWindow.Show("Поле \"Возраст\" должно быть заполнено!");
+                return;
+            }
+
+            if (CountryId.SelectedIndex == -1)
+            {
+                AIDMessageWindow.Show("Поле \"Страна\" должно быть заполнено!");
+                return;
+            }
 
             var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
+
+            MusicianItem.Update(NameText.Text, Convert.ToByte(AgeText.Text), countryId, Convert.ToBoolean(IsDeadText.SelectedIndex));
+
+            AIDMessageWindow.Show("Сохранено успешно!");
+        }
+
+        private void SaveSkillsButton_Click(object sender, RoutedEventArgs e)
+        {
+            for (var i = 0; i < SkillItems.Children.Count - 1; i++)
+            {
+                for (var j = i + 1; j < SkillItems.Children.Count - 1; j++)
+                {
+                    if ((SkillItems.Children[i] as SkillBoxItemControl).SkillItem.Id == (SkillItems.Children[j] as SkillBoxItemControl).SkillItem.Id)
+                    {
+                        AIDMessageWindow.Show("Навыки не должны повторяться!");
+                        return;
+                    }
+                }
+            }
 
             var skills = new List<Skill>();
             for (var i = 0; i < SkillItems.Children.Count - 1; i++)
             {
-                var skill = (SkillItems.Children[i] as MusicianSkillItemControl).SkillItem;
+                var skill = (SkillItems.Children[i] as SkillBoxItemControl).SkillItem;
                 skills.Add(skill);
             }
 
-            MusicianItem.Update(NameText.Text, Convert.ToByte(AgeText.Text), countryId, Convert.ToBoolean(IsDeadText.SelectedIndex), skills);
+            SqlDatabase.Instance.MusicianSkillsAdapter.Update(MusicianItem.Skills.ToList(), skills, MusicianItem.Id);
 
-            DialogResult = true;
+            MusicianItem.Skills.Clear();
+            foreach (var skill in skills)
+                MusicianItem.Skills.Add(skill);
+
+            AIDMessageWindow.Show("Сохранено успешно!");
         }
     }
 }

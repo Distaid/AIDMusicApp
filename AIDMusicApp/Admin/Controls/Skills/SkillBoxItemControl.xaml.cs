@@ -1,15 +1,28 @@
 ﻿using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace AIDMusicApp.Admin.Controls.Musicians
+namespace AIDMusicApp.Admin.Controls.Skills
 {
     /// <summary>
-    /// Логика взаимодействия для MusicianSkillItemControl.xaml
+    /// Логика взаимодействия для SkillBoxItemControl.xaml
     /// </summary>
-    public partial class MusicianSkillItemControl : UserControl
+    public partial class SkillBoxItemControl : UserControl
     {
-        public MusicianSkillItemControl()
+        public SkillBoxItemControl()
         {
             InitializeComponent();
 
@@ -27,7 +40,7 @@ namespace AIDMusicApp.Admin.Controls.Musicians
             }
         }
 
-        public MusicianSkillItemControl(int skillId)
+        public SkillBoxItemControl(int skillId)
         {
             InitializeComponent();
 
@@ -49,7 +62,7 @@ namespace AIDMusicApp.Admin.Controls.Musicians
 
         public Skill SkillItem => (Skill)((ComboBoxItem)SkillComboBox.SelectedItem)?.Tag ?? null;
 
-        private void RemoveButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             (Parent as StackPanel).Children.Remove(this);
         }

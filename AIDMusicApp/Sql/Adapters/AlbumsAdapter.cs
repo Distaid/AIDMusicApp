@@ -70,14 +70,15 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public void Update(int id, string name, short year, string desription, byte[] cover)
+        public void Update(int id, string name, short year, string description, byte[] cover)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_UPDATE], _sqlConnection))
             {
+                command.Parameters.AddWithValue("@id", id);
                 command.Parameters.AddWithValue("@name", name);
                 command.Parameters.AddWithValue("@year", year);
-                command.Parameters.AddWithValue("@desription", desription);
-                command.Parameters.AddWithValue("@avatar", cover);
+                command.Parameters.AddWithValue("@description", !string.IsNullOrWhiteSpace(description) ? description : SqlString.Null);
+                command.Parameters.AddWithValue("@cover", cover);
 
                 command.ExecuteNonQuery();
             }

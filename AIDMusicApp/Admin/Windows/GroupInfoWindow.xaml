@@ -15,6 +15,7 @@
     <Window.Resources>
         <local1:Group x:Key="GroupItem"/>
         <conv:ObjectToStringConverter x:Key="ObjectConverter"/>
+        <conv:BoolToStringConverter x:Key="StringConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -27,52 +28,90 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock x:Name="TitleText" Grid.Column="0" Style="{StaticResource AIDTitleTextStyle}" Text="Header"/>
-            <Button x:Name="CloseButton" Grid.Column="1" IsCancel="True" Style="{StaticResource AIDTitleButtonStyle}">
+            <Button Grid.Column="1" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="10 4"/>
+            <Button x:Name="CloseButton" Grid.Column="2" IsCancel="True" Style="{StaticResource AIDTitleButtonStyle}">
                 <Path Style="{StaticResource AIDCloseButtonPathStyle}"/>
             </Button>
         </Grid>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-            <StackPanel>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+        <Border Grid.Row="1">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
+                <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=Name, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=Name, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=CountryId, Mode=OneWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=CountryId, Mode=OneWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfCreation, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfCreation, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                    <TextBlock Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="2" Text="{Binding Source={StaticResource GroupItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="2" Text="{Binding Source={StaticResource GroupItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5"/>
+                    </Grid>
 
-                    <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 5" Background="#191919">
+                    <TextBlock Text="Жанры" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 0 10 5">
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Genres, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="10" Background="#191919" Padding="10 5 10 7" Margin="5 0">
+                                        <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <TextBlock Text="Лэйблы" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 0 10 5">
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Labels, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="10" Background="#191919" Padding="10 5 10 7" Margin="5 0">
+                                        <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <TextBlock Text="Альбомы" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <Border Background="#191919" Margin="10 0 10 5">
                         <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                            <ItemsControl x:Name="GenresItems" ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Genres, Mode=OneWay}">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Albums, Mode=OneWay}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal"/>
@@ -80,52 +119,62 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Style="{StaticResource AIDTextBlockStackStyle}" Text="{Binding Name}">
-                                            <TextBlock.ContextMenu>
-                                                <ContextMenu Style="{StaticResource AIDContestMenuStyle}">
-                                                    <MenuItem Header="Удалить" Style="{StaticResource AIDMenuItemStyle}"/>
-                                                </ContextMenu>
-                                            </TextBlock.ContextMenu>
-                                        </TextBlock>
+                                        <albums:AlbumGroupItemControl AlbumItem="{Binding}"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
                     </Border>
 
-                    <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 5">
-                        <Button x:Name="AddAlbum" Content="Добавить альбом" Style="{StaticResource AIDButtonStyle}" Width="150" Margin="0 0 0 5" HorizontalAlignment="Left"/>
-                        <Border Background="#191919">
-                            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                                <ItemsControl x:Name="AlbumsItems" ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Albums, Mode=OneWay}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <albums:AlbumGroupItemControl AlbumItem="{Binding}"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </ScrollViewer>
-                        </Border>
-                    </StackPanel>
-
-                    <ListBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 5" Style="{StaticResource AIDListBoxStyle}" Height="Auto" ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Members, Mode=OneWay}">
-                        <ListBox.ItemTemplate>
+                    <TextBlock Text="Участники" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <ItemsControl ItemsSource="{Binding Source={StaticResource GroupItem}, Path=Members, Mode=TwoWay}" Margin="10 0 10 5">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Name" Style="{StaticResource AIDTextBlockStyle}"/>
-                                    <TextBlock Text="IsDead" Style="{StaticResource AIDTextBlockStyle}"/>
-                                    <TextBlock Text="IsFormer" Style="{StaticResource AIDTextBlockStyle}"/>
-                                </StackPanel>
+                                <Border Margin="0 5" Background="#191919" CornerRadius="10" Padding="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" Style="{StaticResource AIDTextBlockStyle}"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding IsFormer, Converter={StaticResource StringConverter}, ConverterParameter=isFormer}" Style="{StaticResource AIDTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding IsDead, Converter={StaticResource StringConverter}, ConverterParameter=isDead}" Style="{StaticResource AIDTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red"/>
+
+                                        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Margin="0 5 0 0">
+                                            <ItemsControl ItemsSource="{Binding Skills}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border CornerRadius="10" Background="#333" Padding="10 5 10 7" Margin="5 0">
+                                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using AIDMusicApp.Sql;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -88,6 +89,21 @@ namespace AIDMusicApp.Models
                 _formats = value;
                 OnPropertyChanged("Formats");
             }
+        }
+
+        public void Update(string name, short year, string description, byte[] cover)
+        {
+            SqlDatabase.Instance.AlbumsAdapter.Update(Id, name, year, description, cover);
+
+            Name = name;
+            Year = year;
+            Description = description;
+            Cover = cover;
+        }
+
+        public void Delete()
+        {
+            SqlDatabase.Instance.AlbumsAdapter.Delete(Id);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

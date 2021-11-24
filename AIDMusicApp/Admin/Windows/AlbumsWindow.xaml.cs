@@ -30,7 +30,30 @@ namespace AIDMusicApp.Admin.Windows
 
         public Album AlbumItem { get; private set; } = null;
 
-        public AlbumsWindow(int groupId)
+        public AlbumsWindow(int groupId, IEnumerable<Genre> genres)
+        {
+            InitializeComponent();
+
+            AddPanel.Visibility = Visibility.Visible;
+
+            TitleBar.MouseDown += TitleBar_MouseDown;
+            LoadImage.Click += LoadImage_Click;
+            YearText.PreviewTextInput += YearText_PreviewTextInput;
+            AddGenre.Click += AddGenre_Click;
+            AddFormat.Click += AddFormat_Click;
+            ConfirmButton.Click += AddButton_Click;
+
+            TitleText.Text = "Добавление Альбома";
+            _groupId = groupId;
+
+            foreach (var genre in genres)
+            {
+                var item = new GenreBoxItemControl(genre.Id);
+                GenreItems.Children.Insert(GenreItems.Children.Count - 1, item);
+            }
+        }
+
+        public AlbumsWindow(Album album)
         {
             InitializeComponent();
 
@@ -41,9 +64,41 @@ namespace AIDMusicApp.Admin.Windows
             AddFormat.Click += AddFormat_Click;
             ConfirmButton.Click += AddButton_Click;
 
-            TitleText.Text = "Добавление Альбома";
-            ConfirmButton.Content = "Добавить";
-            _groupId = groupId;
+            TitleText.Text = "Редактирование Альбома";
+
+            SaveGeneralButton.Visibility = Visibility.Visible;
+            SaveGeneralButton.Click += SaveGeneralButton_Click;
+
+            SaveGenresButton.Visibility = Visibility.Visible;
+            SaveGenresButton.Click += SaveGenresButton_Click;
+
+            SaveFormatsButton.Visibility = Visibility.Visible;
+            SaveFormatsButton.Click += SaveFormatsButton_Click;
+
+            AlbumItem = album;
+            NameText.Text = AlbumItem.Name;
+            YearText.Text = AlbumItem.Year.ToString();
+            DescriptionText.Text = AlbumItem.Description;
+
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.StreamSource = new MemoryStream(AlbumItem.Cover);
+            image.EndInit();
+            CoverImage.ImageSource = image;
+
+            foreach (var genre in AlbumItem.Genres)
+            {
+                var item = new GenreBoxItemControl(genre.Id);
+                GenreItems.Children.Insert(GenreItems.Children.Count - 1, item);
+            }
+
+            foreach (var format in AlbumItem.Formats)
+            {
+                var item = new FormatBoxItemControl(format.Id);
+                FormatItems.Children.Insert(FormatItems.Children.Count - 1, item);
+            }
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
@@ -124,18 +179,6 @@ namespace AIDMusicApp.Admin.Windows
                         return false;
                     }
                 }
-            }
-
-            if (GenreItems.Children.Count == 1)
-            {
-                AIDMessageWindow.Show("Поле \"Жанры\" должно содержать хотя бы один элемент!");
-                return false;
-            }
-
-            if (FormatItems.Children.Count == 1)
-            {
-                AIDMessageWindow.Show("Поле \"Форматы\" должно содержать хотя бы один элемент!");
-                return false;
             }
 
             for (var i = 0; i < GenreItems.Children.Count - 1; i++)
@@ -229,6 +272,136 @@ namespace AIDMusicApp.Admin.Windows
             SqlDatabase.Instance.DiscographyAdapter.Insert(AlbumItem.Id, _groupId);
 
             DialogResult = true;
+        }
+
+        private void SaveGeneralButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(NameText.Text))
+            {
+                AIDMessageWindow.Show("Поле \"Название\" должно быть заполнено!");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(YearText.Text))
+            {
+                AIDMessageWindow.Show("Поле \"Год\" должно быть заполнено!");
+                return;
+            }
+            else
+            {
+                if (short.TryParse(YearText.Text, out short res))
+                {
+                    if (res > 2021 || res < 1900)
+                    {
+                        AIDMessageWindow.Show("Поле \"Год\" должно быть в диапазоне от 1900 до 2021!");
+                        return;
+                    }
+                }
+            }
+
+            var stream = (CoverImage.ImageSource as BitmapImage).StreamSource;
+            byte[] cover;
+            if (stream == null)
+            {
+                var image = (BitmapImage)Application.Current.Resources["DefaultCover"];
+                var resStream = Application.GetResourceStream(image.UriSource).Stream;
+                cover = new byte[resStream.Length];
+                resStream.Read(cover, 0, cover.Length);
+            }
+            else
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                cover = new byte[stream.Length];
+                stream.Read(cover, 0, cover.Length);
+            }
+
+            AlbumItem.Update(NameText.Text, Convert.ToInt16(YearText.Text), DescriptionText.Text, cover);
+
+            AIDMessageWindow.Show("Сохранено успешно!");
+        }
+
+        private void SaveGenresButton_Click(object sender, RoutedEventArgs e)
+        {
+            for (var i = 0; i < GenreItems.Children.Count - 1; i++)
+            {
+                if ((GenreItems.Children[i] as GenreBoxItemControl).GenreItem == null)
+                {
+                    AIDMessageWindow.Show("Жанр не должны быть пустыми!");
+                    return;
+                }
+
+                for (var j = i + 1; j < GenreItems.Children.Count - 1; j++)
+                {
+                    if ((GenreItems.Children[j] as GenreBoxItemControl).GenreItem == null)
+                    {
+                        AIDMessageWindow.Show("Жанр не должны быть пустыми!");
+                        return;
+                    }
+
+                    if ((GenreItems.Children[i] as GenreBoxItemControl).GenreItem.Id == (GenreItems.Children[j] as GenreBoxItemControl).GenreItem.Id)
+                    {
+                        AIDMessageWindow.Show("Жанры не должны повторяться!");
+                        return;
+                    }
+                }
+            }
+
+            var genres = new List<Genre>();
+            for (var i = 0; i < GenreItems.Children.Count - 1; i++)
+            {
+                var genre = (GenreItems.Children[i] as GenreBoxItemControl).GenreItem;
+                genres.Add(genre);
+            }
+
+            SqlDatabase.Instance.AlbumGenresAdapter.Update(AlbumItem.Genres.ToList(), genres, AlbumItem.Id);
+
+            AlbumItem.Genres.Clear();
+            foreach (var genre in genres)
+                AlbumItem.Genres.Add(genre);
+
+            AIDMessageWindow.Show("Сохранено успешно!");
+        }
+
+        private void SaveFormatsButton_Click(object sender, RoutedEventArgs e)
+        {
+            for (var i = 0; i < FormatItems.Children.Count - 1; i++)
+            {
+                if ((FormatItems.Children[i] as FormatBoxItemControl).FormatItem == null)
+                {
+                    AIDMessageWindow.Show("Формат не должны быть пустыми!");
+                    return;
+                }
+
+                for (var j = i + 1; j < FormatItems.Children.Count - 1; j++)
+                {
+                    if ((FormatItems.Children[j] as FormatBoxItemControl).FormatItem == null)
+                    {
+                        AIDMessageWindow.Show("Формат не должны быть пустыми!");
+                        return;
+                    }
+
+                    if ((FormatItems.Children[i] as FormatBoxItemControl).FormatItem.Id == (FormatItems.Children[j] as FormatBoxItemControl).FormatItem.Id)
+                    {
+                        AIDMessageWindow.Show("Форматы не должны повторяться!");
+                        return;
+                    }
+                }
+            }
+
+            var formats = new List<Format>();
+            for (var i = 0; i < FormatItems.Children.Count - 1; i++)
+            {
+                var genre = (FormatItems.Children[i] as FormatBoxItemControl).FormatItem;
+                formats.Add(genre);
+            }
+
+            SqlDatabase.Instance.AlbumFormatsAdapter.Update(AlbumItem.Formats.ToList(), formats, AlbumItem.Id);
+
+            AlbumItem.Formats.Clear();
+            foreach (var format in formats)
+                AlbumItem.Formats.Add(format);
+
+            AIDMessageWindow.Show("Сохранено успешно!");
         }
     }
 }
