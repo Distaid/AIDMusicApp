@@ -1,6 +1,4 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using WpfAnimatedGif;
 
 namespace AIDMusicApp.Controls
 {
@@ -12,8 +10,6 @@ namespace AIDMusicApp.Controls
         public LoadingControl()
         {
             InitializeComponent();
-            //var image = new BitmapImage(new System.Uri("/AIDMusicApp;component/Images/LoadingIcon.gif"));
-            //ImageBehavior.SetAnimatedSource(LoadImage, image);
         }
     }
 }
