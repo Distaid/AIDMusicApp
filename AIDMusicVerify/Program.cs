@@ -24,15 +24,13 @@ namespace AIDMusicVerify
             "Musicians",
             "GroupGenres",
             "AlbumGenres",
-            "SongGenres",
             "Contracts",
             "Members",
             "MusicianSkills",
             "Discography",
             "AlbumFormats",
             "TrackLists",
-            "Feats",
-            "Covers"
+            "Feats"
         };
 
         private static Dictionary<string, string> _comands = new Dictionary<string, string>();
