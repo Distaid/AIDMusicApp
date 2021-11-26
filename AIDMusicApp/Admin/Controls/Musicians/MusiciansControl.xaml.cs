@@ -17,6 +17,8 @@ namespace AIDMusicApp.Admin.Controls.Musicians
             InitializeComponent();
 
             AddItemButton.Click += AddItemButton_Click;
+            SearchTextBox.TextChanged += SearchTextBox_TextChanged;
+            SearchButton.Click += SearchButton_Click;
 
             Task.Run(async () =>
             {
@@ -25,7 +27,6 @@ namespace AIDMusicApp.Admin.Controls.Musicians
                     AddItemButton.IsEnabled = false;
                     SearchTextBox.IsEnabled = false;
                     SearchButton.IsEnabled = false;
-                    //SearchField.IsEnabled = false;
                 }));
                 await Task.Delay(1);
 
@@ -44,9 +45,37 @@ namespace AIDMusicApp.Admin.Controls.Musicians
                     AddItemButton.IsEnabled = true;
                     SearchTextBox.IsEnabled = true;
                     SearchButton.IsEnabled = true;
-                    //SearchField.IsEnabled = true;
                 }));
             });
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (SearchTextBox.Text.Length == 0)
+            {
+                foreach (UIElement item in MusicianItems.Children)
+                {
+                    item.Visibility = Visibility.Visible;
+                }
+
+                AddItemButton.IsEnabled = true;
+            }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SearchTextBox.Text.Length == 0)
+                return;
+
+            foreach (MusicianItemControl item in MusicianItems.Children)
+            {
+                if (item.MusicianItem.Name.Contains(SearchTextBox.Text))
+                    item.Visibility = Visibility.Visible;
+                else
+                    item.Visibility = Visibility.Collapsed;
+            }
+
+            AddItemButton.IsEnabled = false;
         }
 
         private void AddItemButton_Click(object sender, RoutedEventArgs e)

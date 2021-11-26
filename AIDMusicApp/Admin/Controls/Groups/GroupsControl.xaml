@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AIDMusicApp.Admin.Controls.Groups"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,17 +18,11 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <Button x:Name="AddItemButton" Content="Добавить" Style="{StaticResource AIDButtonStyle}" Margin="10 5"/>
             <TextBox Grid.Column="1" x:Name="SearchTextBox" Style="{StaticResource AIDTextBoxStyle}" Margin="10 5" ContextMenu="{x:Null}" Width="270" HorizontalAlignment="Right"/>
-            <ComboBox Grid.Column="2" x:Name="SearchField" Style="{StaticResource AIDComboBoxStyle}" Margin="10 5" Width="140">
-                <ComboBoxItem Content="Название" IsSelected="True"/>
-                <ComboBoxItem Content="Год основания"/>
-                <ComboBoxItem Content="Год распада"/>
-            </ComboBox>
-            <Button Grid.Column="3" x:Name="SearchButton" Content="Поиск" Style="{StaticResource AIDButtonStyle}" Margin="10 5" Width="80"/>
+            <Button Grid.Column="2" x:Name="SearchButton" Content="Поиск" Style="{StaticResource AIDButtonStyle}" Margin="10 5" Width="80"/>
         </Grid>
 
         <Border Grid.Row="1" Background="#191919" Margin="10 5">

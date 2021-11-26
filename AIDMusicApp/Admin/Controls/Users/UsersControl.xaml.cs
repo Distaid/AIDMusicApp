@@ -17,6 +17,8 @@ namespace AIDMusicApp.Admin.Controls.Users
             InitializeComponent();
 
             AddItemButton.Click += AddItemButton_Click;
+            SearchTextBox.TextChanged += SearchTextBox_TextChanged;
+            SearchButton.Click += SearchButton_Click;
 
             Task.Run(async () =>
             {
@@ -47,6 +49,60 @@ namespace AIDMusicApp.Admin.Controls.Users
                     SearchField.IsEnabled = true;
                 }));
             });
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (SearchTextBox.Text.Length == 0)
+            {
+                foreach (UIElement item in UserItems.Children)
+                {
+                    item.Visibility = Visibility.Visible;
+                }
+
+                AddItemButton.IsEnabled = true;
+            }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SearchTextBox.Text.Length == 0)
+                return;
+
+            switch (SearchField.SelectedIndex)
+            {
+                case 0:
+                    foreach (UserItemControl item in UserItems.Children)
+                    {
+                        if (item.UserItem.Login.Contains(SearchTextBox.Text))
+                            item.Visibility = Visibility.Visible;
+                        else
+                            item.Visibility = Visibility.Collapsed;
+                    }
+                    break;
+
+                case 1:
+                    foreach (UserItemControl item in UserItems.Children)
+                    {
+                        if (item.UserItem.Phone.Contains(SearchTextBox.Text))
+                            item.Visibility = Visibility.Visible;
+                        else
+                            item.Visibility = Visibility.Collapsed;
+                    }
+                    break;
+
+                case 2:
+                    foreach (UserItemControl item in UserItems.Children)
+                    {
+                        if (item.UserItem.Email.Contains(SearchTextBox.Text))
+                            item.Visibility = Visibility.Visible;
+                        else
+                            item.Visibility = Visibility.Collapsed;
+                    }
+                    break;
+            }
+
+            AddItemButton.IsEnabled = false;
         }
 
         private void AddItemButton_Click(object sender, RoutedEventArgs e)
