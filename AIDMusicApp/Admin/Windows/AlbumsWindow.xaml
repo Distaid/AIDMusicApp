@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AIDMusicApp.Admin.Windows"
+        xmlns:local="clr-namespace:AIDMusicApp.Admin.Windows" xmlns:songs="clr-namespace:AIDMusicApp.Admin.Controls.Songs"
         mc:Ignorable="d"
         Height="350" Width="650"
         WindowStartupLocation="CenterScreen"
@@ -112,13 +112,13 @@
 
                         <Border Grid.Row="1" Background="#191919" Margin="5">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                                <WrapPanel Grid.Row="1" x:Name="AlbumItems" Background="#191919">
-                                    <!--<WrapPanel.Resources>
-                                        <Style TargetType="albums:AlbumItemControl">
+                                <StackPanel Orientation="Vertical" x:Name="SongItems">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="songs:SongItemControl">
                                             <Setter Property="Margin" Value="5"/>
                                         </Style>
-                                    </WrapPanel.Resources>-->
-                                </WrapPanel>
+                                    </StackPanel.Resources>
+                                </StackPanel>
                             </ScrollViewer>
                         </Border>
                     </Grid>

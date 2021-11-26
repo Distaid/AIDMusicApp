@@ -25,8 +25,7 @@
             <MenuItem Header="Таблицы данных" Style="{StaticResource AIDMenuItemStyle}">
                 <MenuItem x:Name="UsersButton" Header="Пользователи" Style="{StaticResource AIDMenuItemStyle}"/>
                 <MenuItem x:Name="GroupsButton" Header="Группы" Style="{StaticResource AIDMenuItemStyle}"/>
-                <MenuItem Header="Альбомы" Style="{StaticResource AIDMenuItemStyle}"/>
-                <MenuItem Header="Песни" Style="{StaticResource AIDMenuItemStyle}"/>
+                <MenuItem x:Name="AlbumsButton" Header="Альбомы" Style="{StaticResource AIDMenuItemStyle}"/>
                 <MenuItem x:Name="MusiciansButton" Header="Музыканты" Style="{StaticResource AIDMenuItemStyle}"/>
             </MenuItem>
         </Menu>

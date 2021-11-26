@@ -1,7 +1,6 @@
 ﻿using AIDMusicApp.Admin.Windows;
 using AIDMusicApp.Sql;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,7 +57,7 @@ namespace AIDMusicApp.Admin.Controls.Genres
                 {
                     item.Visibility = Visibility.Visible;
                 }
-                
+
                 AddItemButton.IsEnabled = true;
             }
         }

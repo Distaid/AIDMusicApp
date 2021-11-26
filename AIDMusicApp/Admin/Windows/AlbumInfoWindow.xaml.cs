@@ -1,17 +1,6 @@
 ﻿using AIDMusicApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AIDMusicApp.Admin.Windows
 {
@@ -25,6 +14,7 @@ namespace AIDMusicApp.Admin.Windows
             InitializeComponent();
 
             TitleBar.MouseDown += TitleBar_MouseDown;
+            EditButton.Click += EditButton_Click;
 
             TitleText.Text = album.Name;
 
@@ -35,6 +25,7 @@ namespace AIDMusicApp.Admin.Windows
             AlbumItem.Cover = album.Cover;
             AlbumItem.Genres = album.Genres;
             AlbumItem.Formats = album.Formats;
+            AlbumItem.Songs = album.Songs;
         }
 
         public Album AlbumItem => (Album)Resources["AlbumItem"];
@@ -43,6 +34,12 @@ namespace AIDMusicApp.Admin.Windows
         {
             if (e.ChangedButton == MouseButton.Left)
                 DragMove();
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var editWindow = new AlbumsWindow(AlbumItem);
+            editWindow.ShowDialog();
         }
     }
 }

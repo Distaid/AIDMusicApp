@@ -1,20 +1,8 @@
 ﻿using AIDMusicApp.Admin.Windows;
 using AIDMusicApp.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AIDMusicApp.Admin.Controls.Albums
 {
@@ -26,7 +14,7 @@ namespace AIDMusicApp.Admin.Controls.Albums
         private ObservableCollection<Album> _albums;
         private Album _album;
 
-        public AlbumItemControl(Album album, ObservableCollection<Album> albums)
+        public AlbumItemControl(Album album, ObservableCollection<Album> albums = null)
         {
             InitializeComponent();
 
@@ -42,6 +30,7 @@ namespace AIDMusicApp.Admin.Controls.Albums
             AlbumItem.Year = album.Year;
             AlbumItem.Formats = album.Formats;
             AlbumItem.Genres = album.Genres;
+            AlbumItem.Songs = album.Songs;
             AlbumItem.Cover = album.Cover;
             AlbumItem.Description = album.Description;
         }
@@ -62,7 +51,7 @@ namespace AIDMusicApp.Admin.Controls.Albums
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            _albums.Remove(_album);
+            _albums?.Remove(_album);
             AlbumItem.Delete();
             (Parent as WrapPanel).Children.Remove(this);
         }

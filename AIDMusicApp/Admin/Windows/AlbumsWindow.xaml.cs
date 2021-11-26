@@ -1,5 +1,6 @@
 ﻿using AIDMusicApp.Admin.Controls.Formats;
 using AIDMusicApp.Admin.Controls.Genres;
+using AIDMusicApp.Admin.Controls.Songs;
 using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
 using AIDMusicApp.Windows;
@@ -8,16 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AIDMusicApp.Admin.Windows
 {
@@ -63,7 +57,7 @@ namespace AIDMusicApp.Admin.Windows
             YearText.PreviewTextInput += YearText_PreviewTextInput;
             AddGenre.Click += AddGenre_Click;
             AddFormat.Click += AddFormat_Click;
-            ConfirmButton.Click += AddButton_Click;
+            AddSong.Click += AddSong_Click;
 
             TitleText.Text = "Редактирование Альбома";
 
@@ -99,6 +93,12 @@ namespace AIDMusicApp.Admin.Windows
             {
                 var item = new FormatBoxItemControl(format.Id);
                 FormatItems.Children.Insert(FormatItems.Children.Count - 1, item);
+            }
+
+            foreach (var song in AlbumItem.Songs)
+            {
+                var item = new SongItemControl(song, AlbumItem.Songs);
+                SongItems.Children.Add(item);
             }
         }
 
@@ -265,9 +265,9 @@ namespace AIDMusicApp.Admin.Windows
 
             for (var i = 0; i < FormatItems.Children.Count - 1; i++)
             {
-                var genre = (FormatItems.Children[i] as FormatBoxItemControl).FormatItem;
-                AlbumItem.Formats.Add(genre);
-                SqlDatabase.Instance.AlbumGenresAdapter.Insert(AlbumItem.Id, genre.Id);
+                var format = (FormatItems.Children[i] as FormatBoxItemControl).FormatItem;
+                AlbumItem.Formats.Add(format);
+                SqlDatabase.Instance.AlbumFormatsAdapter.Insert(AlbumItem.Id, format.Id);
             }
 
             SqlDatabase.Instance.DiscographyAdapter.Insert(AlbumItem.Id, _groupId);
@@ -403,6 +403,17 @@ namespace AIDMusicApp.Admin.Windows
                 AlbumItem.Formats.Add(format);
 
             AIDMessageWindow.Show("Сохранено успешно!");
+        }
+
+        private void AddSong_Click(object sender, RoutedEventArgs e)
+        {
+            var addWindow = new SongsWindow(AlbumItem.Id);
+            if (addWindow.ShowDialog() == true)
+            {
+                AlbumItem.Songs.Add(addWindow.SongItem);
+                var item = new SongItemControl(addWindow.SongItem, AlbumItem.Songs);
+                SongItems.Children.Add(item);
+            }
         }
     }
 }

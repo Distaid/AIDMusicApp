@@ -1,5 +1,6 @@
-﻿using AIDMusicApp.Admin.Controls.Formats;
+﻿using AIDMusicApp.Admin.Controls.Albums;
 using AIDMusicApp.Admin.Controls.Countries;
+using AIDMusicApp.Admin.Controls.Formats;
 using AIDMusicApp.Admin.Controls.Genres;
 using AIDMusicApp.Admin.Controls.Groups;
 using AIDMusicApp.Admin.Controls.Labels;
@@ -36,6 +37,7 @@ namespace AIDMusicApp.Admin.Controls
             UsersButton.Click += ChangePanel;
             MusiciansButton.Click += ChangePanel;
             GroupsButton.Click += ChangePanel;
+            AlbumsButton.Click += ChangePanel;
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -87,6 +89,11 @@ namespace AIDMusicApp.Admin.Controls
                 case "GroupsButton":
                     if (!(MainContent.Content is GroupsControl))
                         MainContent.Content = new GroupsControl();
+                    break;
+
+                case "AlbumsButton":
+                    if (!(MainContent.Content is AlbumsControl))
+                        MainContent.Content = new AlbumsControl();
                     break;
             }
         }

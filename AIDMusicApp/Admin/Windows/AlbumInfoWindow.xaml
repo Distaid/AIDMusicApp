@@ -13,6 +13,7 @@
         <local1:Album x:Key="AlbumItem"/>
         <conv:BoolToStringConverter x:Key="StringConverter"/>
         <conv:BytesToImageConverter x:Key="BytesConverter"/>
+        <conv:SongToStringConverter x:Key="SongConverter"/>
     </Window.Resources>
     
     <Grid>
@@ -105,6 +106,36 @@
                     </ScrollViewer>
                     
                     <TextBlock Text="Песни" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <ItemsControl ItemsSource="{Binding Source={StaticResource AlbumItem}, Path=Songs, Mode=OneWay}" Margin="10 0 10 5">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="0 3" Background="#191919" CornerRadius="10" Padding="5 2 5 4">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Style="{StaticResource AIDTextBlockStyle}" Margin="5 4">
+                                            <TextBlock.Text>
+                                                <MultiBinding Converter="{StaticResource SongConverter}">
+                                                    <Binding Path="Name" Mode="OneWay"/>
+                                                    <Binding Path="Guests" Mode="OneWay"/>
+                                                    <Binding Path="Guests.Count" Mode="OneWay"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="1" Text="{Binding Time}" Style="{StaticResource AIDTextBlockStyle}" HorizontalAlignment="Right" Margin="5 4"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

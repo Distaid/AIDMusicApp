@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="AIDMusicApp.Admin.Controls.Songs.SongItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AIDMusicApp.Admin.Controls.Songs"
+             xmlns:local1="clr-namespace:AIDMusicApp.Models"
+             xmlns:conv="clr-namespace:AIDMusicApp.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="90" d:DesignWidth="500"
+             Height="90" Width="Auto">
+    <UserControl.Resources>
+        <local1:Song x:Key="SongItem"/>
+        <conv:SongToStringConverter x:Key="SongConverter"/>
+    </UserControl.Resources>
+
+    <Border Background="#222222" BorderThickness="1" BorderBrush="{StaticResource AIDCyan}" CornerRadius="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="ID" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource SongItem}, Path=Id, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3" HorizontalAlignment="Right"/>
+
+            <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" Foreground="{StaticResource AIDCyan}" VerticalAlignment="Center" Margin="10 3"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Длительность" Style="{StaticResource AIDTextBlockStyle}" Foreground="{StaticResource AIDCyan}" VerticalAlignment="Center" Margin="10 3"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource SongConverter}">
+                            <Binding Source="{StaticResource SongItem}" Path="Name" Mode="OneWay"/>
+                            <Binding Source="{StaticResource SongItem}" Path="Guests" Mode="OneWay"/>
+                            <Binding Source="{StaticResource SongItem}" Path="Guests.Count" Mode="OneWay"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource SongItem}, Path=Time, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+
+                <Button Grid.Row="0" Grid.Column="2" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="3" x:FieldModifier="private"/>
+                <Button Grid.Row="1" Grid.Column="2" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="3" x:FieldModifier="private"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

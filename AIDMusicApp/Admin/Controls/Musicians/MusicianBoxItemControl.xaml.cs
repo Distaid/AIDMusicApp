@@ -1,19 +1,7 @@
 ﻿using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AIDMusicApp.Admin.Controls.Musicians
 {
@@ -22,9 +10,12 @@ namespace AIDMusicApp.Admin.Controls.Musicians
     /// </summary>
     public partial class MusicianBoxItemControl : UserControl
     {
-        public MusicianBoxItemControl()
+        public MusicianBoxItemControl(bool isNeedFormer = true)
         {
             InitializeComponent();
+
+            if (!isNeedFormer)
+                Former.Visibility = Visibility.Collapsed;
 
             RemoveButton.Click += RemoveButton_Click;
 
@@ -59,6 +50,28 @@ namespace AIDMusicApp.Admin.Controls.Musicians
                 MusicianComboBox.Items.Add(item);
             }
             IsFormer = isFormer;
+        }
+
+        public MusicianBoxItemControl(int musicianId)
+        {
+            InitializeComponent();
+
+            Former.Visibility = Visibility.Collapsed;
+
+            RemoveButton.Click += RemoveButton_Click;
+
+            MusicianComboBox.PreviewMouseWheel += (o, e) =>
+            {
+                e.Handled = !((ComboBox)o).IsDropDownOpen;
+            };
+
+            foreach (var musician in SqlDatabase.Instance.MusiciansAdapter.GetAll())
+            {
+                var item = new ComboBoxItem { Content = musician.Name, Tag = musician };
+                if (musician.Id == musicianId)
+                    item.IsSelected = true;
+                MusicianComboBox.Items.Add(item);
+            }
         }
 
         public Musician MusicianItem => (Musician)((ComboBoxItem)MusicianComboBox.SelectedItem)?.Tag ?? null;

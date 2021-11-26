@@ -1,16 +1,16 @@
-﻿using AIDMusicApp.Admin.Controls.Genres;
+﻿using AIDMusicApp.Admin.Controls.Albums;
+using AIDMusicApp.Admin.Controls.Genres;
 using AIDMusicApp.Admin.Controls.Labels;
+using AIDMusicApp.Admin.Controls.Musicians;
 using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
 using AIDMusicApp.Windows;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using AIDMusicApp.Admin.Controls.Musicians;
-using AIDMusicApp.Admin.Controls.Albums;
 
 namespace AIDMusicApp.Admin.Windows
 {

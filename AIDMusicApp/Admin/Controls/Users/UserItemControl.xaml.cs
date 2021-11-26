@@ -34,15 +34,7 @@ namespace AIDMusicApp.Admin.Controls.Users
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             var editWindow = new UsersWindow(UserItem);
-            if (editWindow.ShowDialog() == true)
-            {
-                UserItem.Login = editWindow.UserItem.Login;
-                UserItem.Password = editWindow.UserItem.Login;
-                UserItem.Email = editWindow.UserItem.Email;
-                UserItem.Phone = editWindow.UserItem.Phone;
-                UserItem.AccessId = editWindow.UserItem.AccessId;
-                UserItem.Avatar = editWindow.UserItem.Avatar;
-            }
+            editWindow.ShowDialog();
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)

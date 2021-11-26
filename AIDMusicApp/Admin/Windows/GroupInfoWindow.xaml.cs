@@ -1,18 +1,6 @@
-﻿using AIDMusicApp.Admin.Controls.Albums;
-using AIDMusicApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AIDMusicApp.Models;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AIDMusicApp.Admin.Windows
 {
@@ -28,6 +16,8 @@ namespace AIDMusicApp.Admin.Windows
             TitleBar.MouseDown += TitleBar_MouseDown;
             EditButton.Click += EditButton_Click;
 
+            TitleText.Text = group.Name;
+
             GroupItem.Id = group.Id;
             GroupItem.Name = group.Name;
             GroupItem.CountryId = group.CountryId;
@@ -38,7 +28,6 @@ namespace AIDMusicApp.Admin.Windows
             GroupItem.Albums = group.Albums;
             GroupItem.Members = group.Members;
             GroupItem.Labels = group.Labels;
-            TitleText.Text = group.Name;
         }
 
         public Group GroupItem => (Group)Resources["GroupItem"];

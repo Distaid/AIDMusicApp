@@ -50,12 +50,12 @@
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" Foreground="{StaticResource AIDCyan}" VerticalAlignment="Center" Margin="10 3"/>
                 <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Source={StaticResource MusicianItem}, Path=IsDead, Mode=OneWay, Converter={StaticResource BoolConverter}, ConverterParameter=isDead}" VerticalAlignment="Center" Foreground="Red" TextAlignment="Center"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=Name, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=Age, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=CountryId, Mode=TwoWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=Name, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=Age, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=CountryId, Mode=OneWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
 
                 <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="6 2">
-                    <ItemsControl ItemsSource="{Binding Source={StaticResource MusicianItem}, Path=Skills, Mode=TwoWay}">
+                    <ItemsControl ItemsSource="{Binding Source={StaticResource MusicianItem}, Path=Skills, Mode=OneWay}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal"/>

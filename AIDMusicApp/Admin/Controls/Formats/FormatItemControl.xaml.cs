@@ -1,6 +1,5 @@
 ﻿using AIDMusicApp.Admin.Windows;
 using AIDMusicApp.Models;
-using AIDMusicApp.Sql;
 using System.Windows;
 using System.Windows.Controls;
 
