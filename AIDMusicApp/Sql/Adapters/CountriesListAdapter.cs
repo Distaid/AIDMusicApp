@@ -15,7 +15,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_CHECK_NAME = "SQL_Check_Name";
         [SqlCommandKey] private const string SQL_SELECT_BYID = "SQL_Select_ById";
 
-        public CountriesListAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLCountriesList.aid") { }
+        public CountriesListAdapter(SqlConnection connection) : base(connection, "SQLCountriesList.aid") { }
 
         public IEnumerable<Country> GetAll()
         {

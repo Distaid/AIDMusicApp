@@ -14,7 +14,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_SELECT_ALBUMSBYGROUPID = "SQL_Select_AlbumsByGroupId";
         [SqlCommandKey] private const string SQL_SELECT_ID_BYALBUMIDANDGROUPID = "SQL_Select_Id_ByAlbumIdAndGroupId";
 
-        public DiscographyAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLDiscography.aid") { }
+        public DiscographyAdapter(SqlConnection connection) : base(connection, "SQLDiscography.aid") { }
 
         public int Insert(int albumId, int groupId)
         {
@@ -27,8 +27,6 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        //TODO Update
-
         public void Delete(int id)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_DELETE], _sqlConnection))
@@ -39,11 +37,11 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public IEnumerable<Album> GetAlbumsByGroupId(int albumId)
+        public IEnumerable<Album> GetAlbumsByGroupId(int groupId)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ALBUMSBYGROUPID], _sqlConnection))
             {
-                command.Parameters.AddWithValue("@id", albumId);
+                command.Parameters.AddWithValue("@id", groupId);
 
                 using (var adapter = new SqlDataAdapter(command))
                 {
@@ -60,7 +58,8 @@ namespace AIDMusicApp.Sql.Adapters
                             Year = Convert.ToInt16(row[3]),
                             Cover = (byte[])row[4],
                             Genres = new ObservableCollection<Genre>(),
-                            Formats = new ObservableCollection<Format>()
+                            Formats = new ObservableCollection<Format>(),
+                            Songs = new ObservableCollection<Song>()
                         };
 
                         foreach (var genre in SqlDatabase.Instance.AlbumGenresAdapter.GetGenresByGroupId(album.Id))
@@ -68,6 +67,9 @@ namespace AIDMusicApp.Sql.Adapters
 
                         foreach (var format in SqlDatabase.Instance.AlbumFormatsAdapter.GetFormatsByGroupId(album.Id))
                             album.Formats.Add(format);
+
+                        foreach (var song in SqlDatabase.Instance.TrackListAdapter.GetSongsByAlbumId(album.Id))
+                            album.Songs.Add(song);
 
                         yield return album;
                     }

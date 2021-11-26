@@ -11,7 +11,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_SELECT = "SQL_Select";
         [SqlCommandKey] private const string SQL_SELECT_BYID = "SQL_Select_ById";
 
-        public AccessAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLAccessRights.aid") { }
+        public AccessAdapter(SqlConnection connection) : base(connection, "SQLAccessRights.aid") { }
 
         public IEnumerable<Access> GetAll()
         {

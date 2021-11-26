@@ -17,10 +17,10 @@ namespace AIDMusicApp.Sql.Adapters
             _sqlComands = new Dictionary<string, string>();
             _sqlConnection = connection;
 
-            if (!File.Exists(file))
+            if (!File.Exists($"{FileLoader.SqlCommandsPath}{file}"))
                 throw new Exception($"Файл {Path.GetFileName(file)} не найден!\nРабота приложения будет прекращена!");
 
-            foreach (var pair in FileLoader.GetFileData(file))
+            foreach (var pair in FileLoader.GetFileData($"{FileLoader.SqlCommandsPath}{file}"))
                 _sqlComands.Add(pair.Key, pair.Value);
 
             CheckKeys(file);

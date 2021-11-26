@@ -1,11 +1,7 @@
 ﻿using AIDMusicApp.Sql.Adapters;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AIDMusicApp.Sql
 {
@@ -26,6 +22,7 @@ namespace AIDMusicApp.Sql
         public MusiciansAdapter MusiciansAdapter { get; private set; }
         public GroupsAdapter GroupsAdapter { get; private set; }
         public AlbumsAdapter AlbumsAdapter { get; private set; }
+        public SongsAdapter SongsAdapter { get; private set; }
 
         public MusicianSkillsAdapter MusicianSkillsAdapter { get; private set; }
         public GroupGenresAdapter GroupGenresAdapter { get; private set; }
@@ -34,6 +31,8 @@ namespace AIDMusicApp.Sql
         public DiscographyAdapter DiscographyAdapter { get; private set; }
         public ContractsAdapter ContractsAdapter { get; private set; }
         public MembersAdapter MembersAdapter { get; private set; }
+        public TrackListAdapter TrackListAdapter { get; private set; }
+        public FeatsAdapter FeatsAdapter { get; private set; }
 
         protected SqlDatabase()
         {
@@ -84,6 +83,7 @@ namespace AIDMusicApp.Sql
                 MusiciansAdapter = new MusiciansAdapter(_sqlConnection);
                 GroupsAdapter = new GroupsAdapter(_sqlConnection);
                 AlbumsAdapter = new AlbumsAdapter(_sqlConnection);
+                SongsAdapter = new SongsAdapter(_sqlConnection);
 
                 MusicianSkillsAdapter = new MusicianSkillsAdapter(_sqlConnection);
                 GroupGenresAdapter = new GroupGenresAdapter(_sqlConnection);
@@ -92,6 +92,8 @@ namespace AIDMusicApp.Sql
                 DiscographyAdapter = new DiscographyAdapter(_sqlConnection);
                 ContractsAdapter = new ContractsAdapter(_sqlConnection);
                 MembersAdapter = new MembersAdapter(_sqlConnection);
+                TrackListAdapter = new TrackListAdapter(_sqlConnection);
+                FeatsAdapter = new FeatsAdapter(_sqlConnection);
             }
             catch
             {

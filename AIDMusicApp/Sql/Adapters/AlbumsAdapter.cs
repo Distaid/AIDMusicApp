@@ -15,7 +15,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
 
-        public AlbumsAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLAlbums.aid") { }
+        public AlbumsAdapter(SqlConnection connection) : base(connection, "SQLAlbums.aid") { }
 
         public IEnumerable<Album> GetAll()
         {
@@ -34,7 +34,8 @@ namespace AIDMusicApp.Sql.Adapters
                         Description = Convert.ToString(row[3]),
                         Cover = (byte[])row[4],
                         Genres = new ObservableCollection<Genre>(),
-                        Formats = new ObservableCollection<Format>()
+                        Formats = new ObservableCollection<Format>(),
+                        Songs = new ObservableCollection<Song>()
                     };
 
                     foreach (var genre in SqlDatabase.Instance.AlbumGenresAdapter.GetGenresByGroupId(album.Id))
@@ -42,6 +43,9 @@ namespace AIDMusicApp.Sql.Adapters
 
                     foreach (var format in SqlDatabase.Instance.AlbumFormatsAdapter.GetFormatsByGroupId(album.Id))
                         album.Formats.Add(format);
+
+                    foreach (var song in SqlDatabase.Instance.TrackListAdapter.GetSongsByAlbumId(album.Id))
+                        album.Songs.Add(song);
 
                     yield return album;
                 }
@@ -65,7 +69,8 @@ namespace AIDMusicApp.Sql.Adapters
                     Description = !string.IsNullOrWhiteSpace(description) ? description : "",
                     Cover = cover,
                     Genres = new ObservableCollection<Genre>(),
-                    Formats = new ObservableCollection<Format>()
+                    Formats = new ObservableCollection<Format>(),
+                    Songs = new ObservableCollection<Song>()
                 };
             }
         }

@@ -13,8 +13,9 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
         [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
+        [SqlCommandKey] private const string SQL_SELECT_ID_NAME = "SQL_Select_Id_Name";
 
-        public GroupsAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLGroups.aid") { }
+        public GroupsAdapter(SqlConnection connection) : base(connection, "SQLGroups.aid") { }
 
         public IEnumerable<Group> GetAll()
         {
@@ -105,6 +106,25 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@id", id);
 
                 command.ExecuteNonQuery();
+            }
+        }
+
+        public IEnumerable<Group> GetAllIdName()
+        {
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT_ID_NAME], _sqlConnection))
+            {
+                var ds = new DataSet();
+                adapter.Fill(ds);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    yield return new Group
+                    {
+                        Id = Convert.ToInt32(row[0]),
+                        Name = Convert.ToString(row[1])
+                    };
+                }
+
             }
         }
     }

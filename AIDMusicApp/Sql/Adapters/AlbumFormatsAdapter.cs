@@ -13,7 +13,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_SELECT_FORMATSBYALBUMID = "SQL_Select_FormatsByAlbumId";
         [SqlCommandKey] private const string SQL_SELECT_ID_BYALBUMIDANDFORMATID = "SQL_Select_Id_ByAlbumIdAndFormatId";
 
-        public AlbumFormatsAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLAlbumFormats.aid") { }
+        public AlbumFormatsAdapter(SqlConnection connection) : base(connection, "SQLAlbumFormats.aid") { }
 
         public int Insert(int albumId, int formatId)
         {

@@ -13,7 +13,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_SELECT_SKILLSBYMUSICIANID = "SQL_Select_SkillsByMusicianId";
         [SqlCommandKey] private const string SQL_SELECT_ID_BYMUSICIANIDANDSKILLID = "SQL_Select_Id_ByMusicianIdAndSkillId";
 
-        public MusicianSkillsAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLMusicianSkills.aid") { }
+        public MusicianSkillsAdapter(SqlConnection connection) : base(connection, "SQLMusicianSkills.aid") { }
 
         public int Insert(int musicianId, int skillId)
         {

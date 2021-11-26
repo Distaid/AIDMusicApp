@@ -13,7 +13,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_SELECT_GENRESBYALBUMID = "SQL_Select_GenresByAlbumId";
         [SqlCommandKey] private const string SQL_SELECT_ID_BYALBUMIDANDGENREID = "SQL_Select_Id_ByAlbumIdAndGenreId";
 
-        public AlbumGenresAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLAlbumGenres.aid") { }
+        public AlbumGenresAdapter(SqlConnection connection) : base(connection, "SQLAlbumGenres.aid") { }
 
         public int Insert(int albumId, int genreId)
         {

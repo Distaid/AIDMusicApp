@@ -7,59 +7,42 @@ using System.Data.SqlClient;
 
 namespace AIDMusicApp.Sql.Adapters
 {
-    public class MembersAdapter : BaseAdapter
+    public class FeatsAdapter : BaseAdapter
     {
         [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
-        [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
-        [SqlCommandKey] private const string SQL_SELECT_MUSICIANSBYGROUPID = "SQL_Select_MusiciansByGroupId";
-        [SqlCommandKey] private const string SQL_SELECT_ID_BYMUSICIANIDANDGROUPID = "SQL_Select_Id_ByMusicianIdAndGroupId";
+        [SqlCommandKey] private const string SQL_SELECT_MUSICIANSBYSONGID = "SQL_Select_MusiciansBySongId";
+        [SqlCommandKey] private const string SQL_SELECT_ID_BYSONGIDANDMUSICIANID = "SQL_Select_Id_BySongIdAndMusicianId";
 
-        public MembersAdapter(SqlConnection connection) : base(connection, "SQLMembers.aid") { }
+        public FeatsAdapter(SqlConnection connection) : base(connection, "SQLFeats.aid") { }
 
-        public int Insert(int musicianId, int groupId, bool isFormer)
+        public int Insert(int songId, int musicianId)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_INSERT], _sqlConnection))
             {
+                command.Parameters.AddWithValue("@song_id", songId);
                 command.Parameters.AddWithValue("@musician_id", musicianId);
-                command.Parameters.AddWithValue("@group_id", groupId);
-                command.Parameters.AddWithValue("@is_former", isFormer);
 
                 return Convert.ToInt32(command.ExecuteScalar());
             }
         }
 
-        public void Update(List<Musician> groupMembers, IEnumerable<Musician> destination, int groupId)
+        public void Update(List<Musician> songGuests, IEnumerable<Musician> destination, int songId)
         {
             foreach (var musician in destination)
             {
-                var index = groupMembers.FindIndex((s) => s.Id == musician.Id);
+                var index = songGuests.FindIndex((s) => s.Id == musician.Id);
 
                 if (index != -1)
-                {
-                    Update(musician.Id, groupId, musician.IsFormer);
-                    groupMembers.RemoveAt(index);
-                }
+                    songGuests.RemoveAt(index);
                 else
-                    Insert(musician.Id, groupId, musician.IsFormer);
+                    Insert(songId, musician.Id);
             }
 
-            foreach (var member in groupMembers)
+            foreach (var guest in songGuests)
             {
-                var id = GetIdByMusicianIdAndGroupId(member.Id, groupId);
+                var id = GetIdBySongIdAndMusicianId(songId, guest.Id);
                 Delete(id);
-            }
-        }
-
-        private void Update(int musicianId, int groupId, bool isFormer)
-        {
-            using (var command = new SqlCommand(_sqlComands[SQL_UPDATE], _sqlConnection))
-            {
-                command.Parameters.AddWithValue("@musician_id", musicianId);
-                command.Parameters.AddWithValue("@group_id", groupId);
-                command.Parameters.AddWithValue("@is_former", isFormer);
-
-                command.ExecuteNonQuery();
             }
         }
 
@@ -73,11 +56,11 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public IEnumerable<Musician> GetMusiciansByGroupId(int groupId)
+        public IEnumerable<Musician> GetMusiciansBySongId(int songId)
         {
-            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_MUSICIANSBYGROUPID], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_MUSICIANSBYSONGID], _sqlConnection))
             {
-                command.Parameters.AddWithValue("@id", groupId);
+                command.Parameters.AddWithValue("@id", songId);
 
                 using (var adapter = new SqlDataAdapter(command))
                 {
@@ -93,7 +76,6 @@ namespace AIDMusicApp.Sql.Adapters
                             Age = Convert.ToByte(row[2]),
                             CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[3])),
                             IsDead = Convert.ToBoolean(row[4]),
-                            IsFormer = Convert.ToBoolean(row[5]),
                             Skills = new ObservableCollection<Skill>()
                         };
 
@@ -106,12 +88,12 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public int GetIdByMusicianIdAndGroupId(int musicianId, int groupId)
+        public int GetIdBySongIdAndMusicianId(int songId, int musicianId)
         {
-            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ID_BYMUSICIANIDANDGROUPID], _sqlConnection))
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ID_BYSONGIDANDMUSICIANID], _sqlConnection))
             {
+                command.Parameters.AddWithValue("@song_id", songId);
                 command.Parameters.AddWithValue("@musician_id", musicianId);
-                command.Parameters.AddWithValue("@group_id", groupId);
 
                 return Convert.ToInt32(command.ExecuteScalar());
             }

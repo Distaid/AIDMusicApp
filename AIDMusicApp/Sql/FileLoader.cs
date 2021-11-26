@@ -8,6 +8,8 @@ namespace AIDMusicApp.Sql
 {
     public static class FileLoader
     {
+        public static string SqlCommandsPath { get; } = "Sql\\Commands\\";
+
         public static string LoadSqlConnectionString()
         {
             if (!File.Exists("settings.json"))

@@ -14,7 +14,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
 
-        public MusiciansAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLMusicians.aid") { }
+        public MusiciansAdapter(SqlConnection connection) : base(connection, "SQLMusicians.aid") { }
 
         public IEnumerable<Musician> GetAll()
         {

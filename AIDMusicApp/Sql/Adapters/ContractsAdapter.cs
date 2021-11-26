@@ -13,7 +13,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_SELECT_LABELSBYGROUPID = "SQL_Select_LabelsByGroupId";
         [SqlCommandKey] private const string SQL_SELECT_ID_BYGROUPIDANDLABELID = "SQL_Select_Id_ByGroupIdAndLabelId";
 
-        public ContractsAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLContracts.aid") { }
+        public ContractsAdapter(SqlConnection connection) : base(connection, "SQLContracts.aid") { }
 
         public int Insert(int groupId, int labelId)
         {

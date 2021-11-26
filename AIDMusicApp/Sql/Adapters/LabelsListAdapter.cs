@@ -14,7 +14,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
         [SqlCommandKey] private const string SQL_CHECK_NAME = "SQL_Check_Name";
 
-        public LabelsListAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLLabelsList.aid") { }
+        public LabelsListAdapter(SqlConnection connection) : base(connection, "SQLLabelsList.aid") { }
 
         public IEnumerable<Label> GetAll()
         {

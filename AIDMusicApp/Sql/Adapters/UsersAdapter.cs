@@ -18,7 +18,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_CHECK_PHONE = "SQL_Check_Phone";
         [SqlCommandKey] private const string SQL_CHECK_EMAIL = "SQL_Check_Email";
 
-        public UsersAdapter(SqlConnection connection) : base(connection, "SQLCommands\\SQLUsers.aid") { }
+        public UsersAdapter(SqlConnection connection) : base(connection, "SQLUsers.aid") { }
 
         public IEnumerable<User> GetAll()
         {
