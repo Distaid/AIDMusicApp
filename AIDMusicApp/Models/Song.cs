@@ -1,13 +1,78 @@
-﻿namespace AIDMusicApp.Models
+﻿using AIDMusicApp.Sql;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace AIDMusicApp.Models
 {
-    public class Song
+    public class Song : INotifyPropertyChanged
     {
-        public int Id { get; set; }
+        private int _id;
 
-        public string Name { get; set; }
+        private string _name;
 
-        public short Time { get; set; }
+        private string _time;
 
-        public bool IsCover { get; set; }
+        private ObservableCollection<Musician> _guests;
+
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+
+        public string Time
+        {
+            get => _time;
+            set
+            {
+                _time = value;
+                OnPropertyChanged("Time");
+            }
+        }
+
+        public ObservableCollection<Musician> Guests
+        {
+            get => _guests;
+            set
+            {
+                _guests = value;
+                OnPropertyChanged("Guests");
+            }
+        }
+
+        public void Update(string name, string time)
+        {
+            SqlDatabase.Instance.SongsAdapter.Update(Id, name, time);
+
+            Name = name;
+            Time = time;
+        }
+
+        public void Delete()
+        {
+            SqlDatabase.Instance.SongsAdapter.Delete(Id);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

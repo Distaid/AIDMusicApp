@@ -21,6 +21,8 @@ namespace AIDMusicApp.Models
 
         private ObservableCollection<Format> _formats;
 
+        private ObservableCollection<Song> _songs;
+
         public int Id
         {
             get => _id;
@@ -88,6 +90,16 @@ namespace AIDMusicApp.Models
             {
                 _formats = value;
                 OnPropertyChanged("Formats");
+            }
+        }
+
+        public ObservableCollection<Song> Songs
+        {
+            get => _songs;
+            set
+            {
+                _songs = value;
+                OnPropertyChanged("Songs");
             }
         }
 
