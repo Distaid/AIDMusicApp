@@ -14,6 +14,7 @@
         Style="{StaticResource AIDWindowStyle}">
     <Window.Resources>
         <local1:Group x:Key="GroupItem"/>
+        <conv:BytesToImageConverter x:Key="BytesConverter"/>
         <conv:ObjectToStringConverter x:Key="ObjectConverter"/>
         <conv:BoolToStringConverter x:Key="StringConverter"/>
     </Window.Resources>
@@ -51,24 +52,31 @@
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=Name, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <Ellipse Grid.Column="0" Grid.RowSpan="4" Height="75" Width="75" Margin="10 5">
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="AvatarImage" ImageSource="{Binding Source={StaticResource GroupItem}, Path=Logo, Mode=TwoWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultImage}}"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=CountryId, Mode=OneWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Source={StaticResource GroupItem}, Path=Name, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfCreation, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Source={StaticResource GroupItem}, Path=CountryId, Mode=OneWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfCreation, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                        <TextBlock Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Text="{Binding Source={StaticResource GroupItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Source={StaticResource GroupItem}, Path=YearOfBreakup, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" Text="{Binding Source={StaticResource GroupItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5"/>
                     </Grid>
 
                     <TextBlock Text="Жанры" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>

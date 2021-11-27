@@ -21,6 +21,8 @@ namespace AIDMusicApp.Models
 
         private Country _countryId;
 
+        private byte[] _logo;
+
         private ObservableCollection<Genre> _genres;
 
         private ObservableCollection<Label> _labels;
@@ -89,6 +91,16 @@ namespace AIDMusicApp.Models
             }
         }
 
+        public byte[] Logo
+        {
+            get => _logo;
+            set
+            {
+                _logo = value;
+                OnPropertyChanged("Logo");
+            }
+        }
+
         public ObservableCollection<Genre> Genres
         {
             get => _genres;
@@ -134,14 +146,15 @@ namespace AIDMusicApp.Models
             SqlDatabase.Instance.GroupsAdapter.Delete(Id);
         }
 
-        public void Update(string name, string description, short? yearOfCreation, short? yearOfBreakup, Country countryId)
+        public void Update(string name, string description, short? yearOfCreation, short? yearOfBreakup, Country countryId, byte[] logo)
         {
-            SqlDatabase.Instance.GroupsAdapter.Update(Id, name, description, yearOfCreation, yearOfBreakup, countryId.Id);
+            SqlDatabase.Instance.GroupsAdapter.Update(Id, name, description, yearOfCreation, yearOfBreakup, countryId.Id, logo);
             Name = name;
             Description = description;
             YearOfCreation = yearOfCreation;
             YearOfBreakup = yearOfBreakup;
             CountryId = countryId;
+            Logo = logo;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

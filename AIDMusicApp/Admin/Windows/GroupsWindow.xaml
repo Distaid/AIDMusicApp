@@ -45,22 +45,31 @@
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
-                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+                        <Ellipse Grid.Column="0" Grid.RowSpan="3" Height="90" Width="90" Margin="10 5">
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="LogoImage" ImageSource="{Binding Source={StaticResource DefaultImage}}"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
 
-                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="NameText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="CountryId" Style="{StaticResource AIDComboBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="YearOfCreationText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="YearOfBreakupText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="DescriptionText" Style="{StaticResource AIDTextBoxStyle}" VerticalContentAlignment="Top" Margin="0 5 10 5" TextWrapping="Wrap" x:FieldModifier="private"/>
+                        <Button Grid.Row="3" Grid.Column="0" x:Name="LoadImage" Content="Загрузить" Style="{StaticResource AIDButtonStyle}" Margin="10 5"/>
 
-                        <Button x:Name="SaveGeneralButton" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Сохранить Общее" Style="{StaticResource AIDButtonStyle}" Width="150" Margin="5" Visibility="Collapsed"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Год основания" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="Год распада" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
+
+                        <TextBox Grid.Row="0" Grid.Column="2" x:Name="NameText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5"/>
+                        <ComboBox Grid.Row="1" Grid.Column="2" x:Name="CountryId" Style="{StaticResource AIDComboBoxStyle}" Margin="0 5 10 5"/>
+                        <TextBox Grid.Row="2" Grid.Column="2" x:Name="YearOfCreationText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5"/>
+                        <TextBox Grid.Row="3" Grid.Column="2" x:Name="YearOfBreakupText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5"/>
+                        <TextBox Grid.Row="4" Grid.Column="2" x:Name="DescriptionText" Style="{StaticResource AIDTextBoxStyle}" VerticalContentAlignment="Top" Margin="0 5 10 5" TextWrapping="Wrap"/>
+
+                        <Button x:Name="SaveGeneralButton" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Content="Сохранить Общее" Style="{StaticResource AIDButtonStyle}" Width="150" Margin="5" Visibility="Collapsed"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Жанры">
@@ -72,7 +81,7 @@
 
                         <Border Grid.Row="0" Margin="5">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                                <StackPanel x:Name="GenreItems" Margin="5" x:FieldModifier="private">
+                                <StackPanel x:Name="GenreItems" Margin="5">
                                     <Button x:Name="AddGenre" Content="Добавить жанр" Style="{StaticResource AIDButtonStyle}" Margin="5" Width="150"/>
                                 </StackPanel>
                             </ScrollViewer>
@@ -90,7 +99,7 @@
 
                         <Border Grid.Row="0" Margin="5">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                                <StackPanel x:Name="LabelItems" Margin="5" x:FieldModifier="private">
+                                <StackPanel x:Name="LabelItems" Margin="5">
                                     <Button x:Name="AddLabel" Content="Добавить лэйбл" Style="{StaticResource AIDButtonStyle}" Margin="5" Width="150"/>
                                 </StackPanel>
                             </ScrollViewer>
@@ -108,7 +117,7 @@
 
                         <Border Grid.Row="0" Margin="5">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                                <StackPanel x:Name="MemberItems" Margin="5" x:FieldModifier="private">
+                                <StackPanel x:Name="MemberItems" Margin="5">
                                     <Button x:Name="AddMember" Content="Добавить участника" Style="{StaticResource AIDButtonStyle}" Margin="5" Width="150"/>
                                 </StackPanel>
                             </ScrollViewer>

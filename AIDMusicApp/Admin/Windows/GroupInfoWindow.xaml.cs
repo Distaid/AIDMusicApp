@@ -24,6 +24,7 @@ namespace AIDMusicApp.Admin.Windows
             GroupItem.YearOfCreation = group.YearOfCreation;
             GroupItem.YearOfBreakup = group.YearOfBreakup;
             GroupItem.Description = group.Description;
+            GroupItem.Logo = group.Logo;
             GroupItem.Genres = group.Genres;
             GroupItem.Albums = group.Albums;
             GroupItem.Members = group.Members;

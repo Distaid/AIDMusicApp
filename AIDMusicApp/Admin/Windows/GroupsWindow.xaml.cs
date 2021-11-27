@@ -5,12 +5,15 @@ using AIDMusicApp.Admin.Controls.Musicians;
 using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
 using AIDMusicApp.Windows;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace AIDMusicApp.Admin.Windows
 {
@@ -36,6 +39,7 @@ namespace AIDMusicApp.Admin.Windows
                 e.Handled = !((ComboBox)o).IsDropDownOpen;
             };
 
+            LoadImage.Click += LoadImage_Click;
             AddGenre.Click += AddGenre_Click;
             AddLabel.Click += AddLabel_Click;
             AddMember.Click += AddMember_Click;
@@ -80,6 +84,7 @@ namespace AIDMusicApp.Admin.Windows
             YearOfBreakupText.Text = GroupItem.YearOfBreakup.ToString();
             DescriptionText.Text = GroupItem.Description;
 
+            LoadImage.Click += LoadImage_Click;
             AddGenre.Click += AddGenre_Click;
             AddLabel.Click += AddLabel_Click;
             AddMember.Click += AddMember_Click;
@@ -116,6 +121,14 @@ namespace AIDMusicApp.Admin.Windows
                 var item = new AlbumItemControl(album, GroupItem.Albums);
                 AlbumItems.Children.Add(item);
             }
+
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.StreamSource = new MemoryStream(GroupItem.Logo);
+            image.EndInit();
+            LogoImage.ImageSource = image;
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
@@ -127,6 +140,24 @@ namespace AIDMusicApp.Admin.Windows
         private void YearText_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !byte.TryParse(e.Text, out _);
+        }
+
+        private void LoadImage_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.Filter = "PNG|*.png|JPG|*.jpg;*.jpeg";
+
+            if (dialog.ShowDialog() == true)
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = new MemoryStream(File.ReadAllBytes(dialog.FileName));
+                image.EndInit();
+                LogoImage.ImageSource = image;
+            }
         }
 
         private void AddGenre_Click(object sender, RoutedEventArgs e)
@@ -262,11 +293,26 @@ namespace AIDMusicApp.Admin.Windows
                 return;
 
             var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
+            var stream = (LogoImage.ImageSource as BitmapImage).StreamSource;
+            byte[] logo;
+            if (stream == null)
+            {
+                var image = (BitmapImage)Application.Current.Resources["DefaultCover"];
+                var resStream = Application.GetResourceStream(image.UriSource).Stream;
+                logo = new byte[resStream.Length];
+                resStream.Read(logo, 0, logo.Length);
+            }
+            else
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                logo = new byte[stream.Length];
+                stream.Read(logo, 0, logo.Length);
+            }
 
             GroupItem = SqlDatabase.Instance.GroupsAdapter.Insert(NameText.Text, DescriptionText.Text,
                 !string.IsNullOrWhiteSpace(YearOfCreationText.Text) ? Convert.ToInt16(YearOfCreationText.Text) : null,
                 !string.IsNullOrWhiteSpace(YearOfBreakupText.Text) ? Convert.ToInt16(YearOfBreakupText.Text) : null,
-                countryId.Id);
+                countryId.Id, logo);
 
             for (var i = 0; i < GenreItems.Children.Count - 1; i++)
             {
@@ -332,11 +378,26 @@ namespace AIDMusicApp.Admin.Windows
             }
 
             var countryId = (Country)(CountryId.SelectedItem as ComboBoxItem).Tag;
+            var stream = (LogoImage.ImageSource as BitmapImage).StreamSource;
+            byte[] logo;
+            if (stream == null)
+            {
+                var image = (BitmapImage)Application.Current.Resources["DefaultCover"];
+                var resStream = Application.GetResourceStream(image.UriSource).Stream;
+                logo = new byte[resStream.Length];
+                resStream.Read(logo, 0, logo.Length);
+            }
+            else
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                logo = new byte[stream.Length];
+                stream.Read(logo, 0, logo.Length);
+            }
 
             GroupItem.Update(NameText.Text, DescriptionText.Text,
                 !string.IsNullOrWhiteSpace(YearOfCreationText.Text) ? Convert.ToInt16(YearOfCreationText.Text) : null,
                 !string.IsNullOrWhiteSpace(YearOfBreakupText.Text) ? Convert.ToInt16(YearOfBreakupText.Text) : null,
-                countryId);
+                countryId, logo);
 
             AIDMessageWindow.Show("Сохранено успешно!");
         }

@@ -34,6 +34,7 @@ namespace AIDMusicApp.Sql.Adapters
                         YearOfCreation = row[3].Equals(DBNull.Value) ? null : Convert.ToInt16(row[3]),
                         YearOfBreakup = row[4].Equals(DBNull.Value) ? null : Convert.ToInt16(row[4]),
                         CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[5])),
+                        Logo = (byte[])row[6],
                         Albums = new ObservableCollection<Album>(),
                         Genres = new ObservableCollection<Genre>(),
                         Labels = new ObservableCollection<Label>(),
@@ -58,7 +59,7 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public Group Insert(string name, string description, short? yearOfCreation, short? yearOfBreakup, int countryId)
+        public Group Insert(string name, string description, short? yearOfCreation, short? yearOfBreakup, int countryId, byte[] logo)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_INSERT], _sqlConnection))
             {
@@ -67,6 +68,7 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@creation", yearOfCreation.HasValue ? yearOfCreation.Value : DBNull.Value);
                 command.Parameters.AddWithValue("@breakup", yearOfBreakup.HasValue ? yearOfBreakup.Value : DBNull.Value);
                 command.Parameters.AddWithValue("@country_id", countryId);
+                command.Parameters.AddWithValue("@logo", logo);
 
                 return new Group
                 {
@@ -76,6 +78,7 @@ namespace AIDMusicApp.Sql.Adapters
                     YearOfCreation = yearOfCreation,
                     YearOfBreakup = yearOfBreakup,
                     CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(countryId),
+                    Logo = logo,
                     Albums = new ObservableCollection<Album>(),
                     Genres = new ObservableCollection<Genre>(),
                     Labels = new ObservableCollection<Label>(),
@@ -84,7 +87,7 @@ namespace AIDMusicApp.Sql.Adapters
             }
         }
 
-        public void Update(int id, string name, string description, short? yearOfCreation, short? yearOfBreakup, int countryId)
+        public void Update(int id, string name, string description, short? yearOfCreation, short? yearOfBreakup, int countryId, byte[] logo)
         {
             using (var command = new SqlCommand(_sqlComands[SQL_UPDATE], _sqlConnection))
             {
@@ -94,6 +97,7 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@creation", yearOfCreation.HasValue ? yearOfCreation.Value : DBNull.Value);
                 command.Parameters.AddWithValue("@breakup", yearOfBreakup.HasValue ? yearOfBreakup.Value : DBNull.Value);
                 command.Parameters.AddWithValue("@country_id", countryId);
+                command.Parameters.AddWithValue("@logo", logo);
 
                 command.ExecuteNonQuery();
             }
