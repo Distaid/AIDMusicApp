@@ -124,11 +124,14 @@ namespace AIDMusicApp.Admin.Windows
                 return false;
             }
 
-            if (SqlDatabase.Instance.UsersAdapter.ContainsLogin(LoginText.Text))
+            if (UserItem.Login != LoginText.Text)
             {
-                AIDMessageWindow.Show("Пользователь с таким логином уже существует!");
-                LoginText.Focus();
-                return false;
+                if (SqlDatabase.Instance.UsersAdapter.ContainsLogin(LoginText.Text))
+                {
+                    AIDMessageWindow.Show("Пользователь с таким логином уже существует!");
+                    LoginText.Focus();
+                    return false;
+                }
             }
 
             if (string.IsNullOrWhiteSpace(PasswordText.Password))
@@ -147,11 +150,14 @@ namespace AIDMusicApp.Admin.Windows
                     return false;
                 }
 
-                if (SqlDatabase.Instance.UsersAdapter.ContainsPhone(PhoneText.Text))
+                if (UserItem.Phone != PhoneText.Text)
                 {
-                    AIDMessageWindow.Show("Пользователь с таким номером телефона уже существует!");
-                    PhoneText.Focus();
-                    return false;
+                    if (SqlDatabase.Instance.UsersAdapter.ContainsPhone(PhoneText.Text))
+                    {
+                        AIDMessageWindow.Show("Пользователь с таким номером телефона уже существует!");
+                        PhoneText.Focus();
+                        return false;
+                    }
                 }
             }
 
@@ -163,12 +169,14 @@ namespace AIDMusicApp.Admin.Windows
                     EmailText.Focus();
                     return false;
                 }
-
-                if (SqlDatabase.Instance.UsersAdapter.ContainsEmail(EmailText.Text))
+                if (UserItem.Email != EmailText.Text)
                 {
-                    AIDMessageWindow.Show("Пользователь с такой почтой уже существует!");
-                    EmailText.Focus();
-                    return false;
+                    if (SqlDatabase.Instance.UsersAdapter.ContainsEmail(EmailText.Text))
+                    {
+                        AIDMessageWindow.Show("Пользователь с такой почтой уже существует!");
+                        EmailText.Focus();
+                        return false;
+                    }
                 }
             }
 

@@ -15,8 +15,8 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <ComboBox Grid.Column="0" x:Name="SkillComboBox" Style="{StaticResource AIDComboBoxStyle}" Margin="5 2" x:FieldModifier="private"/>
-            <Button Grid.Column="1" x:Name="RemoveButton" Content="Удалить" Style="{StaticResource AIDButtonStyle}" Margin="5 2" x:FieldModifier="private"/>
+            <ComboBox Grid.Column="0" x:Name="SkillComboBox" Style="{StaticResource AIDComboBoxStyle}" Margin="5 2"/>
+            <Button Grid.Column="1" x:Name="RemoveButton" Content="Удалить" Style="{StaticResource AIDButtonStyle}" Margin="5 2"/>
         </Grid>
     </Border>
 </UserControl>

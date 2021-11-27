@@ -70,8 +70,8 @@
                 </ScrollViewer>
             </Grid>
 
-            <Button Grid.Row="2" Grid.Column="0" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
-            <Button Grid.Row="2" Grid.Column="1" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
+            <Button Grid.Row="2" Grid.Column="0" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
+            <Button Grid.Row="2" Grid.Column="1" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
         </Grid>
     </Border>
 </UserControl>

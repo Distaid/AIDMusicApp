@@ -49,18 +49,18 @@
 
                         <Rectangle Grid.Column="0" Grid.RowSpan="3" Height="90" Width="90" Margin="10 5">
                             <Rectangle.Fill>
-                                <ImageBrush x:Name="CoverImage" ImageSource="{Binding Source={StaticResource DefaultCover}}" x:FieldModifier="private"/>
+                                <ImageBrush x:Name="CoverImage" ImageSource="{Binding Source={StaticResource DefaultCover}}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <Button Grid.Row="3" Grid.Column="0" x:Name="LoadImage" Content="Загрузить" Style="{StaticResource AIDButtonStyle}" Margin="10 5" VerticalAlignment="Top" x:FieldModifier="private"/>
+                        <Button Grid.Row="3" Grid.Column="0" x:Name="LoadImage" Content="Загрузить" Style="{StaticResource AIDButtonStyle}" Margin="10 5" VerticalAlignment="Top"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="Название" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="Год" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
                         <TextBlock Grid.Row="2" Grid.Column="1" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5" Foreground="{StaticResource AIDCyan}"/>
 
-                        <TextBox Grid.Row="0" Grid.Column="2" x:Name="NameText" Style="{StaticResource AIDTextBoxStyle}" VerticalAlignment="Center" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <TextBox Grid.Row="1" Grid.Column="2" x:Name="YearText" Style="{StaticResource AIDTextBoxStyle}" VerticalAlignment="Center" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="2" x:Name="DescriptionText" Style="{StaticResource AIDTextBoxStyle}" VerticalContentAlignment="Top" Margin="0 5 10 5" TextWrapping="Wrap" x:FieldModifier="private"/>
+                        <TextBox Grid.Row="0" Grid.Column="2" x:Name="NameText" Style="{StaticResource AIDTextBoxStyle}" VerticalAlignment="Center" Margin="0 5 10 5"/>
+                        <TextBox Grid.Row="1" Grid.Column="2" x:Name="YearText" Style="{StaticResource AIDTextBoxStyle}" VerticalAlignment="Center" Margin="0 5 10 5"/>
+                        <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="2" x:Name="DescriptionText" Style="{StaticResource AIDTextBoxStyle}" VerticalContentAlignment="Top" Margin="0 5 10 5" TextWrapping="Wrap"/>
 
                         <Button x:Name="SaveGeneralButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Content="Сохранить Общее" Style="{StaticResource AIDButtonStyle}" Width="150" Margin="5" Visibility="Collapsed"/>
                     </Grid>
@@ -74,7 +74,7 @@
 
                         <Border Grid.Row="0" Margin="5">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                                <StackPanel x:Name="GenreItems" Margin="5" x:FieldModifier="private">
+                                <StackPanel x:Name="GenreItems" Margin="5">
                                     <Button x:Name="AddGenre" Content="Добавить жанр" Style="{StaticResource AIDButtonStyle}" Margin="5" Width="150"/>
                                 </StackPanel>
                             </ScrollViewer>
@@ -92,7 +92,7 @@
 
                         <Border Grid.Row="0" Margin="5">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                                <StackPanel x:Name="FormatItems" Margin="5" x:FieldModifier="private">
+                                <StackPanel x:Name="FormatItems" Margin="5">
                                     <Button x:Name="AddFormat" Content="Добавить формат" Style="{StaticResource AIDButtonStyle}" Margin="5" Width="150"/>
                                 </StackPanel>
                             </ScrollViewer>

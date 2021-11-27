@@ -55,8 +55,8 @@
                 </TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource SongItem}, Path=Time, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="0 3 10 3" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
 
-                <Button Grid.Row="0" Grid.Column="2" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="3" x:FieldModifier="private"/>
-                <Button Grid.Row="1" Grid.Column="2" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="3" x:FieldModifier="private"/>
+                <Button Grid.Row="0" Grid.Column="2" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="3"/>
+                <Button Grid.Row="1" Grid.Column="2" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="3"/>
             </Grid>
         </Grid>
     </Border>

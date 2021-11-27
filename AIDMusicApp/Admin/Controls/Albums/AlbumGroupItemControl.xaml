@@ -23,11 +23,11 @@
 
             <Rectangle Grid.Row="0" Width="Auto" Height="Auto" Margin="5">
                 <Rectangle.Fill>
-                    <ImageBrush x:Name="CoverImage" ImageSource="{Binding ElementName=albumGroupItemWindow, Path=AlbumItem.Cover, Mode=OneWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultCover}}" x:FieldModifier="private"/>
+                    <ImageBrush x:Name="CoverImage" ImageSource="{Binding ElementName=albumGroupItemWindow, Path=AlbumItem.Cover, Mode=OneWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultCover}}"/>
                 </Rectangle.Fill>
             </Rectangle>
 
-            <TextBlock Grid.Row="1" x:Name="AlbumNameText" Style="{StaticResource AIDTextBlockStyle}" FontSize="12" VerticalAlignment="Center" Margin="8 5" TextTrimming="CharacterEllipsis" x:FieldModifier="private">
+            <TextBlock Grid.Row="1" x:Name="AlbumNameText" Style="{StaticResource AIDTextBlockStyle}" FontSize="12" VerticalAlignment="Center" Margin="8 5" TextTrimming="CharacterEllipsis">
                 <TextBlock.Text>
                     <MultiBinding Mode="OneWay" StringFormat="{}{0} ({1})">
                         <Binding ElementName="albumGroupItemWindow" Path="AlbumItem.Name"/>

@@ -34,8 +34,8 @@
 
             <Separator Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource AIDSeparatorHorizontalStyle}"/>
 
-            <Button Grid.Row="3" Grid.Column="0" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
-            <Button Grid.Row="3" Grid.Column="1" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
+            <Button Grid.Row="3" Grid.Column="0" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
+            <Button Grid.Row="3" Grid.Column="1" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
         </Grid>
     </Border>
 </UserControl>

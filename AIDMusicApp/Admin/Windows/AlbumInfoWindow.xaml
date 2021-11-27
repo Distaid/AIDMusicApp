@@ -55,7 +55,7 @@
                         
                         <Rectangle Grid.Column="0" Grid.RowSpan="3" Height="90" Width="90" Margin="10 5">
                             <Rectangle.Fill>
-                                <ImageBrush x:Name="CoverImage" ImageSource="{Binding Source={StaticResource AlbumItem}, Path=Cover, Converter={StaticResource BytesConverter}}" x:FieldModifier="private"/>
+                                <ImageBrush x:Name="CoverImage" ImageSource="{Binding Source={StaticResource AlbumItem}, Path=Cover, Converter={StaticResource BytesConverter}}"/>
                             </Rectangle.Fill>
                         </Rectangle>
 

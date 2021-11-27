@@ -45,7 +45,7 @@
 
                 <Rectangle Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Width="100" Height="100" Margin="10 3" VerticalAlignment="Top">
                     <Rectangle.Fill>
-                        <ImageBrush x:Name="CoverImage" ImageSource="{Binding Source={StaticResource AlbumItem}, Path=Cover, Mode=TwoWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultCover}}" x:FieldModifier="private"/>
+                        <ImageBrush x:Name="CoverImage" ImageSource="{Binding Source={StaticResource AlbumItem}, Path=Cover, Mode=TwoWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultCover}}"/>
                     </Rectangle.Fill>
                 </Rectangle>
 
@@ -84,9 +84,9 @@
                 </ScrollViewer>
             </Grid>
 
-            <Button Grid.Row="2" Grid.Column="0" x:Name="InfoButton" Content="Инфо" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
-            <Button Grid.Row="2" Grid.Column="1" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
-            <Button Grid.Row="2" Grid.Column="2" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
+            <Button Grid.Row="2" Grid.Column="0" x:Name="InfoButton" Content="Инфо" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
+            <Button Grid.Row="2" Grid.Column="1" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
+            <Button Grid.Row="2" Grid.Column="2" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
         </Grid> 
     </Border>
 </UserControl>

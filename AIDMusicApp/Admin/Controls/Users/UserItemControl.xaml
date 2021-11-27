@@ -29,7 +29,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="ID" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="IdText" Text="{Binding Source={StaticResource UserItem}, Path=Id, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3" HorizontalAlignment="Right" x:FieldModifier="private"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="IdText" Text="{Binding Source={StaticResource UserItem}, Path=Id, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 3" HorizontalAlignment="Right"/>
 
             <Grid Grid.Row="1" Grid.ColumnSpan="2" Height="100">
                 <Grid.RowDefinitions>
@@ -47,25 +47,25 @@
 
                 <Ellipse Grid.Column="0" Grid.RowSpan="4" Height="90" Width="90" Margin="10 5">
                     <Ellipse.Fill>
-                        <ImageBrush x:Name="AvatarImage" ImageSource="{Binding Source={StaticResource UserItem}, Path=Avatar, Mode=TwoWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultImage}}" x:FieldModifier="private"/>
+                        <ImageBrush x:Name="AvatarImage" ImageSource="{Binding Source={StaticResource UserItem}, Path=Avatar, Mode=TwoWay, Converter={StaticResource BytesConverter}, TargetNullValue={StaticResource DefaultImage}}"/>
                     </Ellipse.Fill>
                 </Ellipse>
 
                 <TextBlock Grid.Column="1" Grid.Row="0" Text="Логин" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}"/>
-                <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Source={StaticResource UserItem}, Path=Login, Mode=TwoWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Source={StaticResource UserItem}, Path=Login, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="1" Text="Номер" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}" ToolTip="Номер телефона"/>
-                <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Source={StaticResource UserItem}, Path=Phone, Mode=TwoWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Source={StaticResource UserItem}, Path=Phone, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="2" Text="Почта" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}"/>
-                <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Source={StaticResource UserItem}, Path=Email, Mode=TwoWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Source={StaticResource UserItem}, Path=Email, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                 
                 <TextBlock Grid.Column="1" Grid.Row="3" Text="Доступ" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Foreground="{StaticResource AIDCyan}"/>
-                <TextBlock Grid.Column="2" Grid.Row="3" Text="{Binding Source={StaticResource UserItem}, Path=AccessId, Mode=TwoWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="2" Grid.Row="3" Text="{Binding Source={StaticResource UserItem}, Path=AccessId, Mode=OneWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
             </Grid>
 
-            <Button Grid.Row="2" Grid.Column="0" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
-            <Button Grid.Row="2" Grid.Column="1" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5" x:FieldModifier="private"/>
+            <Button Grid.Row="2" Grid.Column="0" x:Name="EditButton" Content="Изменить" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
+            <Button Grid.Row="2" Grid.Column="1" x:Name="RemoveButton" Content="УДАЛИТЬ" Style="{StaticResource AIDButtonStyle}" Width="100" Margin="5"/>
         </Grid>
     </Border>
 </UserControl>

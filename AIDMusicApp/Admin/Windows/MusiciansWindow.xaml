@@ -52,10 +52,10 @@
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Статус" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
-                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="NameText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="AgeText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CountryId" Style="{StaticResource AIDComboBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private"/>
-                        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="IsDeadText" Style="{StaticResource AIDComboBoxStyle}" Margin="0 5 10 5" x:FieldModifier="private">
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="NameText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="AgeText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5"/>
+                        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CountryId" Style="{StaticResource AIDComboBoxStyle}" Margin="0 5 10 5"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="IsDeadText" Style="{StaticResource AIDComboBoxStyle}" Margin="0 5 10 5">
                             <ComboBoxItem Content="Живой" IsSelected="True"/>
                             <ComboBoxItem Content="Умер"/>
                         </ComboBox>
@@ -72,7 +72,7 @@
 
                         <Border Grid.Row="0" Margin="5">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
-                                <StackPanel x:Name="SkillItems" Margin="5" x:FieldModifier="private">
+                                <StackPanel x:Name="SkillItems" Margin="5">
                                     <Button x:Name="AddSkill" Content="Добавить навык" Style="{StaticResource AIDButtonStyle}" Margin="5" Width="150"/>
                                 </StackPanel>
                             </ScrollViewer>
