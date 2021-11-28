@@ -67,7 +67,7 @@
                         <ComboBox Grid.Row="1" Grid.Column="2" x:Name="CountryId" Style="{StaticResource AIDComboBoxStyle}" Margin="0 5 10 5"/>
                         <TextBox Grid.Row="2" Grid.Column="2" x:Name="YearOfCreationText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5"/>
                         <TextBox Grid.Row="3" Grid.Column="2" x:Name="YearOfBreakupText" Style="{StaticResource AIDTextBoxStyle}" Margin="0 5 10 5"/>
-                        <TextBox Grid.Row="4" Grid.Column="2" x:Name="DescriptionText" Style="{StaticResource AIDTextBoxStyle}" VerticalContentAlignment="Top" Margin="0 5 10 5" TextWrapping="Wrap"/>
+                        <TextBox Grid.Row="4" Grid.Column="2" x:Name="DescriptionText" Style="{StaticResource AIDTextBoxStyle}" VerticalContentAlignment="Top" Margin="0 5 10 5" TextWrapping="Wrap" AcceptsReturn="True"/>
 
                         <Button x:Name="SaveGeneralButton" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Content="Сохранить Общее" Style="{StaticResource AIDButtonStyle}" Width="150" Margin="5" Visibility="Collapsed"/>
                     </Grid>
@@ -126,7 +126,7 @@
                         <Button x:Name="SaveMembersButton" Grid.Row="1" Content="Сохранить Участников" Style="{StaticResource AIDButtonStyle}" Width="150" Margin="5" Visibility="Collapsed"/>
                     </Grid>
                 </TabItem>
-                <TabItem x:Name="AlbumsPanel" Header="Альбомы" Visibility="Visible">
+                <TabItem x:Name="AlbumsPanel" Header="Альбомы" Visibility="Collapsed">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
