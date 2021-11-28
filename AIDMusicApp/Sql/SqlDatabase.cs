@@ -66,7 +66,7 @@ namespace AIDMusicApp.Sql
 
         public void LoadComands()
         {
-            if (!Directory.Exists("SQLCommands"))
+            if (!Directory.Exists(FileLoader.SqlCommandsPath))
                 throw new Exception("Папка с файлами команд не обнаружена!\nРабота приложения будет прекращена!");
 
             try
