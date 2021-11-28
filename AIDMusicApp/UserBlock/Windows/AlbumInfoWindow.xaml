@@ -66,7 +66,9 @@
                         <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Source={StaticResource AlbumItem}, Path=Year, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" Text="Описание" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
-                        <TextBlock Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="{Binding Source={StaticResource AlbumItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="10 5"/>
+                        <ScrollViewer Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Height="60" Margin="10 5">
+                            <TextBlock Text="{Binding Source={StaticResource AlbumItem}, Path=Description, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" Margin="2" TextWrapping="Wrap"/>
+                        </ScrollViewer>
                     </Grid>
 
                     <TextBlock Text="Жанры" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
