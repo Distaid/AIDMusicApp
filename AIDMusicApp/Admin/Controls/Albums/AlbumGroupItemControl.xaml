@@ -10,7 +10,6 @@
              d:DesignHeight="200" d:DesignWidth="180"
              Height="200" Width="180" Name="albumGroupItemWindow">
     <UserControl.Resources>
-        <local1:Album x:Key="AlbumItem"/>
         <conv:BytesToImageConverter x:Key="BytesConverter"/>
     </UserControl.Resources>
 
