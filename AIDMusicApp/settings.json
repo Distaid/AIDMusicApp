@@ -1,6 +1,6 @@
 ﻿{
   "Server": "localhost",
-  "Data Source": "DESKTOP-0L0FT0L",
+  "Data Source": "",
   "Initial Catalog": "MusicDB",
   "Integrated Security": true
 }
