@@ -22,6 +22,7 @@
                 <ResourceDictionary Source="Styles/TextBlockStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TitleBarStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ToolTipStyle.xaml"/>
                 <ResourceDictionary Source="Styles/WindowStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
