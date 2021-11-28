@@ -58,7 +58,7 @@ namespace AIDMusicApp.Admin.Windows
 
             if (SqlDatabase.Instance.SkillsListAdapter.ContainsName(NameText.Text))
             {
-                AIDMessageWindow.Show("Страна с таким названием уже существует!");
+                AIDMessageWindow.Show("Такой навык уже существует!");
                 NameText.Focus();
                 NameText.CaretIndex = NameText.Text.Length;
                 return;
@@ -87,7 +87,7 @@ namespace AIDMusicApp.Admin.Windows
 
             if (SqlDatabase.Instance.SkillsListAdapter.ContainsName(NameText.Text))
             {
-                AIDMessageWindow.Show("Страна с таким названием уже существует!");
+                AIDMessageWindow.Show("Такой навык уже существует!");
                 NameText.Focus();
                 NameText.CaretIndex = NameText.Text.Length;
                 return;
