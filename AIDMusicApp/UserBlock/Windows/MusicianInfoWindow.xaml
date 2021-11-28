@@ -1,0 +1,106 @@
+﻿<Window x:Class="AIDMusicApp.UserBlock.Windows.MusicianInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AIDMusicApp.UserBlock.Windows"
+        xmlns:local1="clr-namespace:AIDMusicApp.Models"
+        xmlns:local2="clr-namespace:AIDMusicApp.UserBlock.Controls"
+        xmlns:conv="clr-namespace:AIDMusicApp.Converters"
+        mc:Ignorable="d"
+        Height="470" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Style="{StaticResource AIDWindowStyle}">
+    <Window.Resources>
+        <local1:Musician x:Key="MusicianItem"/>
+        <conv:ObjectToStringConverter x:Key="ObjectConverter"/>
+        <conv:BoolToStringConverter x:Key="StringConverter"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TitleBar" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="TitleText" Grid.Column="0" Style="{StaticResource AIDTitleTextStyle}" Text="Header"/>
+            <Button x:Name="CloseButton" Grid.Column="2" IsCancel="True" Style="{StaticResource AIDTitleButtonStyle}">
+                <Path Style="{StaticResource AIDCloseButtonPathStyle}"/>
+            </Button>
+        </Grid>
+
+        <Border Grid.Row="1">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
+                <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=Name, Mode=OneWay, TargetNullValue=-}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Возраст" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=Age, Mode=OneWay}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Страна" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Source={StaticResource MusicianItem}, Path=CountryId, Mode=OneWay, Converter={StaticResource ObjectConverter}}" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" Margin="10 5"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Source={StaticResource MusicianItem}, Path=IsDead, Mode=OneWay, Converter={StaticResource StringConverter}, ConverterParameter=isDead}" Style="{StaticResource AIDTextBlockStyle}" Foreground="Red" HorizontalAlignment="Center" Margin="10 5"/>
+                    </Grid>
+
+                    <TextBlock Text="Навыки" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 0 10 5">
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource MusicianItem}, Path=Skills, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="10" Background="#191919" Padding="10 5 10 7" Margin="5 0">
+                                        <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <TextBlock Text="Связанные проекты" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
+                    <Border Background="#191919" Margin="10 0 10 5">
+                        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource MusicianItem}, Path=Groups, Mode=OneWay}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <local2:GroupItemControl GroupItem="{Binding}" Margin="5" BorderBackground="#222"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>
