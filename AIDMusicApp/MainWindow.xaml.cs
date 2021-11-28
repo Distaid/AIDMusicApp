@@ -2,6 +2,7 @@
 using AIDMusicApp.Controls;
 using AIDMusicApp.Models;
 using AIDMusicApp.Sql;
+using AIDMusicApp.UserBlock.Controls;
 using AIDMusicApp.Windows;
 using System;
 using System.Threading.Tasks;
@@ -132,6 +133,12 @@ namespace AIDMusicApp
                     MainContent.Content = null;
                     MainContent.Content = new AdminMainControl(false);
                     (MainContent.Content as AdminMainControl).ExitClick += MainWindow_ExitClick;
+                    break;
+
+                case "Пользователь":
+                    MainContent.Content = null;
+                    MainContent.Content = new UserMainControl(user);
+                    (MainContent.Content as UserMainControl).ExitClick += MainWindow_ExitClick;
                     break;
 
                 default:
