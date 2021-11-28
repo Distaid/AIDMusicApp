@@ -21,6 +21,8 @@ namespace AIDMusicApp.Models
 
         private ObservableCollection<Skill> _skills;
 
+        private ObservableCollection<Group> _groups;
+
         private bool _isFormer;
 
         public int Id
@@ -80,6 +82,16 @@ namespace AIDMusicApp.Models
             {
                 _skills = value;
                 OnPropertyChanged("Skills");
+            }
+        }
+
+        public ObservableCollection<Group> Groups
+        {
+            get => _groups;
+            set
+            {
+                _groups = value;
+                OnPropertyChanged("Groups");
             }
         }
 

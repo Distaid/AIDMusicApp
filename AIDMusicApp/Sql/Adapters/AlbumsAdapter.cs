@@ -14,6 +14,9 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
         [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
+        [SqlCommandKey] private const string SQL_SELECT_SHORT = "SQL_Select_Short";
+        [SqlCommandKey] private const string SQL_SELECT_TOP10 = "SQL_Select_Top10";
+        [SqlCommandKey] private const string SQL_SELECT_BYNAME = "SQL_Select_ByName";
 
         public AlbumsAdapter(SqlConnection connection) : base(connection, "SQLAlbums.aid") { }
 
@@ -96,6 +99,74 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@id", id);
 
                 command.ExecuteNonQuery();
+            }
+        }
+
+        public IEnumerable<Album> GetAllShort()
+        {
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT_SHORT], _sqlConnection))
+            {
+                var ds = new DataSet();
+                adapter.Fill(ds);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    yield return new Album
+                    {
+                        Id = Convert.ToInt32(row[0]),
+                        Name = Convert.ToString(row[1]),
+                        Year = Convert.ToInt16(row[2]),
+                        Description = Convert.ToString(row[3]),
+                        Cover = (byte[])row[4]
+                    };
+                }
+            }
+        }
+
+        public IEnumerable<Album> GetTop10()
+        {
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT_TOP10], _sqlConnection))
+            {
+                var ds = new DataSet();
+                adapter.Fill(ds);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    yield return new Album
+                    {
+                        Id = Convert.ToInt32(row[0]),
+                        Name = Convert.ToString(row[1]),
+                        Year = Convert.ToInt16(row[2]),
+                        Description = Convert.ToString(row[3]),
+                        Cover = (byte[])row[4]
+                    };
+                }
+            }
+        }
+
+        public IEnumerable<Album> GetAllByName(string name)
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_BYNAME], _sqlConnection))
+            {
+                command.Parameters.AddWithValue("@name", $"%{name}%");
+
+                using (var adapter = new SqlDataAdapter(command))
+                {
+                    var ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        yield return new Album
+                        {
+                            Id = Convert.ToInt32(row[0]),
+                            Name = Convert.ToString(row[1]),
+                            Year = Convert.ToInt16(row[2]),
+                            Description = Convert.ToString(row[3]),
+                            Cover = (byte[])row[4]
+                        };
+                    }
+                }
             }
         }
     }

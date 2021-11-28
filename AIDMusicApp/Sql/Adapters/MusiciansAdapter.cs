@@ -13,6 +13,8 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_INSERT = "SQL_Insert";
         [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
+        [SqlCommandKey] private const string SQL_SELECT_TOP10 = "SQL_Select_Top10";
+        [SqlCommandKey] private const string SQL_SELECT_BYNAME = "SQL_Select_ByName";
 
         public MusiciansAdapter(SqlConnection connection) : base(connection, "SQLMusicians.aid") { }
 
@@ -85,6 +87,53 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@id", id);
 
                 command.ExecuteNonQuery();
+            }
+        }
+
+        public IEnumerable<Musician> GetTop10()
+        {
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT_TOP10], _sqlConnection))
+            {
+                var ds = new DataSet();
+                adapter.Fill(ds);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    yield return new Musician
+                    {
+                        Id = Convert.ToInt32(row[0]),
+                        Name = Convert.ToString(row[1]),
+                        Age = Convert.ToByte(row[2]),
+                        CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[3])),
+                        IsDead = Convert.ToBoolean(row[4])
+                    };
+                }
+            }
+        }
+
+        public IEnumerable<Musician> GetAllByName(string name)
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_BYNAME], _sqlConnection))
+            {
+                command.Parameters.AddWithValue("@name", $"%{name}%");
+
+                using (var adapter = new SqlDataAdapter(command))
+                {
+                    var ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        yield return new Musician
+                        {
+                            Id = Convert.ToInt32(row[0]),
+                            Name = Convert.ToString(row[1]),
+                            Age = Convert.ToByte(row[2]),
+                            CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[3])),
+                            IsDead = Convert.ToBoolean(row[4])
+                        };
+                    }
+                }
             }
         }
     }

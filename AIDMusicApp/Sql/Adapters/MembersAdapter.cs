@@ -14,6 +14,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
         [SqlCommandKey] private const string SQL_SELECT_MUSICIANSBYGROUPID = "SQL_Select_MusiciansByGroupId";
         [SqlCommandKey] private const string SQL_SELECT_ID_BYMUSICIANIDANDGROUPID = "SQL_Select_Id_ByMusicianIdAndGroupId";
+        [SqlCommandKey] private const string SQL_SELECT_SHORT_GROUPSBYMUSICIANID = "SQL_Select_Short_GroupsByMusicianId";
 
         public MembersAdapter(SqlConnection connection) : base(connection, "SQLMembers.aid") { }
 
@@ -114,6 +115,35 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@group_id", groupId);
 
                 return Convert.ToInt32(command.ExecuteScalar());
+            }
+        }
+
+        public IEnumerable<Group> GetShortGroupsByMusicianId(int musicianId)
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_SHORT_GROUPSBYMUSICIANID], _sqlConnection))
+            {
+                command.Parameters.AddWithValue("@id", musicianId);
+
+                using (var adapter = new SqlDataAdapter(command))
+                {
+                    var ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        yield return new Group
+                        {
+                            Id = Convert.ToInt32(row[0]),
+                            Name = Convert.ToString(row[1]),
+                            Description = Convert.ToString(row[2]),
+                            YearOfCreation = row[3].Equals(DBNull.Value) ? null : Convert.ToInt16(row[3]),
+                            YearOfBreakup = row[4].Equals(DBNull.Value) ? null : Convert.ToInt16(row[4]),
+                            CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[5])),
+                            Logo = (byte[])row[6]
+                        };
+                    }
+
+                }
             }
         }
     }

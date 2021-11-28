@@ -13,6 +13,9 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
         [SqlCommandKey] private const string SQL_SELECT_ALBUMSBYGROUPID = "SQL_Select_AlbumsByGroupId";
         [SqlCommandKey] private const string SQL_SELECT_ID_BYALBUMIDANDGROUPID = "SQL_Select_Id_ByAlbumIdAndGroupId";
+        [SqlCommandKey] private const string SQL_SELECT_SHORT_ALBUMSBYGROUPID = "SQL_Select_Short_AlbumsByGroupId";
+        [SqlCommandKey] private const string SQL_SELECT_GROUPNAMEBYALBUMID = "SQL_Select_GroupNameByAlbumId";
+        [SqlCommandKey] private const string SQL_SELECT_ALBUMSBYGROUPNAME = "SQL_Select_AlbumsByGroupName";
 
         public DiscographyAdapter(SqlConnection connection) : base(connection, "SQLDiscography.aid") { }
 
@@ -85,6 +88,78 @@ namespace AIDMusicApp.Sql.Adapters
                 command.Parameters.AddWithValue("@group_id", groupId);
 
                 return Convert.ToInt32(command.ExecuteScalar());
+            }
+        }
+
+        public IEnumerable<Album> GetShortAlbumsByGroupId(int groupId)
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_SHORT_ALBUMSBYGROUPID], _sqlConnection))
+            {
+                command.Parameters.AddWithValue("@id", groupId);
+
+                using (var adapter = new SqlDataAdapter(command))
+                {
+                    var ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        yield return new Album
+                        {
+                            Id = Convert.ToInt32(row[0]),
+                            Name = Convert.ToString(row[1]),
+                            Description = Convert.ToString(row[2]),
+                            Year = Convert.ToInt16(row[3]),
+                            Cover = (byte[])row[4]
+                        };
+                    }
+                }
+            }
+        }
+
+        public string GetGroupNameByAlbumId(int albumId)
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_GROUPNAMEBYALBUMID], _sqlConnection))
+            {
+                command.Parameters.AddWithValue("@id", albumId);
+
+                using (var adapter = new SqlDataAdapter(command))
+                {
+                    var ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    var row = ds.Tables[0].Rows[0];
+
+                    return Convert.ToString(row[0]);
+                }
+            }
+        }
+
+        public IEnumerable<Tuple<Album, string>> GetAlbumsByGroupName(string name)
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_ALBUMSBYGROUPNAME], _sqlConnection))
+            {
+                command.Parameters.AddWithValue("@name", $"%{name}%");
+
+                using (var adapter = new SqlDataAdapter(command))
+                {
+                    var ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        var album = new Album
+                        {
+                            Id = Convert.ToInt32(row[0]),
+                            Name = Convert.ToString(row[1]),
+                            Description = Convert.ToString(row[2]),
+                            Year = Convert.ToInt16(row[3]),
+                            Cover = (byte[])row[4]
+                        };
+
+                        yield return new Tuple<Album, string>(album, Convert.ToString(row[5]));
+                    }
+                }
             }
         }
     }

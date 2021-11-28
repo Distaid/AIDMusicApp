@@ -14,6 +14,9 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_UPDATE = "SQL_Update";
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
         [SqlCommandKey] private const string SQL_SELECT_ID_NAME = "SQL_Select_Id_Name";
+        [SqlCommandKey] private const string SQL_SELECT_SHORT = "SQL_Select_Short";
+        [SqlCommandKey] private const string SQL_SELECT_TOP10 = "SQL_Select_Top10";
+        [SqlCommandKey] private const string SQL_SELECT_BYNAME = "SQL_Select_ByName";
 
         public GroupsAdapter(SqlConnection connection) : base(connection, "SQLGroups.aid") { }
 
@@ -129,6 +132,81 @@ namespace AIDMusicApp.Sql.Adapters
                     };
                 }
 
+            }
+        }
+
+        public IEnumerable<Group> GetAllShort()
+        {
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT_SHORT], _sqlConnection))
+            {
+                var ds = new DataSet();
+                adapter.Fill(ds);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    yield return new Group
+                    {
+                        Id = Convert.ToInt32(row[0]),
+                        Name = Convert.ToString(row[1]),
+                        Description = Convert.ToString(row[2]),
+                        YearOfCreation = row[3].Equals(DBNull.Value) ? null : Convert.ToInt16(row[3]),
+                        YearOfBreakup = row[4].Equals(DBNull.Value) ? null : Convert.ToInt16(row[4]),
+                        CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[5])),
+                        Logo = (byte[])row[6]
+                    };
+                }
+
+            }
+        }
+
+        public IEnumerable<Group> GetTop10()
+        {
+            using (var adapter = new SqlDataAdapter(_sqlComands[SQL_SELECT_TOP10], _sqlConnection))
+            {
+                var ds = new DataSet();
+                adapter.Fill(ds);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    yield return new Group
+                    {
+                        Id = Convert.ToInt32(row[0]),
+                        Name = Convert.ToString(row[1]),
+                        Description = Convert.ToString(row[2]),
+                        YearOfCreation = row[3].Equals(DBNull.Value) ? null : Convert.ToInt16(row[3]),
+                        YearOfBreakup = row[4].Equals(DBNull.Value) ? null : Convert.ToInt16(row[4]),
+                        CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[5])),
+                        Logo = (byte[])row[6]
+                    };
+                }
+            }
+        }
+
+        public IEnumerable<Group> GetAllByName(string name)
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_BYNAME], _sqlConnection))
+            {
+                command.Parameters.AddWithValue("@name", $"%{name}%");
+
+                using (var adapter = new SqlDataAdapter(command))
+                {
+                    var ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        yield return new Group
+                        {
+                            Id = Convert.ToInt32(row[0]),
+                            Name = Convert.ToString(row[1]),
+                            Description = Convert.ToString(row[2]),
+                            YearOfCreation = row[3].Equals(DBNull.Value) ? null : Convert.ToInt16(row[3]),
+                            YearOfBreakup = row[4].Equals(DBNull.Value) ? null : Convert.ToInt16(row[4]),
+                            CountryId = SqlDatabase.Instance.CountriesListAdapter.GetById(Convert.ToInt32(row[5])),
+                            Logo = (byte[])row[6]
+                        };
+                    }
+                }
             }
         }
     }
