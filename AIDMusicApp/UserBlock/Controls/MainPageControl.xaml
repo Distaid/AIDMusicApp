@@ -11,46 +11,52 @@
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Недавно добавленные группы" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
-                <ItemsControl x:Name="NewGroups" Margin="10 5">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:GroupItemControl GroupItem="{Binding}" Margin="5 0" BorderBackground="#191919"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 5">
+                    <ItemsControl x:Name="NewGroups">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:GroupItemControl GroupItem="{Binding}" Margin="5 0" BorderBackground="#191919"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
 
                 <TextBlock Text="Недавно добавленные альбомы" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
-                <ItemsControl x:Name="NewAlbums" Margin="10 5">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:AlbumItemControl AlbumItem="{Binding Item1}" GroupName="{Binding Item2}" Margin="5 0" Height="270" BorderBackground="#191919"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 5">
+                    <ItemsControl x:Name="NewAlbums">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:AlbumItemControl AlbumItem="{Binding Item1}" GroupName="{Binding Item2}" Margin="5 0" Height="270" BorderBackground="#191919"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
 
                 <TextBlock Text="Недавно добавленные музыканты" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
-                <ItemsControl x:Name="NewMusicians" Margin="10 5">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:MusicianItemControl MusicianItem="{Binding}" Margin="5 0"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 5">
+                    <ItemsControl x:Name="NewMusicians">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:MusicianItemControl MusicianItem="{Binding}" Margin="5 0"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </StackPanel>
         </ScrollViewer>
     </Grid>

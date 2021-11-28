@@ -39,18 +39,20 @@
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Недавно добавленные альбомы" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
-                <ItemsControl x:Name="NewAlbums" Margin="10 5">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:AlbumItemControl AlbumItem="{Binding Item1}" GroupName="{Binding Item2}" Margin="5 0" Height="270" BorderBackground="#191919"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 5">
+                    <ItemsControl x:Name="NewAlbums">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:AlbumItemControl AlbumItem="{Binding Item1}" GroupName="{Binding Item2}" Margin="5 0" Height="270" BorderBackground="#191919"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
 
                 <StackPanel Orientation="Vertical" x:Name="SearchBlock" Visibility="Collapsed">
                     <TextBlock Text="Результаты поиска" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>

@@ -34,7 +34,8 @@
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Недавно добавленные музыканты" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
-                <ItemsControl x:Name="NewMusicians" Margin="10 5">
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Style="{StaticResource AIDScrollViewerStyle}" Background="Transparent" Margin="10 5">
+                    <ItemsControl x:Name="NewMusicians">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>
@@ -45,7 +46,8 @@
                             <local:MusicianItemControl MusicianItem="{Binding}" Margin="5 0"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ItemsControl>
+                </ScrollViewer>
 
                 <StackPanel Orientation="Vertical" x:Name="SearchBlock" Visibility="Collapsed">
                     <TextBlock Text="Результаты поиска" Style="{StaticResource AIDTextBlockStyle}" Margin="10 10 0 10" FontSize="15"/>
