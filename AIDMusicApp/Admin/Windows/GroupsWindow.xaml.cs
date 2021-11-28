@@ -107,7 +107,7 @@ namespace AIDMusicApp.Admin.Windows
             foreach (var label in GroupItem.Labels)
             {
                 var item = new LabelBoxItemControl(label.Id);
-                LabelItems.Children.Insert(GenreItems.Children.Count - 1, item);
+                LabelItems.Children.Insert(LabelItems.Children.Count - 1, item);
             }
 
             foreach (var member in GroupItem.Members)
