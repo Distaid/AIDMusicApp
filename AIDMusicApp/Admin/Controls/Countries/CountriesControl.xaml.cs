@@ -24,6 +24,12 @@ namespace AIDMusicApp.Admin.Controls.Countries
             {
                 await Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    CountText.Text = $"Всего: {SqlDatabase.Instance.CountriesListAdapter.GetCount()}";
+                }));
+                await Task.Delay(1);
+
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
                     AddItemButton.IsEnabled = false;
                     SearchTextBox.IsEnabled = false;
                     SearchButton.IsEnabled = false;

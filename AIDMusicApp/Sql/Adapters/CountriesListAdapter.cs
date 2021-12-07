@@ -14,6 +14,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_DELETE = "SQL_Delete";
         [SqlCommandKey] private const string SQL_CHECK_NAME = "SQL_Check_Name";
         [SqlCommandKey] private const string SQL_SELECT_BYID = "SQL_Select_ById";
+        [SqlCommandKey] private const string SQL_SELECT_COUNT = "SQL_Select_Count";
 
         public CountriesListAdapter(SqlConnection connection) : base(connection, "SQLCountriesList.aid") { }
 
@@ -100,6 +101,14 @@ namespace AIDMusicApp.Sql.Adapters
                         Name = Convert.ToString(row[1]),
                     };
                 }
+            }
+        }
+
+        public int GetCount()
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_COUNT], _sqlConnection))
+            {
+                return Convert.ToInt32(command.ExecuteScalar());
             }
         }
     }

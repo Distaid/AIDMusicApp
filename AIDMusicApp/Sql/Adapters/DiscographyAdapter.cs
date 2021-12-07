@@ -16,6 +16,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_SELECT_SHORT_ALBUMSBYGROUPID = "SQL_Select_Short_AlbumsByGroupId";
         [SqlCommandKey] private const string SQL_SELECT_GROUPNAMEBYALBUMID = "SQL_Select_GroupNameByAlbumId";
         [SqlCommandKey] private const string SQL_SELECT_ALBUMSBYGROUPNAME = "SQL_Select_AlbumsByGroupName";
+        [SqlCommandKey] private const string SQL_SELECT_COUNT = "SQL_Select_Count";
 
         public DiscographyAdapter(SqlConnection connection) : base(connection, "SQLDiscography.aid") { }
 
@@ -160,6 +161,16 @@ namespace AIDMusicApp.Sql.Adapters
                         yield return new Tuple<Album, string>(album, Convert.ToString(row[5]));
                     }
                 }
+            }
+        }
+
+        public int GetCount(int groupId)
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_COUNT], _sqlConnection))
+            {
+                command.Parameters.AddWithValue("@id", groupId);
+
+                return Convert.ToInt32(command.ExecuteScalar());
             }
         }
     }

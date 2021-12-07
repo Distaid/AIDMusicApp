@@ -24,6 +24,12 @@ namespace AIDMusicApp.Admin.Controls.Groups
             {
                 await Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    CountText.Text = $"Всего: {SqlDatabase.Instance.GroupsAdapter.GetCount()}";
+                }));
+                await Task.Delay(1);
+
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
                     AddItemButton.IsEnabled = false;
                     SearchTextBox.IsEnabled = false;
                     SearchButton.IsEnabled = false;

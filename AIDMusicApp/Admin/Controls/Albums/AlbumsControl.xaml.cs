@@ -38,6 +38,12 @@ namespace AIDMusicApp.Admin.Controls.Albums
                 }));
                 await Task.Delay(1);
 
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    CountText.Text = $"Всего: {SqlDatabase.Instance.DiscographyAdapter.GetCount(groupId)}";
+                }));
+                await Task.Delay(1);
+
                 foreach (var album in SqlDatabase.Instance.DiscographyAdapter.GetAlbumsByGroupId(groupId))
                 {
                     await Dispatcher.BeginInvoke(new Action(() =>

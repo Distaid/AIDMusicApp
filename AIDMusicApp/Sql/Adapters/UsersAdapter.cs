@@ -17,6 +17,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_CHECK_LOGIN = "SQL_Check_Login";
         [SqlCommandKey] private const string SQL_CHECK_PHONE = "SQL_Check_Phone";
         [SqlCommandKey] private const string SQL_CHECK_EMAIL = "SQL_Check_Email";
+        [SqlCommandKey] private const string SQL_SELECT_COUNT = "SQL_Select_Count";
 
         public UsersAdapter(SqlConnection connection) : base(connection, "SQLUsers.aid") { }
 
@@ -154,6 +155,14 @@ namespace AIDMusicApp.Sql.Adapters
 
                 var count = Convert.ToInt32(command.ExecuteScalar());
                 return count != 0;
+            }
+        }
+
+        public int GetCount()
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_COUNT], _sqlConnection))
+            {
+                return Convert.ToInt32(command.ExecuteScalar());
             }
         }
     }

@@ -17,6 +17,7 @@ namespace AIDMusicApp.Sql.Adapters
         [SqlCommandKey] private const string SQL_SELECT_SHORT = "SQL_Select_Short";
         [SqlCommandKey] private const string SQL_SELECT_TOP10 = "SQL_Select_Top10";
         [SqlCommandKey] private const string SQL_SELECT_BYNAME = "SQL_Select_ByName";
+        [SqlCommandKey] private const string SQL_SELECT_COUNT = "SQL_Select_Count";
 
         public GroupsAdapter(SqlConnection connection) : base(connection, "SQLGroups.aid") { }
 
@@ -207,6 +208,14 @@ namespace AIDMusicApp.Sql.Adapters
                         };
                     }
                 }
+            }
+        }
+
+        public int GetCount()
+        {
+            using (var command = new SqlCommand(_sqlComands[SQL_SELECT_COUNT], _sqlConnection))
+            {
+                return Convert.ToInt32(command.ExecuteScalar());
             }
         }
     }

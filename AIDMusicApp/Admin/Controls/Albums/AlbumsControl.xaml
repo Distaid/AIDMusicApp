@@ -20,12 +20,14 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <Button x:Name="AddItemButton" Content="Добавить" IsEnabled="{Binding ElementName=GroupField, Path=SelectedItem, Converter={StaticResource IsEnableConverter}}" Style="{StaticResource AIDButtonStyle}" Margin="10 5"/>
-            <ComboBox Grid.Column="2" x:Name="GroupField" Style="{StaticResource AIDComboBoxStyle}" Margin="10 5" Width="400"/>
+            <TextBlock x:Name="CountText" Grid.Column="1" Style="{StaticResource AIDTextBlockStyle}" VerticalAlignment="Center" ToolTip="Число обновляется при перелючении панели"/>
+            <ComboBox Grid.Column="3" x:Name="GroupField" Style="{StaticResource AIDComboBoxStyle}" Margin="10 5" Width="400"/>
         </Grid>
 
         <Border Grid.Row="1" Background="#191919" Margin="10 5">
