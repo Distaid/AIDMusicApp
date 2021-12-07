@@ -124,13 +124,16 @@ namespace AIDMusicApp.Admin.Windows
                 return false;
             }
 
-            if (UserItem.Login != LoginText.Text)
+            if (UserItem != null)
             {
-                if (SqlDatabase.Instance.UsersAdapter.ContainsLogin(LoginText.Text))
+                if (UserItem.Login != LoginText.Text)
                 {
-                    AIDMessageWindow.Show("Пользователь с таким логином уже существует!");
-                    LoginText.Focus();
-                    return false;
+                    if (SqlDatabase.Instance.UsersAdapter.ContainsLogin(LoginText.Text))
+                    {
+                        AIDMessageWindow.Show("Пользователь с таким логином уже существует!");
+                        LoginText.Focus();
+                        return false;
+                    }
                 }
             }
 
